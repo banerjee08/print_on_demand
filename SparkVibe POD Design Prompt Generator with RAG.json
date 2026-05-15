@@ -1,0 +1,554 @@
+{
+  "name": "SparkVibe POD Design Prompt Generator with RAG",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "f022e53f-7ad2-4fa7-bd49-b5d39afcb7b4",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        96,
+        156
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "183016108",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "66dd79ec-f23c-439d-b040-aa808ffd2192",
+      "name": "Google Sheets: Read main sheet",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        320,
+        156
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.Confirmation }}",
+              "value2": "go_ahead"
+            }
+          ]
+        }
+      },
+      "id": "d634eb7c-d808-45c9-aea6-5e3cd7a6446f",
+      "name": "Filter: go_ahead",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        544,
+        156
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nfor (const item of $input.all()) {\n  const keys = Object.keys(item.json);\n  for (const key of keys) {\n    if (['F', 'G', 'H', 'I', 'J', 'K', 'L'].includes(key) || item.json[key].toString().toLowerCase() === 'yes') {\n      if (item.json[key].toString().toLowerCase() === 'yes') {\n        newItems.push({\n          json: {\n            ...item.json,\n            event: key,\n            column_name: key\n          }\n        });\n      }\n    }\n  }\n}\nreturn newItems;"
+      },
+      "id": "1840aefe-e70e-4411-a656-bb0879647447",
+      "name": "Item Lists: Extract F-L columns",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        768,
+        156
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "notEqual"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "6921e795-b72d-4bc1-9d92-343bf1aacce6",
+      "name": "If Empty",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        992,
+        156
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "36daa623-8270-48e7-bded-5c59b1d62c66",
+      "name": "Split In Batches",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        1216,
+        156
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "main calendar",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "row_id",
+              "lookupValue": "={{ $('Split In Batches').item.json.row_id || $('Split In Batches').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a17785f0-3656-4fa1-a173-162502d803d5",
+      "name": "Google Sheets Lookup #1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1440,
+        32
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Product Recommendations",
+          "mode": "name"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "month",
+              "lookupValue": "={{ $('Split In Batches').item.json.month }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "879ff540-629a-43c4-bbe8-ef1e7c57a889",
+      "name": "Google Sheets Lookup #2",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        1664,
+        32
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "download",
+        "fileId": {
+          "__rl": true,
+          "value": "YOUR_DRIVE_FILE_ID_HERE",
+          "mode": "id"
+        },
+        "options": {}
+      },
+      "id": "44a166aa-39b8-4f18-8dea-0578b4c991e0",
+      "name": "Google Drive",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 2,
+      "position": [
+        1888,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nfor (const item of $input.all()) {\n  for (let i = 0; i < 3; i++) {\n    newItems.push({\n      json: {\n        ...item.json,\n        loop_iteration: i + 1\n      }\n    });\n  }\n}\nreturn newItems;"
+      },
+      "id": "1ee83662-1ed0-4784-8556-e3208c82a664",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2112,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "text": "={{ 'You are SparkVibe POD expert. Generate 12 DETAILED graphic design prompts for Midjourney/Flux.\\n\\nContext:\\n- Event: ' + $('Split In Batches').item.json.event + ' (' + $('Split In Batches').item.json.month + ' ' + $('Split In Batches').item.json.date + ')\\n- Products: ' + $('Google Sheets Lookup #1').item.json.mid_tier_product_recommendations + ' + ' + $('Google Sheets Lookup #2').item.json.product_recommendations + '\\n- Brand Guidelines: ' + ($json.text || 'See attached') + '\\n- Learn from past: Improve common failures (avoid busy designs, bad shamrocks)\\n\\nEach prompt MUST include:\\n1. Product type (hoodie/t-shirt/mug)\\n2. SparkVibe style: vibrant mid-tier, Instagram-ready\\n3. Event theme (St. Patrick\\'s: shamrocks, green, lucky)\\n4. 4K, highly detailed, commercial POD mockup\\n\\nJSON array only: [{\\n  \"design_prompt\": \"sparkvibe st patricks hoodie, vibrant green shamrocks... --ar 1:1 --v 6\"\\n}]' }}",
+        "options": {}
+      },
+      "id": "71cf00ce-caf6-4f93-a27e-4124569f2d46",
+      "name": "AI Agent (LangChain)",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        2336,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {
+          "temperature": 0.3,
+          "numPredict": 4000
+        }
+      },
+      "id": "53641bb3-e104-4cb5-8e06-8c25fc5ed61f",
+      "name": "Ollama Model: llama3.2:3b",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        2344,
+        256
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "lhvQJmJDNIJ4CYLu",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "1d9218d6-b38e-4527-8cf4-b0c0e62255de",
+      "name": "Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        2472,
+        256
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nfor (const item of $input.all()) {\n  try {\n    let outputText = item.json.output || item.json.text || '';\n    if (outputText.includes('```json')) {\n      outputText = outputText.split('```json')[1].split('```')[0];\n    }\n    const prompts = JSON.parse(outputText.trim());\n    for (const p of prompts) {\n      newItems.push({\n        json: {\n          ...item.json,\n          design_prompt: p.design_prompt\n        }\n      });\n    }\n  } catch(e) {\n    newItems.push({ json: { ...item.json, error: 'Failed to process AI array', raw_output: item.json }});\n  }\n}\nreturn newItems;"
+      },
+      "id": "82523a39-6579-42dc-ac4e-059c29563700",
+      "name": "Item Lists: Split prompt array to items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2688,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "month",
+              "value": "={{ $('Split In Batches').item.json.month }}"
+            },
+            {
+              "name": "date",
+              "value": "={{ $('Split In Batches').item.json.date }}"
+            },
+            {
+              "name": "event",
+              "value": "={{ $('Split In Batches').item.json.event }}"
+            },
+            {
+              "name": "Brand",
+              "value": "SparkVibe"
+            },
+            {
+              "name": "Design Prompt",
+              "value": "={{ $json.design_prompt }}"
+            },
+            {
+              "name": "confirmation",
+              "value": "ready_for_review"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "34b13484-013a-45ed-8e45-de6643877f48",
+      "name": "Set: Format output",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        2912,
+        32
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Prompt Generation",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "id": "88084353-a6d0-440f-bf82-e32086da58d3",
+      "name": "Google Sheets: Append",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        3136,
+        156
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Read main sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets: Read main sheet": {
+      "main": [
+        [
+          {
+            "node": "Filter: go_ahead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: go_ahead": {
+      "main": [
+        [
+          {
+            "node": "Item Lists: Extract F-L columns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists: Extract F-L columns": {
+      "main": [
+        [
+          {
+            "node": "If Empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Empty": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Split In Batches": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Lookup #1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Lookup #1": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets Lookup #2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets Lookup #2": {
+      "main": [
+        [
+          {
+            "node": "Google Drive",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Drive": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent (LangChain)": {
+      "main": [
+        [
+          {
+            "node": "Item Lists: Split prompt array to items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model: llama3.2:3b": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists: Split prompt array to items": {
+      "main": [
+        [
+          {
+            "node": "Set: Format output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set: Format output": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Append",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets: Append": {
+      "main": [
+        [
+          {
+            "node": "Split In Batches",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "861c024a-f439-466b-bea2-125e1f4debec",
+  "meta": {
+    "instanceId": "16393cbcefcd7e72e48cc52a0cbfeffc25839d53b4a65a711ee884e5ac2d5379"
+  },
+  "id": "dHNPVX27fOc8qv3z",
+  "tags": []
+}

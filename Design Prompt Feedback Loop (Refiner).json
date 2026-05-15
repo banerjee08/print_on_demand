@@ -1,0 +1,367 @@
+{
+  "name": "Design Prompt Feedback Loop (Refiner)",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        1856,
+        608
+      ],
+      "id": "1bfc1df3-5f2c-4643-b9db-23843f1dd8d3"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Design Prompts",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "name": "Google Sheets: Read Design Prompts",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2080,
+        608
+      ],
+      "id": "1c8417df-883e-4d17-84c7-b66ccfc6598e",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "Needs Revision",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            },
+            {
+              "id": "condition-2",
+              "leftValue": "={{ $json.feedback }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "name": "Filter: Needs Revision",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 2,
+      "position": [
+        2304,
+        608
+      ],
+      "id": "b9718ff1-e8ca-4eeb-8570-4e937f5a26d0"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Loop",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        2528,
+        608
+      ],
+      "id": "7c651354-626a-4be7-8bb1-03ad260d8bb2"
+    },
+    {
+      "parameters": {},
+      "name": "Wait For Ollama Cooldown",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        2752,
+        480
+      ],
+      "id": "1b4e1194-1204-42d0-9cd6-ebe575ae3c99",
+      "webhookId": "edb344b0-6eed-4d6d-bf5c-c3657aab9703"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{'You are a senior POD image prompt strategist for the US market.\\n\\nYou recently wrote a design prompt for an image generating API, but the client rejected it and provided specific critical feedback on how to fix it.\\n\\n**Original Prompt You Wrote:**\\n' + ($json.design_prompt || '') + '\\n\\n**Client Feedback To Apply:**\\n' + ($json.feedback || '') + '\\n\\nYour task is to heavily REVISION the image generation prompt so that it PERFECTLY addresses the client\\'s feedback.\\n\\nYOUR TASK\\nGenerate a SINGLE revised prompt for an image model that creates a graphic design concept for POD.\\n\\nPROMPT REQUIREMENTS\\n- Create an original concept, not a copy of any existing design, logo, franchise, meme template, celebrity, brand, or artist style.\\n- Do NOT reference any copyrighted character, trademark, slogan, TV show, movie, sports team, game, comic, anime, music artist, luxury brand, fashion label, or famous logo.\\n- Do NOT mention \"in the style of\" any artist, designer, brand, or studio.\\n- Do NOT include parody of real brands.\\n- Do NOT use existing internet memes or exact viral layouts.\\n- Do NOT generate fan art, lookalikes, or derivative works.\\n- The design must be commercially safe and original.\\n- The design must be visually strong enough to sell as streetwear or lifestyle merchandise in the US market.\\n- The slogan must be the only text if text is used.\\n- No extra words, subtext, labels, watermarks, mockup text, signatures, borders, or UI elements.\\n- Transparent background if appropriate for a graphic.\\n- Composition should leave balanced negative space.\\n- Keep the main subject away from the margins.\\n- The graphic should be readable from a distance.\\n- The prompt should aim for a clean, premium, marketable design with strong silhouette and clear focal point.\\n- Use brand colors sparingly, about 20–30%, with the rest driven by theme-appropriate colors.\\n- Use bold contrast, clean shape language, and strong visual hierarchy.\\n- Make the prompt concrete enough for image generation, not vague.\\n- Mention print-ready quality and high detail.\\n- Mention square composition unless the product requires another ratio.\\n\\nSTYLE DIRECTION\\nPrefer designs that feel:\\n- modern\\n- playful but not childish\\n- slightly edgy but broadly wearable\\n- trendy without chasing a specific meme\\n- premium enough for $25–55 apparel\\n- flexible across t-shirts, hoodies, totes, stickers, and phone cases\\n\\nOUTPUT FORMAT\\nReturn ONLY the final revised image-generation prompt.\\nNo explanation.\\nNo bullet points.\\nNo quotes.\\nNo intro.\\nNo outro.\\n\\nQUALITY CHECK BEFORE OUTPUT\\nBefore returning the prompt, verify it strictly addresses the user feedback and constraints.'}}",
+        "options": {}
+      },
+      "name": "AI Agent (LangChain)",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        2976,
+        480
+      ],
+      "id": "9493c21d-899a-4a42-a0d0-598e593a5cbf"
+    },
+    {
+      "parameters": {
+        "model": "deepseek-r1:7b",
+        "options": {
+          "temperature": 0.5,
+          "numPredict": 1000
+        }
+      },
+      "name": "Ollama Model: qwen3:1.7b",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        3056,
+        704
+      ],
+      "id": "16cb9a13-5a87-4da2-8ac5-2a5e90b48ba5",
+      "credentials": {
+        "ollamaApi": {
+          "id": "qHCgFApTsWnlJaEW",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nfor (const item of $input.all()) {\n  let outputText = item.json.output || item.json.text || '';\n  \n  // Remove any deepseek-r1 generated <think> tags completely\n  outputText = outputText.replace(/<think>[\\s\\S]*?<\\/think>/gi, '').trim();\n  \n  // Strip any conversational filler preceding the actual prompt\n  let startIdx = outputText.indexOf('A stylized illustration of');\n  if (startIdx === -1) startIdx = outputText.indexOf('A high quality t-shirt design graphic featuring');\n  if (startIdx !== -1) {\n    outputText = outputText.substring(startIdx);\n  }\n  \n  // Remove leading/trailing quotes sometimes added by LLM\n  outputText = outputText.replace(/^[\"']|[\"']$/g, '').trim();\n  // Remove bold markdown tags if LLM outputs **Design Prompt:** \n  outputText = outputText.replace(/\\*\\*Design Prompt:\\*\\*\\s*/i, '').trim();\n  \n  const loopItem = $('Loop').first().json;\n  \n  newItems.push({\n    json: {\n      ...loopItem,\n      design_prompt: outputText,\n      status: 'Ready for Review',\n      feedback: '',\n      model: 'qwen3:1.7b (Refined)'\n    }\n  });\n}\nreturn newItems;"
+      },
+      "name": "Format Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3328,
+        480
+      ],
+      "id": "014172d5-131a-4c45-ac0e-8269beb94565"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Design Prompts",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "design_prompt": "={{ $json.design_prompt }}",
+            "feedback": "",
+            "status": "Ready for Review",
+            "model": "={{ $json.model }}",
+            "row_number": "={{ $('Loop').first().json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "design_prompt",
+              "displayName": "design_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback",
+              "displayName": "feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "model",
+              "displayName": "model",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Google Sheets: Replace Refined Prompt",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        3552,
+        608
+      ],
+      "id": "84bf4d05-0216-450c-98b2-0c17624f0381",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Read Design Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets: Read Design Prompts": {
+      "main": [
+        [
+          {
+            "node": "Filter: Needs Revision",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: Needs Revision": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Wait For Ollama Cooldown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait For Ollama Cooldown": {
+      "main": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent (LangChain)": {
+      "main": [
+        [
+          {
+            "node": "Format Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Output": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Replace Refined Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets: Replace Refined Prompt": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model: qwen3:1.7b": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5bf798d7-558c-4e12-a435-e575f8101a3e",
+  "meta": {
+    "instanceId": "16393cbcefcd7e72e48cc52a0cbfeffc25839d53b4a65a711ee884e5ac2d5379"
+  },
+  "id": "eRbx8lsmKumhliOt",
+  "tags": []
+}

@@ -1,0 +1,638 @@
+{
+  "name": "n8n_content_generation",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "c3622354-8a3f-4729-a8d4-ab26d95c5f4d",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        2704,
+        -2952
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "documentURL": "={{ $json.id }}"
+      },
+      "id": "90556430-2628-4a3c-ac82-af0869aa9fe0",
+      "name": "Google Docs Read",
+      "type": "n8n-nodes-base.googleDocs",
+      "typeVersion": 2,
+      "position": [
+        4496,
+        -2952
+      ],
+      "credentials": {
+        "googleDocsOAuth2Api": {
+          "id": "rPVDMAFqq5xmwblZ",
+          "name": "Google Docs account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ 'You are ' + $('If Empty').item.json.brand + ' POD expert. Generate 10 DETAILED graphic design prompts for Midjourney/Flux.\\n\\nContext:\\n- Event: ' + $('If Empty').item.json.event + ' (' + $('If Empty').item.json.month + ')\\n- Products: ' + $('If Empty').item.json.mid_tier_product_recommendation + ' + ' + $('Getting info : Product Recommendation').item.json.product_recommendations + '\\n- Brand Guidelines: ' + ($json.text || 'See attached') + '\\n- Learn from past: Improve common failures (avoid busy designs)\\n\\nEach prompt MUST include:\\n1. Product type (hoodie/t-shirt/mug)\\n2. ' + $('If Empty').item.json.brand + ' style: vibrant mid-tier, Instagram-ready\\n3. Event theme (' + $('If Empty').item.json.event + ')\\n4. 4K, highly detailed, commercial POD mockup\\n\\nJSON array only: [{\\n  \"design_prompt\": \"' + $('If Empty').item.json.brand + ' style hoodie, vibrant... --ar 1:1 --v 6\"\\n}]' }}",
+        "options": {},
+        "promptType": "define"
+      },
+      "id": "f09a7345-c0fb-4fc9-ab35-85c89ef79ee8",
+      "name": "AI Agent (LangChain)1",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        4720,
+        -2952
+      ],
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {
+          "temperature": 0.3,
+          "numPredict": 4000
+        }
+      },
+      "id": "c7121c74-60c4-4f90-8e23-33afa29c9e48",
+      "name": "Ollama Model: llama3.2:3b1",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        4728,
+        -2728
+      ],
+      "credentials": {
+        "ollamaApi": {
+          "id": "lhvQJmJDNIJ4CYLu",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $json.brand + '_' + $json.event + '_' + $json.loop_iteration }}"
+      },
+      "id": "baf85b54-f36c-4922-aa9f-7031931750bf",
+      "name": "Buffer Memory1",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        4856,
+        -2728
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nlet idx = 0;\nfor (const item of $input.all()) {\n  try {\n    let outputText = item.json.output || item.json.text || '';\n    \n    // Extract JSON from code fences: handles ```json, ```, or no fence\n    if (outputText.includes('```json')) {\n      outputText = outputText.split('```json')[1].split('```')[0];\n    } else if (outputText.includes('```')) {\n      // Plain backtick block (e.g. qwen2.5 output style)\n      outputText = outputText.split('```')[1].split('```')[0];\n    } else {\n      // No code fences - try to find a JSON array anywhere in the text\n      const match = outputText.match(/\\[\\s*\\{[\\s\\S]*?\\}\\s*\\]/);\n      if (match) outputText = match[0];\n    }\n    \n    let prompts = [];\n    try {\n      prompts = JSON.parse(outputText.trim());\n    } catch (e) {\n      if (outputText.trim().startsWith('[')) {\n        prompts = JSON.parse(outputText.trim() + ']'); // naive fallback\n      }\n    }\n    \n    // ensure array\n    if (!Array.isArray(prompts)) prompts = [prompts];\n    \n    for (const p of prompts) {\n      if (!p || !p.design_prompt) continue;\n      newItems.push({\n        json: Object.assign({}, item.json, { design_prompt: p.design_prompt }),\n        pairedItem: { item: idx }\n      });\n    }\n  } catch(e) {\n    newItems.push({ \n      json: Object.assign({}, item.json, { error: 'Failed to process AI array', raw_output: item.json }),\n      pairedItem: { item: idx }\n    });\n  }\n  idx++;\n}\nreturn newItems;"
+      },
+      "id": "ba110251-7ae0-4339-b71a-825d6464fcef",
+      "name": "Item Lists: Split prompt array to items1",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        5072,
+        -2952
+      ]
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "month",
+              "value": "={{ $('If Empty').item.json.month }}"
+            },
+            {
+              "name": "date",
+              "value": "={{ $('If Empty').item.json.date }}"
+            },
+            {
+              "name": "event",
+              "value": "={{ $('If Empty').item.json.event }}"
+            },
+            {
+              "name": "Brand",
+              "value": "={{ $('If Empty').item.json.brand }}"
+            },
+            {
+              "name": "Design Prompt",
+              "value": "={{ $json.design_prompt }}"
+            },
+            {
+              "name": "confirmation",
+              "value": "ready_for_review"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "2f113508-04a7-4e72-81a8-e0618bbc6e28",
+      "name": "Set: Format output1",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 2,
+      "position": [
+        5296,
+        -2952
+      ]
+    },
+    {
+      "parameters": {
+        "operation": "insert",
+        "schema": {
+          "__rl": true,
+          "mode": "list",
+          "value": "public"
+        },
+        "table": {
+          "__rl": true,
+          "mode": "name",
+          "value": "prompt_feedback"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "brand": "={{ $json.Brand }}",
+            "event": "={{ $json.event }}",
+            "month": "={{ $json.month }}",
+            "loop_iteration": "={{ $json.loop_iteration || 1 }}",
+            "design_prompt": "={{ $json['Design Prompt'] }}",
+            "status": "ready_for_review",
+            "feedback": ""
+          },
+          "matchingColumns": [],
+          "schema": [
+            { "id": "brand", "displayName": "brand", "required": false, "defaultMatch": false, "canBeUsedToMatch": true, "display": true, "type": "string", "removed": false },
+            { "id": "event", "displayName": "event", "required": false, "defaultMatch": false, "canBeUsedToMatch": true, "display": true, "type": "string", "removed": false },
+            { "id": "month", "displayName": "month", "required": false, "defaultMatch": false, "canBeUsedToMatch": true, "display": true, "type": "string", "removed": false },
+            { "id": "loop_iteration", "displayName": "loop_iteration", "required": false, "defaultMatch": false, "canBeUsedToMatch": true, "display": true, "type": "number", "removed": false },
+            { "id": "design_prompt", "displayName": "design_prompt", "required": false, "defaultMatch": false, "canBeUsedToMatch": true, "display": true, "type": "string", "removed": false },
+            { "id": "status", "displayName": "status", "required": false, "defaultMatch": false, "canBeUsedToMatch": true, "display": true, "type": "string", "removed": false },
+            { "id": "feedback", "displayName": "feedback", "required": false, "defaultMatch": false, "canBeUsedToMatch": true, "display": true, "type": "string", "removed": false }
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+      "name": "Postgres: Save Prompt",
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.5,
+      "position": [
+        5520,
+        -2952
+      ],
+      "credentials": {
+        "postgres": {
+          "id": "REPLACE_WITH_YOUR_POSTGRES_CRED_ID",
+          "name": "PostgreSQL account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "YOUR_SHEET_ID_HERE",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Prompt Generation",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {}
+        },
+        "options": {}
+      },
+      "id": "5a136346-75f4-4818-8a6d-27a3713bd0e3",
+      "name": "Google Sheets: Append1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        5744,
+        -2952
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.Confirmation }}",
+              "value2": "go_ahead"
+            }
+          ]
+        }
+      },
+      "id": "120d7c49-a451-4d6f-9172-3b6cc1ffbab0",
+      "name": "Filter: go_ahead",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        3152,
+        -2952
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nfor (const item of $input.all()) {\n  const row = item.json;\n  const keys = Object.keys(row);\n  for (const key of keys) {\n    if (row[key] && row[key].toString().toLowerCase() === 'yes') {\n      const brandName = key;\n      const monthValue = row['month'] || row['Month'] || '';\n      const eventValue = row['event/celebration'] || row['Event/Celebration'] || '';\n      \n      let productRec = '';\n      const allProductRecs = row['mid_tier_product_recommendations'] || row['Mid_tier_product_recommendations'] || '';\n      if (allProductRecs) {\n        const parts = allProductRecs.toString().split(';');\n        for (const part of parts) {\n          if (part.trim().toLowerCase().startsWith(brandName.toLowerCase() + ':')) {\n            productRec = part.trim().substring(brandName.length + 1).trim();\n            break;\n          }\n        }\n      }\n\n      newItems.push({\n        json: {\n          ...row,\n          month: monthValue,\n          brand: brandName,\n          event: eventValue,\n          mid_tier_product_recommendation: productRec\n        }\n      });\n    }\n  }\n}\nreturn newItems;"
+      },
+      "id": "84e1f40b-f636-48c3-b8c7-52186d87c489",
+      "name": "Item Lists: Extract F-L columns",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        3376,
+        -2952
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "condition-1",
+              "leftValue": "={{ $input.all().length }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "notEqual"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "a284847e-d7f1-464e-89ab-7310158c731b",
+      "name": "If Empty",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        3600,
+        -2952
+      ]
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "list",
+          "cachedResultName": "Telegram-POD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 183016108,
+          "mode": "list",
+          "cachedResultName": "Imp Dates",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM/edit#gid=183016108"
+        },
+        "options": {}
+      },
+      "id": "e8c92296-6396-434b-9dd4-b370fee8d570",
+      "name": "Reading - Imp Dates",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        2928,
+        -2952
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "list",
+          "cachedResultName": "Telegram-POD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1036655276,
+          "mode": "list",
+          "cachedResultName": "Product Recommendations",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM/edit#gid=1036655276"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "month",
+              "lookupValue": "={{ $json.month }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "507bb008-5c54-49ca-976e-42a73feed487",
+      "name": "Getting info : Product Recommendation",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        4048,
+        -2952
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "list",
+          "cachedResultName": "Telegram-POD",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 183016108,
+          "mode": "list",
+          "cachedResultName": "Imp Dates",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM/edit#gid=183016108"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "date",
+              "lookupValue": "={{ $('If Empty').item.json.row_number || $('If Empty').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "dbb43dcf-338c-4053-8285-10763ede7710",
+      "name": "Extracting one item to process",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        3824,
+        -2952
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "list",
+        "useQueryString": true,
+        "queryString": "=name contains 'Brand Guidelines - {{ $('If Empty').item.json.brand }}'",
+        "options": {}
+      },
+      "id": "eb2fdd50-8285-4b0a-8cd0-3ea90845be6d",
+      "name": "Searching Brand Guidelines",
+      "type": "n8n-nodes-base.googleDrive",
+      "typeVersion": 2,
+      "position": [
+        4272,
+        -2952
+      ],
+      "credentials": {
+        "googleDriveOAuth2Api": {
+          "id": "fELtnghRXhwnZz3b",
+          "name": "Google Drive account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nlet itemIndex = 0;\n\n// Get data from previous nodes\n// $items('Node Name') gets the items output by that node\nconst ifEmptyItems = $items('If Empty');\nconst productRecItems = $items('Getting info : Product Recommendation');\n\nfor (const item of $input.all()) {\n  // In a straight flow (one item per record), indexes should match up.\n  const baseInfo = ifEmptyItems[itemIndex] ? ifEmptyItems[itemIndex].json : {};\n  const productInfo = productRecItems[itemIndex] ? productRecItems[itemIndex].json : {};\n  \n  for (let i = 0; i < 3; i++) {\n    newItems.push({\n      json: Object.assign({}, item.json, baseInfo, productInfo, { loop_iteration: i + 1 }),\n      pairedItem: { item: itemIndex }\n    });\n  }\n  itemIndex++;\n}\nreturn newItems;"
+      },
+      "id": "d42fc8ce-57fa-49bc-9f77-9e67976d7f5c",
+      "name": "Loop Over Items",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        4608,
+        -2952
+      ]
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Reading - Imp Dates",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Docs Read": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent (LangChain)1": {
+      "main": [
+        [
+          {
+            "node": "Item Lists: Split prompt array to items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model: llama3.2:3b1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent (LangChain)1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buffer Memory1": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent (LangChain)1",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists: Split prompt array to items1": {
+      "main": [
+        [
+          {
+            "node": "Set: Format output1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Set: Format output1": {
+      "main": [
+        [
+          {
+            "node": "Postgres: Save Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Postgres: Save Prompt": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Append1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: go_ahead": {
+      "main": [
+        [
+          {
+            "node": "Item Lists: Extract F-L columns",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Item Lists: Extract F-L columns": {
+      "main": [
+        [
+          {
+            "node": "If Empty",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If Empty": {
+      "main": [
+        [
+          {
+            "node": "Extracting one item to process",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        []
+      ]
+    },
+    "Reading - Imp Dates": {
+      "main": [
+        [
+          {
+            "node": "Filter: go_ahead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Getting info : Product Recommendation": {
+      "main": [
+        [
+          {
+            "node": "Searching Brand Guidelines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extracting one item to process": {
+      "main": [
+        [
+          {
+            "node": "Getting info : Product Recommendation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Searching Brand Guidelines": {
+      "main": [
+        [
+          {
+            "node": "Google Docs Read",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "AI Agent (LangChain)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "2ed4c794-4844-4ca7-ae71-80d3460a8510",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "16393cbcefcd7e72e48cc52a0cbfeffc25839d53b4a65a711ee884e5ac2d5379"
+  },
+  "id": "dHNPVX27fOc8qv3z",
+  "tags": []
+}

@@ -1,0 +1,264 @@
+{
+  "name": "Printify Calendar Extractor using Ollama",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "5dc39e65-936d-4e0c-892a-c5deabb87b07",
+      "name": "When clicking ‘Execute Workflow’",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "cronExpression",
+              "expression": "0 0 1 * *"
+            }
+          ]
+        }
+      },
+      "id": "847253b2-6c8a-48f5-b82b-923f6e1f0eac",
+      "name": "Schedule Trigger",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "position": [
+        0,
+        180
+      ],
+      "typeVersion": 1.2
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "8c59f935-4e3a-442a-a991-32e65d21a50c",
+              "name": "nextMonth",
+              "value": "={{ $now.plus(1, 'month').setZone('UTC').toFormat('MMMM') }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "23dc23ca-8162-43cf-bc01-8b2203e04cf4",
+      "name": "Calculate Next Month",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        220,
+        80
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "url": "https://printify.com/guide/ecommerce-calendar/",
+        "options": {}
+      },
+      "id": "27d075a1-dabf-42a6-a94c-fa63a6eda37c",
+      "name": "HTTP Request",
+      "type": "n8n-nodes-base.httpRequest",
+      "position": [
+        440,
+        80
+      ],
+      "typeVersion": 4.1
+    },
+    {
+      "parameters": {
+        "operation": "extractHtmlContent",
+        "extractionValues": {
+          "values": [
+            {
+              "key": "content",
+              "cssSelector": "body"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "59005d6f-0f06-471b-ad91-8be65cebfd04",
+      "name": "HTML",
+      "type": "n8n-nodes-base.html",
+      "position": [
+        660,
+        80
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:latest",
+        "options": {
+          "temperature": 0,
+          "numPredict": 4000
+        }
+      },
+      "id": "03166ed2-f387-44dd-8bc8-b8f0fb91476b",
+      "name": "Ollama Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "position": [
+        972,
+        304
+      ],
+      "typeVersion": 1,
+      "alwaysOutputData": true,
+      "credentials": {
+        "ollamaApi": {
+          "id": "lhvQJmJDNIJ4CYLu",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "text": "={{ $json.content }}",
+        "attributes": {
+          "attributes": [
+            {
+              "name": "date",
+              "type": "date",
+              "description": "Exact date from the page (e.g., \"January 1\")."
+            },
+            {
+              "name": "event_name",
+              "description": "Exact event name from the page (e.g., \"New Year’s Day\")."
+            },
+            {
+              "name": "product_ideas",
+              "description": "Exact product recommendations from the page under that event/month (comma-separated; \"none\" if absent)."
+            },
+            {
+              "name": "design_ideas",
+              "description": "2–3 VERY SHORT design concepts DIRECTLY inspired by the event description on THIS PAGE ONLY (e.g., \"hearts, roses\" for romance; comma-separated; \"none\" if unclear). NO inventions."
+            }
+          ]
+        },
+        "options": {
+          "systemMessage": "={{ 'IMPORTANT OUTPUT RULES: Respond ONLY with a JSON ARRAY of objects. NO intro text, NO markdown, NO code blocks, NO explanations. Just: [{\"date\": \"...\", \"event_name\": \"...\", \"product_ideas\": \"...\", \"design_ideas\": \"...\"}, ...]\\n\\nStrict extractor for Printify eCommerce calendar. ONLY use input HTML text.\\n\\nEXTRACT EVENTS ONLY FOR THE MONTH OF ' + $json.nextMonth.toUpperCase() + '. Ignore any events from other months.\\n\\nFor each event in ' + $json.nextMonth + ':\\n- date: Copy exactly (e.g., \"' + $json.nextMonth.substring(0,3) + ' 14\").\\n- event_name: Copy exactly.\\n- product_ideas: Copy ONLY \"Product recommendations\" bullets verbatim (comma-sep; \"none\" if absent).\\n- design_ideas: 2-3 one-word concepts from page description ONLY (e.g., \"hearts, roses\"; \"none\" otherwise).\\n\\nExamples (do not include): [{\"date\": \"Feb 14\", \"event_name\": \"Valentine’s Day\", \"product_ideas\": \"mugs, hoodies\", \"design_ideas\": \"hearts, couples\"}]' }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.informationExtractor",
+      "typeVersion": 1.2,
+      "position": [
+        892,
+        80
+      ],
+      "id": "b56e7fc5-616d-43ae-aeb2-dd8218717949",
+      "name": "Information Extractor",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "events",
+        "options": {}
+      },
+      "id": "d313fbc4-26dd-414b-90a8-bb1e870582fa",
+      "name": "Item Lists",
+      "type": "n8n-nodes-base.itemLists",
+      "position": [
+        1120,
+        80
+      ],
+      "typeVersion": 3
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When clicking ‘Execute Workflow’": {
+      "main": [
+        [
+          {
+            "node": "Calculate Next Month",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Calculate Next Month",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Next Month": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTML",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTML": {
+      "main": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Information Extractor": {
+      "main": [
+        [
+          {
+            "node": "Item Lists",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Information Extractor",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate",
+    "availableInMCP": false
+  },
+  "versionId": "db2994cd-df7b-4160-a355-9de2a310f45a",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "16393cbcefcd7e72e48cc52a0cbfeffc25839d53b4a65a711ee884e5ac2d5379"
+  },
+  "id": "B5YWVGNjnBdanrnv",
+  "tags": []
+}

@@ -1,0 +1,586 @@
+{
+  "name": "Design Prompt Generator",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        5872,
+        3696
+      ],
+      "id": "4d332f4b-31c8-46ee-b8b6-71bbd15d69e2"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Slogan Ideas",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "name": "Google Sheets: Read Slogans",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        6096,
+        3696
+      ],
+      "id": "88a1a75f-ce9a-414e-8675-3343c0b85cc9",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [
+            {
+              "value1": "={{ $json.status }}",
+              "value2": "LGTM"
+            }
+          ]
+        }
+      },
+      "name": "Filter: LGTM",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [
+        6320,
+        3696
+      ],
+      "id": "0bcbe3cf-3760-4ff4-8b0e-70e3aa6f713e"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "name": "Loop",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        6544,
+        3696
+      ],
+      "id": "58d7ea64-8213-43cf-ad4d-157abe555d2d"
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Brand Guidelines",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "name": "Reading - Brand Guidelines",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        6768,
+        3568
+      ],
+      "id": "2bc49c03-d48a-43c3-99ad-f0a383d066c7",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Design Prompts",
+          "mode": "name"
+        },
+        "options": {}
+      },
+      "name": "Reading - Winning Prompts",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        6992,
+        3568
+      ],
+      "id": "7009c50b-b0d4-4719-904c-24ebeb1be8b8",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const brandGuidelinesRows = $('Reading - Brand Guidelines').all();\nconst winningRows = $('Reading - Winning Prompts').all() || [];\nconst loopItemJson = $('Loop').first().json || $node['Loop'].json;\n\n// Extract winning prompts for Few-Shot RAG\nconst goodPrompts = winningRows\n    .filter(row => row.json && row.json.status === 'LGTM' && row.json.design_prompt)\n    .slice(-3)\n    .map(row => row.json.design_prompt)\n    .join('\\n\\n---\\n\\n');\n\nconst brandName = (loopItemJson.brand || loopItemJson.Brand || '').trim();\nlet brandPositioning = '';\nlet brandVoiceTone = '';\nlet typographyHierarchy = '';\nlet primaryColorPalette = '';\n\nif (brandName && brandGuidelinesRows.length > 0) {\n  const targetColumn = Object.keys(brandGuidelinesRows[0]?.json || {}).find(col => \n      col.toLowerCase().includes(brandName.toLowerCase()) && col.toLowerCase().includes('short desc')\n  ) || brandName + \" - Short Desc\";\n\n  for (const row of brandGuidelinesRows) {\n    if (!row.json) continue;\n    const rowValues = Object.values(row.json).map(v => String(v).toLowerCase());\n    if (rowValues.includes('brand positioning') || rowValues.includes('brand positioning:')) {\n       brandPositioning = row.json[targetColumn] || '';\n    }\n    if (rowValues.includes('brand voice and tone') || rowValues.includes('brand voice & tone') || rowValues.includes('brand voice and tone:')) {\n       brandVoiceTone = row.json[targetColumn] || '';\n    }\n    if (rowValues.includes('typography hierarchy') || rowValues.includes('typography hierarchy:')) {\n       typographyHierarchy = row.json[targetColumn] || '';\n    }\n    if (rowValues.includes('primary color palette') || rowValues.includes('primary color palette:')) {\n       primaryColorPalette = row.json[targetColumn] || '';\n    }\n  }\n}\n\nreturn [{\n  json: {\n    ...loopItemJson,\n    brand_positioning: brandPositioning,\n    brand_voice_tone: brandVoiceTone,\n    typography_hierarchy: typographyHierarchy,\n    primary_color_palette: primaryColorPalette,\n    winning_prompt_examples: goodPrompts\n  }\n}];"
+      },
+      "name": "Prepare LLM Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        7216,
+        3568
+      ],
+      "id": "85b684ed-4e02-42aa-9d43-c17fa26d2171"
+    },
+    {
+      "parameters": {},
+      "name": "Wait For Ollama Cooldown",
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        7440,
+        3568
+      ],
+      "id": "c5886f88-e993-4286-b853-9b3c4acf4d29",
+      "webhookId": "75b17503-2b7c-41d7-8c78-7e26a4ec73fc"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{'You are a senior POD image prompt strategist for the US market.\\n\\nYour job is to generate ONE high-quality, production-ready image prompt for a commercial print-on-demand design that is:\\n- original\\n- highly sellable\\n- visually distinctive\\n- copyright-safe\\n- trademark-safe\\n- suitable for US Gen Z / Millennials\\n- optimized for casual/streetwear apparel and accessories\\n- easy to upscale for print\\n\\nBRAND CONTEXT\\n- Brand name: ' + ($json.brand || $json.Brand || 'SparkVibe') + '\\n- Positioning: ' + ($json.brand_positioning || 'mid-tier POD lifestyle brand ($25–55)') + '\\n- Brand personality & Voice: ' + ($json.brand_voice_tone || 'fun, casual, energetic') + '\\n- Colors To Consider: ' + ($json.primary_color_palette || 'washed black, white, electric lime, bubblegum pink, sunny mustard') + '\\n\\nINPUTS YOU WILL RECEIVE\\n- Event: ' + ($json.event || '') + '\\n- Slogan: ' + ($json['Slogan Idea'] || $json.slogan || '') + '\\n- Target Product: ' + ($json.product || 't-shirt') + '\\n\\nYOUR TASK\\nGenerate a SINGLE prompt for an image model that creates a graphic design concept for POD.\\n\\nPROMPT REQUIREMENTS\\n- Create an original concept, not a copy of any existing design, logo, franchise, meme template, celebrity, brand, or artist style.\\n- Do NOT reference any copyrighted character, trademark, slogan, TV show, movie, sports team, game, comic, anime, music artist, luxury brand, fashion label, or famous logo.\\n- Do NOT mention \"in the style of\" any artist, designer, brand, or studio.\\n- Do NOT include parody of real brands.\\n- Do NOT use existing internet memes or exact viral layouts.\\n- Do NOT generate fan art, lookalikes, or derivative works.\\n- The design must be commercially safe and original.\\n- The design must be visually strong enough to sell as streetwear or lifestyle merchandise in the US market.\\n- The slogan must be the only text if text is used.\\n- No extra words, subtext, labels, watermarks, mockup text, signatures, borders, or UI elements.\\n- Transparent background if appropriate for a graphic.\\n- Composition should leave balanced negative space.\\n- Keep the main subject away from the margins.\\n- The graphic should be readable from a distance.\\n- The prompt should aim for a clean, premium, marketable design with strong silhouette and clear focal point.\\n- Use brand colors sparingly, about 20–30%, with the rest driven by theme-appropriate colors.\\n- Use bold contrast, clean shape language, and strong visual hierarchy.\\n- Make the prompt concrete enough for image generation, not vague.\\n- Mention print-ready quality and high detail.\\n- Mention square composition unless the product requires another ratio.\\n\\nSTYLE DIRECTION\\nPrefer designs that feel:\\n- modern\\n- playful but not childish\\n- slightly edgy but broadly wearable\\n- trendy without chasing a specific meme\\n- premium enough for $25–55 apparel\\n- flexible across t-shirts, hoodies, totes, stickers, and phone cases\\n' + ($json.winning_prompt_examples ? '\\n=== EXAMPLES OF PERFECT IMAGE PROMPTS TO EMULATE ===\\nStudy the formatting, pacing, and detail of these approved examples to guide your output style:\\n' + $json.winning_prompt_examples + '\\n===================================================\\n' : '') + '\\nOUTPUT FORMAT\\nReturn ONLY the final image-generation prompt.\\nNo explanation.\\nNo bullet points.\\nNo quotes.\\nNo intro.\\nNo outro.\\n\\nQUALITY CHECK BEFORE OUTPUT\\nBefore returning the prompt, verify it includes:\\n- subject\\n- mood\\n- composition\\n- color direction\\n- print/production constraints\\n- originality / no-IP safety\\n- text usage rules\\n- apparel suitability'}}",
+        "options": {}
+      },
+      "name": "AI Agent (LangChain)",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.7,
+      "position": [
+        7664,
+        3568
+      ],
+      "id": "99c16569-0045-4c8d-9832-142b142a50a8"
+    },
+    {
+      "parameters": {
+        "model": "qwen3:1.7b",
+        "options": {
+          "temperature": 0.5,
+          "numPredict": 1000
+        }
+      },
+      "name": "Ollama Model: qwen3:1.7b",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        7680,
+        3792
+      ],
+      "id": "d1e65eb5-3718-4016-8d6b-2ba5ac7d1d50",
+      "credentials": {
+        "ollamaApi": {
+          "id": "qHCgFApTsWnlJaEW",
+          "name": "Ollama account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ ($json.brand || '') + '_' + ($json.event || '') + '_' + ($json.row_number || '') }}"
+      },
+      "name": "Buffer Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.2,
+      "position": [
+        7808,
+        3792
+      ],
+      "id": "823026aa-34b3-44c6-ba21-bcff931def6f"
+    },
+    {
+      "parameters": {
+        "jsCode": "const newItems = [];\nfor (const item of $input.all()) {\n  let outputText = item.json.output || item.json.text || '';\n  \n  outputText = outputText.replace(/<think>[\\s\\S]*?<\\/think>/gi, '').trim();\n  \n  let startIdx = outputText.indexOf('A stylized illustration of');\n  if (startIdx === -1) startIdx = outputText.indexOf('A high quality t-shirt design graphic featuring');\n  if (startIdx !== -1) {\n    outputText = outputText.substring(startIdx);\n  }\n  \n  outputText = outputText.replace(/^[\"']|[\"']$/g, '').trim();\n  outputText = outputText.replace(/\\*\\*Design Prompt:\\*\\*\\s*/i, '').trim();\n  \n  const loopItem = $('Loop').first().json;\n  \n  newItems.push({\n    json: {\n      month: loopItem.month || '',\n      date: loopItem.date || '',\n      event: loopItem.event || '',\n      brand: loopItem.Brand || loopItem.brand || '',\n      product: loopItem.product || 't-shirt',\n      slogan: loopItem['Slogan Idea'] || loopItem.slogan || '',\n      design_prompt: outputText,\n      status: 'Ready for Review',\n      feedback: '',\n      model: 'qwen3:1.7b',\n      mode: 'qwen3:1.7b'\n    }\n  });\n}\nreturn newItems;"
+      },
+      "name": "Format Output",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        8016,
+        3568
+      ],
+      "id": "651c5499-9746-47f1-be90-cc7f49148f08"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Design Prompts",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "month": "={{ $json.month }}",
+            "date": "={{ $json.date }}",
+            "event": "={{ $json.event }}",
+            "brand": "={{ $json.brand }}",
+            "product": "={{ $json.product }}",
+            "slogan": "={{ $json.slogan }}",
+            "design_prompt": "={{ $json.design_prompt }}",
+            "status": "={{ $json.status }}",
+            "feedback": "={{ $json.feedback }}",
+            "model": "={{ $json.model }}",
+            "mode": "={{ $json.mode }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "month",
+              "displayName": "month",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "event",
+              "displayName": "event",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "brand",
+              "displayName": "brand",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "product",
+              "displayName": "product",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "slogan",
+              "displayName": "slogan",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "design_prompt",
+              "displayName": "design_prompt",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "feedback",
+              "displayName": "feedback",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Google Sheets: Append Design Prompt",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        8240,
+        3568
+      ],
+      "id": "3228dc72-4035-4988-9124-709f11d94ee4",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1iHN4yUFSTxAk4UX3np0KFtL1tHnpdpreg_W_7Y3mVnM",
+          "mode": "id"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "Slogan Ideas",
+          "mode": "name"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "Prompt Generated",
+            "row_number": "={{ $('Loop').first().json.row_number }}"
+          },
+          "matchingColumns": [
+            "row_number"
+          ],
+          "schema": [
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": true,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Google Sheets: Update Slogan Status",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [
+        8464,
+        3696
+      ],
+      "id": "f1b8bad4-a88b-43b9-8c57-03d83083bb4a",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "kowj61ntGk297jWr",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Manual Trigger": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Read Slogans",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets: Read Slogans": {
+      "main": [
+        [
+          {
+            "node": "Filter: LGTM",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Filter: LGTM": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Reading - Brand Guidelines",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reading - Brand Guidelines": {
+      "main": [
+        [
+          {
+            "node": "Reading - Winning Prompts",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Reading - Winning Prompts": {
+      "main": [
+        [
+          {
+            "node": "Prepare LLM Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare LLM Prompt": {
+      "main": [
+        [
+          {
+            "node": "Wait For Ollama Cooldown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait For Ollama Cooldown": {
+      "main": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent (LangChain)": {
+      "main": [
+        [
+          {
+            "node": "Format Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Format Output": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Append Design Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets: Append Design Prompt": {
+      "main": [
+        [
+          {
+            "node": "Google Sheets: Update Slogan Status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Sheets: Update Slogan Status": {
+      "main": [
+        [
+          {
+            "node": "Loop",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Model: qwen3:1.7b": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent (LangChain)",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "33ec8abd-771e-42d8-8857-34fc2da728fc",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "16393cbcefcd7e72e48cc52a0cbfeffc25839d53b4a65a711ee884e5ac2d5379"
+  },
+  "id": "zMx7U4tjkj3GH0gy",
+  "tags": []
+}

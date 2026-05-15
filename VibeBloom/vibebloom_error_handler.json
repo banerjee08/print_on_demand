@@ -1,0 +1,56 @@
+{
+  "name": "vibebloom_error_handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "e55dbfdd-4e6f-4d32-9df8-01e4ec9d91fb",
+      "name": "Error Trigger",
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [200, 200]
+    },
+    {
+      "parameters": {
+        "chatId": "5365295465",
+        "text": "={{ '⚠️ *n8n Workflow Error Alert*\\n\\n*Workflow ID:* ' + $json.execution.workflowId + '\\n*Workflow Name:* ' + $json.execution.workflowName + '\\n*Failing Node:* ' + $json.execution.lastNodeExecuted + '\\n*Error Message:* ' + $json.execution.error.message }}",
+        "additionalFields": {
+          "parse_mode": "Markdown"
+        }
+      },
+      "id": "c620e7ae-5e26-444f-b4b9-8e2fdb9a9572",
+      "name": "Telegram",
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.1,
+      "position": [440, 200],
+      "credentials": {
+        "telegramApi": {
+          "id": "telegram_credentials",
+          "name": "Telegram Settings"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "f7ab0a81-d419-4876-b6fb-c5c2a13cc7c7",
+  "meta": {
+    "instanceId": "local-instance"
+  },
+  "id": "ERROR_HANDLER_ID"
+}
