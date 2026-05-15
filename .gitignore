@@ -8,3 +8,5 @@ build/
 .env
 .env.local
 .env.production
+.turbopack/
+*.node
