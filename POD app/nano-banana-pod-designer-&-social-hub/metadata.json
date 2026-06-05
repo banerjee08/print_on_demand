@@ -1,0 +1,6 @@
+{
+  "name": "Nano Banana POD Designer & Social Hub",
+  "description": "Full-stack POD trend analyzer, multi-brand guidelines manager, Gemini image generator, swipe-to-like swiping sandbox, mockup engine, social media asset creator, and campaign performance dashboard.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
