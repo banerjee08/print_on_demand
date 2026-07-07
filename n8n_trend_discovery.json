@@ -1,0 +1,285 @@
+{
+  "name": "POD-01: Trend Discovery & Niche Scoring",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "a1b2c3d4-0001-0001-0001-000000000001",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [200, 280]
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "cronExpression", "expression": "0 9 * * 1"}]
+        },
+        "timezone": "Asia/Kolkata"
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000002",
+      "name": "Schedule: Mon 9am IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 480]
+    },
+    {
+      "parameters": {
+        "jsCode": "// BRAND SEEDS & SEASONAL KEYWORD BUILDER\n// Max 10 unique keywords per run (SerpAPI free tier: 100/month, weekly runs)\nconst now = new Date();\nconst currentMonth = now.getMonth() + 1;\nconst nextMonth = currentMonth === 12 ? 1 : currentMonth + 1;\nconst runDate = now.toISOString().split('T')[0];\n\nconst brands = ['SparkVibe','VibeBloom','PulsePlay','ScribbleSpark','PawPop','GlowGiggle','TinyGiggle'];\n\nconst seasonalByMonth = {\n  1: [{event:'New Year',kw:'new year graphic tee'},{event:'MLK Day',kw:'mlk day shirt'}],\n  2: [{event:\"Valentine's Day\",kw:'valentines day funny shirt'},{event:'Super Bowl',kw:'super bowl shirt funny'}],\n  3: [{event:\"St. Patrick's Day\",kw:'st patricks day shirt'},{event:\"Women's Day\",kw:'womens day gift shirt'}],\n  4: [{event:'Easter',kw:'easter graphic tee'},{event:'Earth Day',kw:'earth day apparel'}],\n  5: [{event:\"Mother's Day\",kw:'mothers day gift shirt'},{event:'Mental Health Month',kw:'mental health awareness shirt'}],\n  6: [{event:\"Father's Day\",kw:'fathers day gift shirt'},{event:'Pride Month',kw:'pride month apparel'}],\n  7: [{event:'Independence Day',kw:'4th of july shirt'},{event:'Summer',kw:'summer graphic tee'}],\n  8: [{event:'Back to School',kw:'back to school shirt funny'},{event:'National Dog Day',kw:'national dog day shirt'}],\n  9: [{event:'Labor Day',kw:'labor day apparel'},{event:'Fall Season',kw:'fall season graphic tee'}],\n  10:[{event:'Halloween',kw:'halloween funny shirt'},{event:'Breast Cancer Awareness',kw:'breast cancer awareness shirt'}],\n  11:[{event:'Thanksgiving',kw:'thanksgiving funny shirt'},{event:'Veterans Day',kw:'veterans day apparel'}],\n  12:[{event:'Christmas',kw:'christmas funny shirt'},{event:'Hanukkah',kw:'hanukkah gift shirt'}]\n};\n\nconst evergreenByNiche = [\n  {brand:'SparkVibe',  seeds:['funny sarcastic shirt','vintage aesthetic tee']},\n  {brand:'VibeBloom',  seeds:['wildflower botanical print','wellness aesthetic shirt']},\n  {brand:'PulsePlay',  seeds:['gym motivation shirt','fitness gift ideas']},\n  {brand:'ScribbleSpark',seeds:['book lover gift shirt','writer aesthetic shirt']},\n  {brand:'PawPop',     seeds:['dog mom shirt funny','cat dad gift shirt']},\n  {brand:'GlowGiggle', seeds:['funny home decor gift','plant parent shirt']},\n  {brand:'TinyGiggle', seeds:['funny toddler shirt','baby shower gift funny']}\n];\n\nconst seen = new Set();\nconst items = [];\n\n// Priority 1: seasonal (current + next month)\nconst seasonalEvents = [...(seasonalByMonth[currentMonth]||[]),...(seasonalByMonth[nextMonth]||[])];\nfor (const ev of seasonalEvents) {\n  if (!seen.has(ev.kw)) {\n    seen.add(ev.kw);\n    items.push({json:{keyword:ev.kw,event_name:ev.event,type:'seasonal',applicable_brands:brands,run_date:runDate}});\n  }\n}\n\n// Priority 2: one evergreen per brand (rotate weekly)\nconst weekNum = Math.floor((now - new Date(now.getFullYear(),0,1))/(7*864e5));\nfor (const b of evergreenByNiche) {\n  const kw = b.seeds[weekNum % b.seeds.length];\n  if (kw && !seen.has(kw)) {\n    seen.add(kw);\n    items.push({json:{keyword:kw,event_name:'',type:'evergreen',applicable_brands:[b.brand],run_date:runDate}});\n  }\n}\n\nreturn items.slice(0, 10);"
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000003",
+      "name": "Code: Build Keyword List",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [460, 380]
+    },
+    {
+      "parameters": {"options": {}},
+      "id": "a1b2c3d4-0001-0001-0001-000000000004",
+      "name": "Split: Loop Per Keyword",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [700, 380]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://serpapi.com/search.json?engine=google_trends&q={{ encodeURIComponent($json.keyword) }}&date=now+7-d&geo=US&api_key=bf4f6938b1211caeed562093b538667a3e171bd1ce57e4711935c6cc3326226a",
+        "options": {"timeout": 30000}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000005",
+      "name": "SerpAPI: Trending Now (7d)",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [940, 280]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://serpapi.com/search.json?engine=google_trends&q={{ encodeURIComponent($('Split: Loop Per Keyword').item.json.keyword) }}&date=today+3-m&geo=US&api_key=bf4f6938b1211caeed562093b538667a3e171bd1ce57e4711935c6cc3326226a",
+        "options": {"timeout": 30000}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000006",
+      "name": "SerpAPI: 3 Months",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1180, 280]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "=https://serpapi.com/search.json?engine=google_trends&q={{ encodeURIComponent($('Split: Loop Per Keyword').item.json.keyword) }}&date=today+12-m&geo=US&api_key=bf4f6938b1211caeed562093b538667a3e171bd1ce57e4711935c6cc3326226a",
+        "options": {"timeout": 30000}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000007",
+      "name": "SerpAPI: 1 Year",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1420, 280]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Normalize SerpAPI results from all 3 horizons\nconst loopItem = $('Split: Loop Per Keyword').item.json;\n\nfunction extractScore(apiResponse) {\n  try {\n    const avg = apiResponse?.interest_over_time?.averages;\n    if (avg && avg.length > 0) return avg[0].value || 0;\n    // fallback: last timeline point\n    const timeline = apiResponse?.interest_over_time?.timeline_data;\n    if (timeline && timeline.length > 0) {\n      const last = timeline[timeline.length - 1];\n      return last?.values?.[0]?.extracted_value || 0;\n    }\n    return 0;\n  } catch(e) { return 0; }\n}\n\nfunction extractRising(apiResponse) {\n  try {\n    const rising = apiResponse?.related_queries?.rising || [];\n    return rising.slice(0, 5).map(r => r.query).join(', ');\n  } catch(e) { return ''; }\n}\n\nconst data7d  = $('SerpAPI: Trending Now (7d)').item.json;\nconst data3m  = $('SerpAPI: 3 Months').item.json;\nconst data1yr = $('SerpAPI: 1 Year').item.json;\n\nconst score7d  = extractScore(data7d);\nconst score3m  = extractScore(data3m);\nconst score1yr = extractScore(data1yr);\nconst risingQueries = extractRising(data1yr) || extractRising(data3m) || extractRising(data7d);\n\nreturn [{\n  json: {\n    ...loopItem,\n    interest_score_7d: score7d,\n    interest_score_3m: score3m,\n    interest_score_1yr: score1yr,\n    rising_queries: risingQueries\n  }\n}];"
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000008",
+      "name": "Code: Normalize Results",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1660, 280]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://ihjymibrnjyafrnjolue.supabase.co/rest/v1/preference_signals",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"},
+            {"name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"}
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "order", "value": "created_at.desc"},
+            {"name": "limit", "value": "20"},
+            {"name": "select", "value": "brand,niche_keyword,signal_type,content,created_at"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000009",
+      "name": "Supabase: Get Preference Signals",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1900, 280]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build Ollama scoring prompt with few-shot context from preference signals\nconst trendItem = $('Code: Normalize Results').item.json;\n\n// Preference signals — may be empty if first run (handled gracefully)\nlet prefSignals = [];\ntry {\n  const rawPrefs = $('Supabase: Get Preference Signals').item.json;\n  prefSignals = Array.isArray(rawPrefs) ? rawPrefs : [];\n} catch(e) { prefSignals = []; }\n\n// Build few-shot examples from past decisions\nconst fewShot = prefSignals.length > 0\n  ? prefSignals.map(p =>\n      `${p.signal_type.toUpperCase()}: brand=${p.brand}, niche=\"${p.niche_keyword}\" ${p.content ? '→ \"' + p.content + '\"' : ''}`\n    ).join('\\n')\n  : 'No previous decisions yet — use your best judgement.';\n\nconst systemPrompt = `You are a POD (Print-on-Demand) product strategist for the US apparel market.\nYou evaluate search trends and decide if a keyword is a good niche for POD t-shirts, hoodies, mugs, and accessories.\n\nScoring rubric:\n- 1-3: Poor fit (too niche, already saturated, or low commercial appeal)\n- 4-6: Decent (some potential, worth monitoring)\n- 7-8: Good (rising trend, sellable designs possible)\n- 9-10: Excellent (seasonal spike + broad appeal + design potential)\n\nPast human decisions for context (use to calibrate your score):\n${fewShot}\n\nRespond ONLY with valid JSON in this exact format:\n{\"score\": 7, \"reasoning\": \"...\", \"llm_approved\": true, \"pod_suitability\": \"high\", \"peak_timing\": \"...\"}`;\n\nconst userPrompt = `Keyword: \"${trendItem.keyword}\"\nEvent: ${trendItem.event_name || 'None'}\nType: ${trendItem.type}\nSearch interest (0-100): 7d=${trendItem.interest_score_7d}, 3mo=${trendItem.interest_score_3m}, 1yr=${trendItem.interest_score_1yr}\nRising queries: ${trendItem.rising_queries || 'none'}\\n\\nScore this keyword for POD potential.`;\n\nreturn [{\n  json: {\n    ...trendItem,\n    ollama_messages: [\n      {role: 'system', content: systemPrompt},\n      {role: 'user', content: userPrompt}\n    ]\n  }\n}];"
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000010",
+      "name": "Code: Build Ollama Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2140, 280]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{"name": "Content-Type", "value": "application/json"}]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'llama3.2:3b', messages: $json.ollama_messages, stream: false, options: { temperature: 0.2, num_predict: 300 } }) }}",
+        "options": {"timeout": 60000}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000011",
+      "name": "Ollama: Score Niche",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2380, 280]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Ollama JSON response\nconst trendItem = $('Code: Build Ollama Prompt').item.json;\nconst rawText = $input.item.json?.message?.content || $input.item.json?.response || '';\n\nlet parsed = { score: 5, reasoning: 'Parse error', llm_approved: false, pod_suitability: 'unknown', peak_timing: 'unknown' };\ntry {\n  // Extract JSON from response (Ollama sometimes wraps it)\n  const jsonMatch = rawText.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);\n} catch(e) { parsed.reasoning = rawText.slice(0, 300); }\n\nreturn [{\n  json: {\n    keyword: trendItem.keyword,\n    event_name: trendItem.event_name || '',\n    type: trendItem.type,\n    locale: 'US',\n    interest_score_7d: trendItem.interest_score_7d,\n    interest_score_3m: trendItem.interest_score_3m,\n    interest_score_1yr: trendItem.interest_score_1yr,\n    rising_queries: trendItem.rising_queries || '',\n    applicable_brands: trendItem.applicable_brands || [],\n    llm_score: parsed.score || 5,\n    llm_reasoning: parsed.reasoning || '',\n    llm_approved: parsed.llm_approved || (parsed.score >= 7),\n    human_approved: null,\n    run_date: trendItem.run_date,\n    // Sheet-friendly\n    applicable_brands_str: (trendItem.applicable_brands || []).join(', '),\n    status: 'Awaiting Your Review'\n  }\n}];"
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000012",
+      "name": "Code: Parse Ollama + Format",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2620, 280]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ihjymibrnjyafrnjolue.supabase.co/rest/v1/trends",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"},
+            {"name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"},
+            {"name": "Content-Type", "value": "application/json"},
+            {"name": "Prefer", "value": "return=minimal"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ keyword: $json.keyword, event_name: $json.event_name, type: $json.type, locale: 'US', interest_score_7d: $json.interest_score_7d, interest_score_3m: $json.interest_score_3m, interest_score_1yr: $json.interest_score_1yr, rising_queries: $json.rising_queries, applicable_brands: $json.applicable_brands, llm_score: $json.llm_score, llm_reasoning: $json.llm_reasoning, llm_approved: $json.llm_approved, run_date: $json.run_date }) }}",
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000013",
+      "name": "Supabase: Insert Trend",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2860, 180]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {"__rl": true, "value": "1T8fHZqsRevB8kKDcYGtqmTNRlFnTK76yCRzOA6n6X2k", "mode": "id"},
+        "sheetName": {"__rl": true, "value": "Trends", "mode": "name"},
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "keyword":              "={{ $('Code: Parse Ollama + Format').item.json.keyword }}",
+            "event_name":           "={{ $('Code: Parse Ollama + Format').item.json.event_name }}",
+            "type":                 "={{ $('Code: Parse Ollama + Format').item.json.type }}",
+            "interest_score_7d":    "={{ $('Code: Parse Ollama + Format').item.json.interest_score_7d }}",
+            "interest_score_3m":    "={{ $('Code: Parse Ollama + Format').item.json.interest_score_3m }}",
+            "interest_score_1yr":   "={{ $('Code: Parse Ollama + Format').item.json.interest_score_1yr }}",
+            "rising_queries":       "={{ $('Code: Parse Ollama + Format').item.json.rising_queries }}",
+            "applicable_brands":    "={{ $('Code: Parse Ollama + Format').item.json.applicable_brands_str }}",
+            "llm_score":            "={{ $('Code: Parse Ollama + Format').item.json.llm_score }}",
+            "llm_reasoning":        "={{ $('Code: Parse Ollama + Format').item.json.llm_reasoning }}",
+            "llm_approved":         "={{ $('Code: Parse Ollama + Format').item.json.llm_approved }}",
+            "human_approved":       "",
+            "run_date":             "={{ $('Code: Parse Ollama + Format').item.json.run_date }}",
+            "status":               "Awaiting Your Review"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {"id": "keyword",            "displayName": "keyword",            "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": true},
+            {"id": "event_name",         "displayName": "event_name",         "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "type",               "displayName": "type",               "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "interest_score_7d",  "displayName": "interest_score_7d",  "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "interest_score_3m",  "displayName": "interest_score_3m",  "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "interest_score_1yr", "displayName": "interest_score_1yr", "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "rising_queries",     "displayName": "rising_queries",     "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "applicable_brands",  "displayName": "applicable_brands",  "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "llm_score",          "displayName": "llm_score",          "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "llm_reasoning",      "displayName": "llm_reasoning",      "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "llm_approved",       "displayName": "llm_approved",       "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "human_approved",     "displayName": "human_approved",     "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "run_date",           "displayName": "run_date",           "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "status",             "displayName": "status",             "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false}
+          ]
+        },
+        "options": {}
+      },
+      "id": "a1b2c3d4-0001-0001-0001-000000000014",
+      "name": "GSheets: Append to Trends",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2860, 380],
+      "credentials": {
+        "googleSheetsOAuth2Api": {"id": "kowj61ntGk297jWr", "name": "Google Sheets account"}
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{"node": "Code: Build Keyword List", "type": "main", "index": 0}]]
+    },
+    "Schedule: Mon 9am IST": {
+      "main": [[{"node": "Code: Build Keyword List", "type": "main", "index": 0}]]
+    },
+    "Code: Build Keyword List": {
+      "main": [[{"node": "Split: Loop Per Keyword", "type": "main", "index": 0}]]
+    },
+    "Split: Loop Per Keyword": {
+      "main": [[], [{"node": "SerpAPI: Trending Now (7d)", "type": "main", "index": 0}]]
+    },
+    "SerpAPI: Trending Now (7d)": {
+      "main": [[{"node": "SerpAPI: 3 Months", "type": "main", "index": 0}]]
+    },
+    "SerpAPI: 3 Months": {
+      "main": [[{"node": "SerpAPI: 1 Year", "type": "main", "index": 0}]]
+    },
+    "SerpAPI: 1 Year": {
+      "main": [[{"node": "Code: Normalize Results", "type": "main", "index": 0}]]
+    },
+    "Code: Normalize Results": {
+      "main": [[{"node": "Supabase: Get Preference Signals", "type": "main", "index": 0}]]
+    },
+    "Supabase: Get Preference Signals": {
+      "main": [[{"node": "Code: Build Ollama Prompt", "type": "main", "index": 0}]]
+    },
+    "Code: Build Ollama Prompt": {
+      "main": [[{"node": "Ollama: Score Niche", "type": "main", "index": 0}]]
+    },
+    "Ollama: Score Niche": {
+      "main": [[{"node": "Code: Parse Ollama + Format", "type": "main", "index": 0}]]
+    },
+    "Code: Parse Ollama + Format": {
+      "main": [[{"node": "Supabase: Insert Trend", "type": "main", "index": 0}]]
+    },
+    "Supabase: Insert Trend": {
+      "main": [[{"node": "GSheets: Append to Trends", "type": "main", "index": 0}]]
+    },
+    "GSheets: Append to Trends": {
+      "main": [[{"node": "Split: Loop Per Keyword", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata"
+  },
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "tags": [{"name": "POD-Automation"}, {"name": "Phase-1"}]
+}

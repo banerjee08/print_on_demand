@@ -1,0 +1,513 @@
+{
+  "name": "POD-02: Slogan Generator + Brand Fit + Approval Loop",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "b1000000-0002-0002-0002-000000000001",
+      "name": "Manual Trigger",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [200, 300]
+    },
+    {
+      "parameters": {
+        "rule": {"interval": [{"field": "cronExpression", "expression": "0 10 * * *"}]},
+        "timezone": "Asia/Kolkata"
+      },
+      "id": "b1000000-0002-0002-0002-000000000002",
+      "name": "Schedule: Daily 10am IST",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [200, 500]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {"__rl": true, "value": "1T8fHZqsRevB8kKDcYGtqmTNRlFnTK76yCRzOA6n6X2k", "mode": "id"},
+        "sheetName": {"__rl": true, "value": "Trends", "mode": "name"},
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000003",
+      "name": "GSheets: Read Approved Trends",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [460, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": {"id": "kowj61ntGk297jWr", "name": "Google Sheets account"}
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [{"value1": "={{ $json.human_approved }}", "value2": "TRUE"}]
+        }
+      },
+      "id": "b1000000-0002-0002-0002-000000000004",
+      "name": "Filter: Human Approved Only",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [700, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Expand: one item per brand per approved keyword\nconst approvedRow = $input.item.json;\nconst brandsStr = approvedRow.applicable_brands || '';\nconst brands = brandsStr.split(',').map(b => b.trim()).filter(Boolean);\n\nif (brands.length === 0) {\n  // Fallback: all brands\n  return ['SparkVibe','VibeBloom','PulsePlay','ScribbleSpark','PawPop','GlowGiggle','TinyGiggle']\n    .map(brand => ({json: {...approvedRow, brand}}));\n}\n\nreturn brands.map(brand => ({json: {...approvedRow, brand}}));"
+      },
+      "id": "b1000000-0002-0002-0002-000000000005",
+      "name": "Code: Expand Per Brand",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [940, 400]
+    },
+    {
+      "parameters": {"options": {}},
+      "id": "b1000000-0002-0002-0002-000000000006",
+      "name": "Split: Loop Per Brand×Keyword",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [1180, 400]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {"__rl": true, "value": "1T8fHZqsRevB8kKDcYGtqmTNRlFnTK76yCRzOA6n6X2k", "mode": "id"},
+        "sheetName": {"__rl": true, "value": "Brand Guidelines", "mode": "name"},
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000007",
+      "name": "GSheets: Read Brand Guidelines",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [1420, 280],
+      "credentials": {
+        "googleSheetsOAuth2Api": {"id": "kowj61ntGk297jWr", "name": "Google Sheets account"}
+      }
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://ihjymibrnjyafrnjolue.supabase.co/rest/v1/preference_signals",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"},
+            {"name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"}
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "brand", "value": "=eq.{{ $('Split: Loop Per Brand×Keyword').item.json.brand }}"},
+            {"name": "signal_type", "value": "in.(slogan_approved,slogan_rejected)"},
+            {"name": "order", "value": "created_at.desc"},
+            {"name": "limit", "value": "20"},
+            {"name": "select", "value": "signal_type,content,niche_keyword,created_at"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000008",
+      "name": "Supabase: Get Slogan Prefs",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1420, 520]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build brand fit check + slogan generation prompt\nconst loopItem = $('Split: Loop Per Brand×Keyword').item.json;\nconst brandName = loopItem.brand;\n\n// Parse brand guidelines — find rows for this brand\nconst guidelineRows = $('GSheets: Read Brand Guidelines').all();\nlet brandGuideline = 'No specific guidelines found — use a fun, modern, US market tone.';\nfor (const row of guidelineRows) {\n  const vals = Object.values(row.json || {});\n  if (vals.some(v => String(v).toLowerCase().includes(brandName.toLowerCase()))) {\n    brandGuideline = Object.entries(row.json)\n      .map(([k, v]) => `${k}: ${v}`).join(' | ');\n    break;\n  }\n}\n\n// Parse slogan preferences (handles empty gracefully)\nlet prefSignals = [];\ntry {\n  const raw = $('Supabase: Get Slogan Prefs').item.json;\n  prefSignals = Array.isArray(raw) ? raw : [];\n} catch(e) { prefSignals = []; }\n\nconst approvedSlogans = prefSignals.filter(p => p.signal_type === 'slogan_approved').map(p => `✓ \"${p.content}\" (${p.niche_keyword})`).slice(0, 5).join('\\n');\nconst rejectedSlogans = prefSignals.filter(p => p.signal_type === 'slogan_rejected').map(p => `✗ \"${p.content}\" (${p.niche_keyword})`).slice(0, 5).join('\\n');\n\nconst systemPrompt = `You are a creative copywriter specializing in POD (Print-on-Demand) merchandise for the US market.\n\nBRAND: ${brandName}\nBRAND GUIDELINES: ${brandGuideline}\n\nTASK:\n1. First, assess brand fit (1-3 sentences): Does the niche suit ${brandName}? Will products look authentic or forced?\n2. If brand fit score >= 6/10, generate EXACTLY 15-20 short, punchy slogans for the niche.\n\nSLOGAN RULES:\n- Max 6 words each\n- Original — no copyrighted phrases\n- Match brand voice (fun/edgy/warm based on brand)\n- Optimized for US Gen Z / Millennials\n- Print-ready (looks good on a tee from a distance)\n- Variety: mix humor, emotion, boldness, wit\n\n${approvedSlogans ? 'APPROVED STYLE EXAMPLES (emulate these):\\n' + approvedSlogans : ''}\n${rejectedSlogans ? 'REJECTED PATTERNS (avoid these):\\n' + rejectedSlogans : ''}\n\nOUTPUT FORMAT — valid JSON only:\n{\n  \"brand_fit_score\": 8,\n  \"brand_fit_reasoning\": \"...\",\n  \"proceed\": true,\n  \"slogans\": [\"Slogan 1\", \"Slogan 2\", ...]\n}`;\n\nconst userPrompt = `Niche/Keyword: \"${loopItem.keyword}\"\nEvent: ${loopItem.event_name || 'N/A'}\nTrend interest: 7d=${loopItem.interest_score_7d}, 3mo=${loopItem.interest_score_3m}, 1yr=${loopItem.interest_score_1yr}\n\nGenerate brand fit assessment and 15-20 slogans.`;\n\nreturn [{\n  json: {\n    ...loopItem,\n    brand_guideline: brandGuideline,\n    ollama_messages: [\n      {role: 'system', content: systemPrompt},\n      {role: 'user', content: userPrompt}\n    ]\n  }\n}];"
+      },
+      "id": "b1000000-0002-0002-0002-000000000009",
+      "name": "Code: Build Slogan Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1660, 400]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{"name": "Content-Type", "value": "application/json"}]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'llama3.2:3b', messages: $json.ollama_messages, stream: false, options: { temperature: 0.8, num_predict: 1200 } }) }}",
+        "options": {"timeout": 120000}
+      },
+      "id": "b1000000-0002-0002-0002-000000000010",
+      "name": "Ollama: Generate Slogans",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1900, 400]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse Ollama slogan response — expand to one row per slogan\nconst loopItem = $('Code: Build Slogan Prompt').item.json;\nconst rawText = $input.item.json?.message?.content || $input.item.json?.response || '';\n\nlet parsed = { brand_fit_score: 5, brand_fit_reasoning: 'Error parsing', proceed: false, slogans: [] };\ntry {\n  const jsonMatch = rawText.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) parsed = JSON.parse(jsonMatch[0]);\n} catch(e) {\n  parsed.brand_fit_reasoning = rawText.slice(0, 200);\n}\n\n// If brand fit too low, skip\nif (!parsed.proceed || parsed.brand_fit_score < 6) {\n  return [{json: {\n    _skip: true,\n    brand: loopItem.brand,\n    keyword: loopItem.keyword,\n    brand_fit_score: parsed.brand_fit_score,\n    brand_fit_reasoning: parsed.brand_fit_reasoning,\n    message: 'Brand fit too low — skipped'\n  }}];\n}\n\n// One row per slogan (15-20 rows)\nconst slogans = (parsed.slogans || []).slice(0, 20);\nreturn slogans.map((slogan, i) => ({\n  json: {\n    brand: loopItem.brand,\n    keyword: loopItem.keyword,\n    event_name: loopItem.event_name || '',\n    brand_niche: loopItem.brand_niche || '',\n    slogan_idea: slogan,\n    brand_fit_score: parsed.brand_fit_score,\n    brand_fit_reasoning: i === 0 ? parsed.brand_fit_reasoning : '',\n    run_date: loopItem.run_date || new Date().toISOString().split('T')[0],\n    status: 'Awaiting Approval',\n    iteration: 1\n  }\n}));"
+      },
+      "id": "b1000000-0002-0002-0002-000000000011",
+      "name": "Code: Parse Slogans",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [2140, 400]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "boolean": [{"value1": "={{ !$json._skip }}", "value2": true}]
+        }
+      },
+      "id": "b1000000-0002-0002-0002-000000000012",
+      "name": "Filter: Skip Low Brand Fit",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [2380, 400]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {"__rl": true, "value": "1T8fHZqsRevB8kKDcYGtqmTNRlFnTK76yCRzOA6n6X2k", "mode": "id"},
+        "sheetName": {"__rl": true, "value": "Slogan Ideas", "mode": "name"},
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "brand":               "={{ $json.brand }}",
+            "keyword":             "={{ $json.keyword }}",
+            "event_name":          "={{ $json.event_name }}",
+            "Slogan Idea":         "={{ $json.slogan_idea }}",
+            "brand_fit_score":     "={{ $json.brand_fit_score }}",
+            "brand_fit_reasoning": "={{ $json.brand_fit_reasoning }}",
+            "run_date":            "={{ $json.run_date }}",
+            "status":              "Awaiting Approval",
+            "iteration":           "={{ $json.iteration }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {"id": "brand",               "displayName": "brand",               "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "keyword",             "displayName": "keyword",             "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "event_name",          "displayName": "event_name",          "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "Slogan Idea",         "displayName": "Slogan Idea",         "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "brand_fit_score",     "displayName": "brand_fit_score",     "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "brand_fit_reasoning", "displayName": "brand_fit_reasoning", "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "run_date",            "displayName": "run_date",            "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "status",              "displayName": "status",              "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "iteration",           "displayName": "iteration",           "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false}
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000013",
+      "name": "GSheets: Append Slogans",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2620, 400],
+      "credentials": {
+        "googleSheetsOAuth2Api": {"id": "kowj61ntGk297jWr", "name": "Google Sheets account"}
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://ihjymibrnjyafrnjolue.supabase.co/rest/v1/slogans",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"},
+            {"name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"},
+            {"name": "Content-Type", "value": "application/json"},
+            {"name": "Prefer", "value": "return=minimal"}
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ brand: $json.brand, keyword: $json.keyword, event_name: $json.event_name, slogan: $json.slogan_idea, iteration: $json.iteration, status: 'Awaiting Approval' }) }}",
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000014",
+      "name": "Supabase: Insert Slogan",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [2860, 400]
+    },
+    {
+      "parameters": {
+        "main": [[{"node": "Split: Loop Per Brand×Keyword", "type": "main", "index": 0}]]
+      },
+      "id": "b1000000-0002-0002-0002-000000000015",
+      "name": "Loop Back",
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [3100, 400]
+    },
+    {
+      "parameters": {
+        "operation": "read",
+        "documentId": {"__rl": true, "value": "1T8fHZqsRevB8kKDcYGtqmTNRlFnTK76yCRzOA6n6X2k", "mode": "id"},
+        "sheetName": {"__rl": true, "value": "Slogan Ideas", "mode": "name"},
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000016",
+      "name": "GSheets: Poll - More Ideas Rows",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [200, 760],
+      "credentials": {
+        "googleSheetsOAuth2Api": {"id": "kowj61ntGk297jWr", "name": "Google Sheets account"}
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "string": [{"value1": "={{ $json.status }}", "value2": "More Ideas"}]
+        }
+      },
+      "id": "b1000000-0002-0002-0002-000000000017",
+      "name": "Filter: More Ideas Status",
+      "type": "n8n-nodes-base.filter",
+      "typeVersion": 1,
+      "position": [460, 760]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Deduplicate: get unique brand+keyword pairs that need more slogans\nconst rows = $input.all();\nconst seen = new Set();\nconst uniquePairs = [];\n\nfor (const row of rows) {\n  const key = `${row.json.brand}||${row.json.keyword}`;\n  if (!seen.has(key)) {\n    seen.add(key);\n    // Get iteration count to know which loop this is\n    const maxIteration = Math.max(...rows\n      .filter(r => r.json.brand === row.json.brand && r.json.keyword === row.json.keyword)\n      .map(r => parseInt(r.json.iteration) || 1));\n    uniquePairs.push({json: {\n      brand: row.json.brand,\n      keyword: row.json.keyword,\n      event_name: row.json.event_name || '',\n      brand_niche: row.json.brand_niche || '',\n      interest_score_7d: row.json.interest_score_7d || 0,\n      interest_score_3m: row.json.interest_score_3m || 0,\n      interest_score_1yr: row.json.interest_score_1yr || 0,\n      next_iteration: maxIteration + 1,\n      run_date: new Date().toISOString().split('T')[0],\n      is_regeneration: true\n    }});\n  }\n}\n\nreturn uniquePairs;"
+      },
+      "id": "b1000000-0002-0002-0002-000000000018",
+      "name": "Code: Dedup More-Ideas Requests",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [700, 760]
+    },
+    {
+      "parameters": {"options": {}},
+      "id": "b1000000-0002-0002-0002-000000000019",
+      "name": "Split: Loop Regeneration",
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [940, 760]
+    },
+    {
+      "parameters": {
+        "method": "GET",
+        "url": "https://ihjymibrnjyafrnjolue.supabase.co/rest/v1/preference_signals",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {"name": "apikey", "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"},
+            {"name": "Authorization", "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImloanltaWJybmp5YWZybmpvbHVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODIyNjU0MjgsImV4cCI6MjA5Nzg0MTQyOH0._RhPfG8ADEf_vpocYq0RsyMnI0OZHPQcvu39670miak"}
+          ]
+        },
+        "sendQuery": true,
+        "queryParameters": {
+          "parameters": [
+            {"name": "brand", "value": "=eq.{{ $json.brand }}"},
+            {"name": "niche_keyword", "value": "=eq.{{ $json.keyword }}"},
+            {"name": "signal_type", "value": "in.(slogan_approved,slogan_rejected,slogan_more_ideas)"},
+            {"name": "order", "value": "created_at.desc"},
+            {"name": "limit", "value": "20"},
+            {"name": "select", "value": "signal_type,content"}
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000020",
+      "name": "Supabase: Get This Keyword's History",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1180, 760]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Build regeneration prompt using rejection context\nconst loopItem = $('Split: Loop Regeneration').item.json;\nlet history = [];\ntry {\n  const raw = $('Supabase: Get This Keyword\\'s History').item.json;\n  history = Array.isArray(raw) ? raw : [];\n} catch(e) { history = []; }\n\nconst rejected = history.filter(h => h.signal_type === 'slogan_rejected').map(h => `✗ \"${h.content || ''}\"`).join('\\n');\nconst approved = history.filter(h => h.signal_type === 'slogan_approved').map(h => `✓ \"${h.content || ''}\"`).join('\\n');\n\nconst systemPrompt = `You are a creative copywriter for POD merchandise (US market).\nGenerate a FRESH batch of 15-20 slogans for the brand and niche below.\nThis is iteration ${loopItem.next_iteration} — the user wants NEW IDEAS.\n\n${rejected ? 'PREVIOUSLY REJECTED (do NOT repeat or sound similar to these):\\n' + rejected : ''}\n${approved ? 'APPROVED STYLE (this person likes these — emulate the tone):\\n' + approved : ''}\n\nBe more creative, unexpected, and different from previous batches.\nSlogans must be max 6 words, print-ready, original.\n\nOutput ONLY valid JSON:\n{ \"slogans\": [\"Slogan 1\", ...] }`;\n\nconst userPrompt = `Brand: ${loopItem.brand}\\nKeyword: \"${loopItem.keyword}\"\\nEvent: ${loopItem.event_name || 'N/A'}\\n\\nGenerate 15-20 fresh slogans.`;\n\nreturn [{ json: { ...loopItem, ollama_messages: [{role:'system',content:systemPrompt},{role:'user',content:userPrompt}] } }];"
+      },
+      "id": "b1000000-0002-0002-0002-000000000021",
+      "name": "Code: Build Regen Prompt",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1420, 760]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://localhost:11434/api/chat",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [{"name": "Content-Type", "value": "application/json"}]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={{ JSON.stringify({ model: 'llama3.2:3b', messages: $json.ollama_messages, stream: false, options: { temperature: 0.9, num_predict: 1200 } }) }}",
+        "options": {"timeout": 120000}
+      },
+      "id": "b1000000-0002-0002-0002-000000000022",
+      "name": "Ollama: Regenerate Slogans",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1660, 760]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Parse regenerated slogans\nconst loopItem = $('Code: Build Regen Prompt').item.json;\nconst rawText = $input.item.json?.message?.content || '';\n\nlet slogans = [];\ntry {\n  const jsonMatch = rawText.match(/\\{[\\s\\S]*\\}/);\n  if (jsonMatch) {\n    const parsed = JSON.parse(jsonMatch[0]);\n    slogans = parsed.slogans || [];\n  }\n} catch(e) { slogans = []; }\n\nconst nextIteration = loopItem.next_iteration || 2;\n\nreturn slogans.slice(0, 20).map(slogan => ({\n  json: {\n    brand: loopItem.brand,\n    keyword: loopItem.keyword,\n    event_name: loopItem.event_name || '',\n    slogan_idea: slogan,\n    brand_fit_score: '',\n    brand_fit_reasoning: `Regeneration batch ${nextIteration}`,\n    run_date: new Date().toISOString().split('T')[0],\n    status: 'Awaiting Approval',\n    iteration: nextIteration\n  }\n}));"
+      },
+      "id": "b1000000-0002-0002-0002-000000000023",
+      "name": "Code: Parse Regen Slogans",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [1900, 760]
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {"__rl": true, "value": "1T8fHZqsRevB8kKDcYGtqmTNRlFnTK76yCRzOA6n6X2k", "mode": "id"},
+        "sheetName": {"__rl": true, "value": "Slogan Ideas", "mode": "name"},
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "brand":               "={{ $json.brand }}",
+            "keyword":             "={{ $json.keyword }}",
+            "event_name":          "={{ $json.event_name }}",
+            "Slogan Idea":         "={{ $json.slogan_idea }}",
+            "brand_fit_score":     "={{ $json.brand_fit_score }}",
+            "brand_fit_reasoning": "={{ $json.brand_fit_reasoning }}",
+            "run_date":            "={{ $json.run_date }}",
+            "status":              "Awaiting Approval",
+            "iteration":           "={{ $json.iteration }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {"id": "brand",               "displayName": "brand",               "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "keyword",             "displayName": "keyword",             "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "event_name",          "displayName": "event_name",          "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "Slogan Idea",         "displayName": "Slogan Idea",         "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "brand_fit_score",     "displayName": "brand_fit_score",     "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "brand_fit_reasoning", "displayName": "brand_fit_reasoning", "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "run_date",            "displayName": "run_date",            "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "status",              "displayName": "status",              "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "iteration",           "displayName": "iteration",           "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false}
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000024",
+      "name": "GSheets: Append Regen Slogans",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2140, 760],
+      "credentials": {
+        "googleSheetsOAuth2Api": {"id": "kowj61ntGk297jWr", "name": "Google Sheets account"}
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {"__rl": true, "value": "1T8fHZqsRevB8kKDcYGtqmTNRlFnTK76yCRzOA6n6X2k", "mode": "id"},
+        "sheetName": {"__rl": true, "value": "Slogan Ideas", "mode": "name"},
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": "More Ideas Sent",
+            "brand": "={{ $('Split: Loop Regeneration').item.json.brand }}",
+            "keyword": "={{ $('Split: Loop Regeneration').item.json.keyword }}"
+          },
+          "matchingColumns": ["brand", "keyword"],
+          "schema": [
+            {"id": "status",  "displayName": "status",  "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": false},
+            {"id": "brand",   "displayName": "brand",   "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": true},
+            {"id": "keyword", "displayName": "keyword", "type": "string", "required": false, "defaultMatch": false, "display": true, "canBeUsedToMatch": true}
+          ]
+        },
+        "options": {}
+      },
+      "id": "b1000000-0002-0002-0002-000000000025",
+      "name": "GSheets: Mark Old Rows Sent",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4,
+      "position": [2380, 760],
+      "credentials": {
+        "googleSheetsOAuth2Api": {"id": "kowj61ntGk297jWr", "name": "Google Sheets account"}
+      }
+    }
+  ],
+  "connections": {
+    "Manual Trigger": {
+      "main": [[{"node": "GSheets: Read Approved Trends", "type": "main", "index": 0}]]
+    },
+    "Schedule: Daily 10am IST": {
+      "main": [[{"node": "GSheets: Read Approved Trends", "type": "main", "index": 0}]]
+    },
+    "GSheets: Read Approved Trends": {
+      "main": [[{"node": "Filter: Human Approved Only", "type": "main", "index": 0}]]
+    },
+    "Filter: Human Approved Only": {
+      "main": [[{"node": "Code: Expand Per Brand", "type": "main", "index": 0}]]
+    },
+    "Code: Expand Per Brand": {
+      "main": [[{"node": "Split: Loop Per Brand×Keyword", "type": "main", "index": 0}]]
+    },
+    "Split: Loop Per Brand×Keyword": {
+      "main": [[], [{"node": "GSheets: Read Brand Guidelines", "type": "main", "index": 0}]]
+    },
+    "GSheets: Read Brand Guidelines": {
+      "main": [[{"node": "Supabase: Get Slogan Prefs", "type": "main", "index": 0}]]
+    },
+    "Supabase: Get Slogan Prefs": {
+      "main": [[{"node": "Code: Build Slogan Prompt", "type": "main", "index": 0}]]
+    },
+    "Code: Build Slogan Prompt": {
+      "main": [[{"node": "Ollama: Generate Slogans", "type": "main", "index": 0}]]
+    },
+    "Ollama: Generate Slogans": {
+      "main": [[{"node": "Code: Parse Slogans", "type": "main", "index": 0}]]
+    },
+    "Code: Parse Slogans": {
+      "main": [[{"node": "Filter: Skip Low Brand Fit", "type": "main", "index": 0}]]
+    },
+    "Filter: Skip Low Brand Fit": {
+      "main": [[{"node": "GSheets: Append Slogans", "type": "main", "index": 0}]]
+    },
+    "GSheets: Append Slogans": {
+      "main": [[{"node": "Supabase: Insert Slogan", "type": "main", "index": 0}]]
+    },
+    "Supabase: Insert Slogan": {
+      "main": [[{"node": "Loop Back", "type": "main", "index": 0}]]
+    },
+    "Loop Back": {
+      "main": [[{"node": "Split: Loop Per Brand×Keyword", "type": "main", "index": 0}]]
+    },
+    "GSheets: Poll - More Ideas Rows": {
+      "main": [[{"node": "Filter: More Ideas Status", "type": "main", "index": 0}]]
+    },
+    "Filter: More Ideas Status": {
+      "main": [[{"node": "Code: Dedup More-Ideas Requests", "type": "main", "index": 0}]]
+    },
+    "Code: Dedup More-Ideas Requests": {
+      "main": [[{"node": "Split: Loop Regeneration", "type": "main", "index": 0}]]
+    },
+    "Split: Loop Regeneration": {
+      "main": [[], [{"node": "Supabase: Get This Keyword's History", "type": "main", "index": 0}]]
+    },
+    "Supabase: Get This Keyword's History": {
+      "main": [[{"node": "Code: Build Regen Prompt", "type": "main", "index": 0}]]
+    },
+    "Code: Build Regen Prompt": {
+      "main": [[{"node": "Ollama: Regenerate Slogans", "type": "main", "index": 0}]]
+    },
+    "Ollama: Regenerate Slogans": {
+      "main": [[{"node": "Code: Parse Regen Slogans", "type": "main", "index": 0}]]
+    },
+    "Code: Parse Regen Slogans": {
+      "main": [[{"node": "GSheets: Append Regen Slogans", "type": "main", "index": 0}]]
+    },
+    "GSheets: Append Regen Slogans": {
+      "main": [[{"node": "GSheets: Mark Old Rows Sent", "type": "main", "index": 0}]]
+    },
+    "GSheets: Mark Old Rows Sent": {
+      "main": [[{"node": "Split: Loop Regeneration", "type": "main", "index": 0}]]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "timezone": "Asia/Kolkata"
+  },
+  "meta": {"templateCredsSetupCompleted": true},
+  "tags": [{"name": "POD-Automation"}, {"name": "Phase-1"}]
+}
