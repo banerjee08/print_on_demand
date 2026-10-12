@@ -1,0 +1,132 @@
+# =============================================================================
+# Traefik v3 Dynamic Subdomain Routing & Auto-TLS Configuration
+# Domain: loulouandluxe.com (LouLou & Luxe)
+# Target Host: Hostinger KVM2 VPS (Docker Compose / Swarm)
+# =============================================================================
+
+http:
+  middlewares:
+    # 1. Canonical 301 Redirect: www.loulouandluxe.com -> loulouandluxe.com
+    redirect-www-to-root:
+      redirectRegex:
+        regex: "^https?://www\\.loulouandluxe\\.com/(.*)"
+        replacement: "https://loulouandluxe.com/$${1}"
+        permanent: true
+
+    # 2. Strict Security Headers (HSTS, Frame Options, Content-Type Sniffing)
+    loulou-security-headers:
+      headers:
+        stsSeconds: 31536000
+        stsIncludeSubdomains: true
+        stsPreload: true
+        contentTypeNosniff: true
+        frameDeny: false
+        customFrameOptionsValue: "SAMEORIGIN"
+        referrerPolicy: "strict-origin-when-cross-origin"
+
+    # 3. API & Webhook Rate Limiting (Protects KVM2 from bot floods)
+    api-rate-limit:
+      rateLimit:
+        average: 60
+        burst: 120
+        period: 1m
+
+  routers:
+    # --- 1. Root Storefront + WWW Redirect (loulouandluxe.com) ---------------
+    storefront-root:
+      rule: "Host(`loulouandluxe.com`) || Host(`www.loulouandluxe.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - redirect-www-to-root
+        - loulou-security-headers
+      service: nextjs-storefront-svc
+      tls:
+        certResolver: letsencrypt
+
+    # --- 2. Headless Commerce & Cross-System Sync API (api.loulouandluxe.com) -
+    commerce-api:
+      rule: "Host(`api.loulouandluxe.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - api-rate-limit
+        - loulou-security-headers
+      service: medusa-backend-svc
+      tls:
+        certResolver: letsencrypt
+
+    # --- 3. n8n Webhook & Refund Orchestrator (hooks.loulouandluxe.com) -------
+    n8n-webhooks:
+      rule: "Host(`hooks.loulouandluxe.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - api-rate-limit
+        - loulou-security-headers
+      service: n8n-orchestrator-svc
+      tls:
+        certResolver: letsencrypt
+
+    # --- 4. First-Party CAPI Tracking Gateway (track.loulouandluxe.com) -------
+    first-party-tracking:
+      rule: "Host(`track.loulouandluxe.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - loulou-security-headers
+      service: sgtm-capi-gateway-svc
+      tls:
+        certResolver: letsencrypt
+
+    # --- 5. Chatwoot Customer Support Portal (support.loulouandluxe.com) ------
+    customer-support:
+      rule: "Host(`support.loulouandluxe.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - loulou-security-headers
+      service: chatwoot-support-svc
+      tls:
+        certResolver: letsencrypt
+
+    # --- 6. Uptime & Health Status Endpoint (status.loulouandluxe.com) --------
+    uptime-status:
+      rule: "Host(`status.loulouandluxe.com`)"
+      entryPoints:
+        - websecure
+      middlewares:
+        - loulou-security-headers
+      service: uptime-kuma-svc
+      tls:
+        certResolver: letsencrypt
+
+  services:
+    nextjs-storefront-svc:
+      loadBalancer:
+        servers:
+          - url: "http://storefront:3000"
+    medusa-backend-svc:
+      loadBalancer:
+        healthCheck:
+          path: "/health"
+          interval: "15s"
+          timeout: "3s"
+        servers:
+          - url: "http://medusa-backend:9000"
+    n8n-orchestrator-svc:
+      loadBalancer:
+        servers:
+          - url: "http://n8n:5678"
+    sgtm-capi-gateway-svc:
+      loadBalancer:
+        servers:
+          - url: "http://n8n:5678/webhook/capi"
+    chatwoot-support-svc:
+      loadBalancer:
+        servers:
+          - url: "http://chatwoot:3000"
+    uptime-kuma-svc:
+      loadBalancer:
+        servers:
+          - url: "http://uptime-kuma:3001"
