@@ -1,0 +1,59 @@
+; =============================================================================
+; BIND DNS Zone File for: loulouandluxe.com (LouLou & Luxe)
+; Registrar: Hostinger (Active Nameservers: nova.dns-parking.com / cosmos.dns-parking.com)
+; Target Hostinger KVM2 VPS IPv4: 72.61.243.31
+; How to Use:
+;   - Option A (Hostinger hPanel): Domains -> loulouandluxe.com -> DNS / Nameservers -> Import Zone
+;   - Option B (Cloudflare Dashboard): DNS -> Records -> Import and Export -> Upload File
+;   - Option C (Automated CLI): Run ./scripts/provision-loulouandluxe-subdomains.sh
+; =============================================================================
+
+$ORIGIN loulouandluxe.com.
+$TTL 300
+
+; --- 1. Root Storefront & Canonical WWW Subdomain ----------------------------
+; Serves USA + Canada (US_CA) at https://loulouandluxe.com/ and /ca/
+; Serves UK (/uk/), Australia (/au/), Germany (/de/), Singapore (/sg/) via subfolders
+@                       IN  A       72.61.243.31
+www                     IN  CNAME   loulouandluxe.com.
+
+; --- 2. Core Commerce & Backend Infrastructure Subdomains --------------------
+; Headless Medusa.js v2 Commerce API + Banana POD & Multi-Website Manager Sync API
+api                     IN  A       72.61.243.31
+
+; n8n Webhook & Queue Orchestrator (2-Hour Order Hold, Printify Dispatch, Refund Engine)
+hooks                   IN  A       72.61.243.31
+
+; Chatwoot Customer Support Helpdesk & Live Storefront Chat Widget
+support                 IN  A       72.61.243.31
+
+; Uptime & Health Check Status Endpoint (Monitored by Multi-Website Manager)
+status                  IN  A       72.61.243.31
+
+; --- 3. CDN & First-Party Ad Tracking Subdomains -----------------------------
+; Cloudflare R2 Custom Domain for 800x800 WebP Regional Lookbooks & 300-DPI Print Previews
+cdn                     IN  CNAME   public.r2.cloudflarestorage.com.
+
+; First-Party Server-Side Tracking Gateway (Meta CAPI + Pinterest CAPI + GA4 sGTM)
+; Bypasses iOS 17+ Safari ITP and browser ad-blockers via 1st-party cookies
+track                   IN  A       72.61.243.31
+
+; --- 4. Transactional Email Subdomain (send.loulouandluxe.com via Resend/Brevo)
+; Isolates automated order/shipping emails (orders@loulouandluxe.com) on send.loulouandluxe.com
+; so root @loulouandluxe.com email routing stays clean for loulouandluxe@gmail.com
+send                    IN  MX  10  feedback-smtp.us-east-1.amazonses.com.
+send                    IN  TXT     "v=spf1 include:amazonses.com ~all"
+resend._domainkey       IN  TXT     "p=REPLACE_WITH_RESEND_DKIM_PUBLIC_KEY"
+
+; --- 5. Root Email Forwarding & DMARC Brand Protection -----------------------
+; Root SPF & DMARC Policy (Protects @loulouandluxe.com from email spoofing)
+@                       IN  TXT     "v=spf1 include:_spf.mail.hostinger.com include:_spf.mx.cloudflare.net ~all"
+_dmarc                  IN  TXT     "v=DMARC1; p=quarantine; rua=mailto:loulouandluxe@gmail.com; pct=100; adkim=s; aspf=s"
+
+; --- 6. Social & Ad Platform Domain Verification TXT Placeholders ------------
+; Meta Business Manager Domain Verification (Required for Rule #5 & Conversions API)
+@                       IN  TXT     "facebook-domain-verification=REPLACE_WITH_META_BUSINESS_TOKEN"
+; Pinterest Business Domain Claim Verification
+@                       IN  TXT     "pinterest-site-verification=REPLACE_WITH_PINTEREST_TOKEN"
+; Google Search Console & Merchant Center Verification
+@                       IN  TXT     "google-site-verification=REPLACE_WITH_GOOGLE_TOKEN"
