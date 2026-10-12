@@ -396,14 +396,45 @@
       box.textContent = msg;
       box.classList.remove('hidden');
       clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(() => box.classList.add('hidden'), 4000);
+      window.__toastTimer = setTimeout(() => box.classList.add('hidden'), 4500);
     }
 
-    function submitWaitlist(e) {
+    async function submitWaitlist(e) {
       e.preventDefault();
-      const email = document.getElementById('cs-email').value;
-      const role = document.getElementById('cs-role').value;
+      const emailInput = document.getElementById('cs-email');
+      const roleSelect = document.getElementById('cs-role');
+      const submitBtn = e.target.querySelector('button[type="submit"]');
+      const email = (emailInput.value || '').trim();
+      const role = roleSelect ? roleSelect.value : 'Everyday Boutique';
+      if (!email) return;
+
+      const origText = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'reserving your 25% off vip pass...';
+      }
+
+      try {
+        await fetch('/webhook/loulou-newsletter-signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            role,
+            source: 'loulouandluxe.com (Public Coming Soon Page)',
+            promoCode: 'LULLUXE25',
+            pageUrl: window.location.href,
+            submittedAt: new Date().toISOString()
+          })
+        });
+      } catch (err) {}
+
+      if (submitBtn) {
+        submitBtn.disabled = false;
+        submitBtn.textContent = origText;
+      }
       document.getElementById('cs-waitlist-success').classList.remove('hidden');
+      emailInput.value = '';
       showToast(`🎀 Welcome (${email})! Your 25% OFF launch pass (LULLUXE25) is reserved for ${role}.`);
     }
 
@@ -415,6 +446,34 @@
 
     function toggleCookieCustomizer() {
       document.getElementById('cookie-customizer-panel').classList.toggle('hidden');
+    }
+
+    function hasLocalCookieConsent() {
+      try {
+        const raw = localStorage.getItem(COOKIE_CONSENT_KEY);
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (parsed && (!parsed.expiresAt || Date.now() < parsed.expiresAt)) {
+            return true;
+          }
+        }
+      } catch (e) {}
+      try {
+        if (document.cookie && document.cookie.split(';').some(c => c.trim().startsWith('loulou_cookie_consent='))) {
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function persistLocalCookieConsent(payload) {
+      const maxAge = 365 * 86400; // 1 full year — never annoy user on every page visit
+      try {
+        localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(payload));
+      } catch (e) {}
+      try {
+        document.cookie = `loulou_cookie_consent=${encodeURIComponent(payload.consent_level || 'ALL')}; path=/; max-age=${maxAge}; SameSite=Lax`;
+      } catch (e) {}
     }
 
     function saveCookieConsent(level) {
@@ -431,12 +490,9 @@
         marketing_cookies: marketing,
         policy_version: 'v1.0-2026-10',
         consented_at: new Date().toISOString(),
-        expiresAt: Date.now() + 180 * 86400 * 1000
+        expiresAt: Date.now() + 365 * 86400 * 1000
       };
-      try {
-        localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(payload));
-        document.cookie = `loulou_cookie_consent=${encodeURIComponent(level)}; path=/; max-age=${180 * 86400}; SameSite=Lax`;
-      } catch (e) {}
+      persistLocalCookieConsent(payload);
 
       const m = document.getElementById('cookie-consent-backdrop');
       m.classList.add('hidden');
@@ -451,9 +507,9 @@
       } catch (e) {}
 
       showToast(level === 'ALL'
-        ? '🍪 All Cookies Accepted'
+        ? '🍪 Preferences Saved: All Cookies Accepted'
         : level === 'NECESSARY_ONLY'
-          ? '🍪 Non-Essential Cookies Declined (Strictly Necessary Only)'
+          ? '🍪 Preferences Saved: Strictly Necessary Cookies Only'
           : '🍪 Custom Cookie Preferences Saved');
     }
 
@@ -467,16 +523,29 @@
       document.getElementById('cs-secs').textContent = String(diff % 60).padStart(2, '0');
     }, 1000);
 
-    // Check Cookie Consent on Entry
-    (function () {
+    // Check Cookie Consent ONCE per user (Local Storage + HTTP Cookie + Backend Visitor Check)
+    (async function () {
+      if (hasLocalCookieConsent()) return;
       try {
-        const raw = localStorage.getItem(COOKIE_CONSENT_KEY);
-        if (raw) {
-          const parsed = JSON.parse(raw);
-          if (parsed && parsed.expiresAt && Date.now() < parsed.expiresAt) return;
+        const res = await fetch('/webhook/loulou-cookie-consent-status', { method: 'GET' });
+        if (res.ok) {
+          const data = await res.json();
+          const record = Array.isArray(data) ? data[0] : data;
+          if (record && record.alreadyConsented) {
+            persistLocalCookieConsent({
+              consent_level: record.consent_level || 'ALL',
+              necessary_cookies: true,
+              analytics_cookies: !!record.analytics_cookies,
+              marketing_cookies: !!record.marketing_cookies,
+              expiresAt: Date.now() + 365 * 86400 * 1000
+            });
+            return;
+          }
         }
       } catch (e) {}
-      openCookieConsentModal();
+      if (!hasLocalCookieConsent()) {
+        openCookieConsentModal();
+      }
     })();
   </script>
 </body>
