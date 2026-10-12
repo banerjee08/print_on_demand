@@ -1170,8 +1170,9 @@
         <p class="text-[15px] text-[#52525B] mb-6">
           sign up to receive 25% off your first order and get first access to new arrivals and sales.
         </p>
-        <form onsubmit="event.preventDefault(); showToast('🎉 Welcome to LouLou & Luxe! Use code LULLUXE25 for 25% OFF!');" class="flex flex-col sm:flex-row gap-2.5 max-w-lg mx-auto">
+        <form onsubmit="submitStorefrontNewsletter(event)" class="flex flex-col sm:flex-row gap-2.5 max-w-lg mx-auto">
           <input
+            id="sf-newsletter-email"
             type="email"
             required
             placeholder="Enter Email address"
@@ -2316,23 +2317,88 @@
     }
 
     /* =========================================================================
-       VISITOR ENTRY COOKIE DISCLAIMER & BACKEND GATEKEEPER
+       NEWSLETTER SIGNUP & BRIDAL CONCIERGE -> N8N WEBHOOK + GMAIL 008 ALERT
+       ========================================================================= */
+    async function submitStorefrontNewsletter(e) {
+      e.preventDefault();
+      const emailEl = document.getElementById('sf-newsletter-email');
+      const email = emailEl ? emailEl.value.trim() : '';
+      if (!email) return;
+      try {
+        await fetch('/webhook/loulou-newsletter-signup', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            email,
+            role: 'Storefront VIP Newsletter',
+            source: window.location.hostname + ' (Storefront Newsletter)',
+            promoCode: 'LULLUXE25',
+            pageUrl: window.location.href,
+            submittedAt: new Date().toISOString()
+          })
+        });
+      } catch (err) {}
+      if (emailEl) emailEl.value = '';
+      showToast(`🎉 Welcome (${email})! Code LULLUXE25 (25% OFF) has been unlocked for your order!`);
+    }
+
+    /* =========================================================================
+       VISITOR ENTRY COOKIE DISCLAIMER & BACKEND GATEKEEPER (ONCE PER USER)
        ========================================================================= */
     const COOKIE_CONSENT_KEY = 'loulou_cookie_consent_v1';
 
-    function initCookieConsentCheck() {
+    function hasLocalCookieConsent() {
       try {
         const raw = localStorage.getItem(COOKIE_CONSENT_KEY);
         if (raw) {
           const parsed = JSON.parse(raw);
-          if (parsed && parsed.expiresAt && Date.now() < parsed.expiresAt) {
+          if (parsed && (!parsed.expiresAt || Date.now() < parsed.expiresAt)) {
             window.__loulouCookieConsent = parsed;
+            return true;
+          }
+        }
+      } catch (e) {}
+      try {
+        if (document.cookie && document.cookie.split(';').some(c => c.trim().startsWith('loulou_cookie_consent='))) {
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function persistLocalCookieConsent(payload) {
+      const maxAge = 365 * 86400; // 1 full year — only pop up once per user
+      window.__loulouCookieConsent = payload;
+      try {
+        localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(payload));
+      } catch (e) {}
+      try {
+        document.cookie = `loulou_cookie_consent=${encodeURIComponent(payload.consent_level || 'ALL')}; path=/; max-age=${maxAge}; SameSite=Lax`;
+      } catch (e) {}
+    }
+
+    async function initCookieConsentCheck() {
+      if (hasLocalCookieConsent()) return;
+      try {
+        const res = await fetch('/webhook/loulou-cookie-consent-status', { method: 'GET' });
+        if (res.ok) {
+          const data = await res.json();
+          const record = Array.isArray(data) ? data[0] : data;
+          if (record && record.alreadyConsented) {
+            persistLocalCookieConsent({
+              consent_level: record.consent_level || 'ALL',
+              necessary_cookies: true,
+              analytics_cookies: !!record.analytics_cookies,
+              marketing_cookies: !!record.marketing_cookies,
+              expiresAt: Date.now() + 365 * 86400 * 1000
+            });
             return;
           }
         }
       } catch (e) {}
-      // Visitor has not yet answered whether we can grab cookies -> show popup on entry
-      openCookieConsentModal();
+      if (!hasLocalCookieConsent()) {
+        openCookieConsentModal();
+      }
     }
 
     function openCookieConsentModal() {
@@ -2373,30 +2439,23 @@
         policy_version: 'v1.0-2026-10',
         region_code: state.currency === 'CAD' ? 'CA' : 'US',
         consented_at: new Date().toISOString(),
-        expiresAt: Date.now() + 180 * 24 * 60 * 60 * 1000 // 180 days
+        expiresAt: Date.now() + 365 * 24 * 60 * 60 * 1000 // 365 days
       };
 
-      window.__loulouCookieConsent = payload;
-      try {
-        localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(payload));
-        document.cookie = `loulou_cookie_consent=${encodeURIComponent(level)}; path=/; max-age=${180 * 86400}; SameSite=Lax`;
-      } catch (e) {}
+      persistLocalCookieConsent(payload);
 
-      // If non-essential cookies were declined, purge any non-essential marketing/analytics keys
       if (!marketing) {
         try {
           localStorage.removeItem('loulou_bridal_concierge_v1');
         } catch (e) {}
       }
 
-      // Close modal
       const modal = document.getElementById('cookie-consent-backdrop');
       if (modal) {
         modal.classList.add('hidden');
         modal.classList.remove('flex');
       }
 
-      // Async audit log dispatch to backend gatekeeper
       try {
         fetch('/webhook/loulou-cookie-consent', {
           method: 'POST',
