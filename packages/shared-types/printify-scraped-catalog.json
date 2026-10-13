@@ -1,0 +1,1370 @@
+{
+  "brand": "LouLou & Luxe (https://loulouandluxe.com)",
+  "target_market": "US & Canada (Launch: October 20, 2026 \u2014 Q4 Fall/Winter, Bridal & Holiday Gifting)",
+  "scraped_at": "2026-10-13T10:20:00Z",
+  "total_sitemap_urls": 1424,
+  "total_categories_in_sitemap": 65,
+  "curated_loulouandluxe_blueprints": [
+    {
+      "blueprint_id": 1262,
+      "name": "Custom Skater Dress | Printify",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1262/generic-brand/womens-skater-dress-aop",
+      "description": "Design and sell your custom skater dress line with Printify. No minimums, worldwide shipping, 650+ blank products.",
+      "categories": [
+        "Women's Clothing",
+        "Skirts & Dresses",
+        "AOP",
+        "All Over Print",
+        "AOP Clothing",
+        "Sublimation",
+        "Women's Clothing",
+        "Skirts & Dresses",
+        "AOP",
+        "Assembled in the USA",
+        "Assembled in USA",
+        "Made in the USA",
+        "Made in USA",
+        "Made in the USA",
+        "Made in USA",
+        "All Over Print",
+        "AOP Clothing",
+        "Sublimation"
+      ],
+      "low_price_usd": 33.39,
+      "high_price_usd": 33.42,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 33.39,
+          "shipping_usd": 6.39
+        },
+        {
+          "provider": "Miami Sublimation",
+          "base_cost_usd": 33.42,
+          "shipping_usd": 6.39
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66d0553f83324e019f0c7836.png",
+        "https://images.printify.com/api/catalog/66d0553b83324e019f0c7835.png",
+        "https://images.printify.com/api/catalog/638a2540fc09cb6e19048002.png",
+        "https://images.printify.com/api/catalog/638a254e0297e2df1e0645f3.png",
+        "https://images.printify.com/api/catalog/638a25520297e2df1e0645f7.png",
+        "https://images.printify.com/api/catalog/638a256d9803d1a5d40784a7.png"
+      ]
+    },
+    {
+      "blueprint_id": 276,
+      "name": "All Over Print Custom Women's Racerback Dress",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/276/generic-brand/womens-cut-and-sew-racerback-dress-aop",
+      "description": "Feminine and stylish, yet really comfortable. This All Over Print Women's Racerback Dress will look stunning from every angle. Design yours today!",
+      "categories": [
+        "Women's Clothing",
+        "Skirts & Dresses",
+        "All Over Print",
+        "Regular fit",
+        "AOP Clothing",
+        "AOP Clothing",
+        "AOP",
+        "Made in USA",
+        "Sublimation",
+        "Assembled in the USA",
+        "Made in the USA",
+        "Halloween",
+        "Assembled in USA"
+      ],
+      "low_price_usd": 23.62,
+      "high_price_usd": 23.65,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 23.62,
+          "shipping_usd": 6.79
+        },
+        {
+          "provider": "MWW On Demand",
+          "base_cost_usd": 23.65,
+          "shipping_usd": 6.59
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66d701889e82c4d1b4093b12.png",
+        "https://images.printify.com/api/catalog/66d701b71fb614d5a3087513.png",
+        "https://images.printify.com/api/catalog/66d702e1b3728cd84f07b192.png"
+      ]
+    },
+    {
+      "blueprint_id": 431,
+      "name": "Personalized All Over Print T-shirt Dress",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/431/generic-brand/t-shirt-dress-aop",
+      "description": "All-Over-Print T-shirt Dress: tagless, custom cut and sewn to match every style. The fun prints will make this t-shirt dress a great piece to sell online.",
+      "categories": [
+        "Women's Clothing",
+        "Skirts & Dresses",
+        "All Over Print",
+        "AOP Clothing",
+        "Made in USA",
+        "Sublimation",
+        "AOP",
+        "Assembled in the USA",
+        "Assembled in USA",
+        "Made in the USA",
+        "Seasonal Picks",
+        "Bestsellers"
+      ],
+      "low_price_usd": 29.64,
+      "high_price_usd": 29.67,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 29.64,
+          "shipping_usd": 6.79
+        },
+        {
+          "provider": "MWW On Demand",
+          "base_cost_usd": 29.67,
+          "shipping_usd": 6.59
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66cc62aeeabc9a89e8024de7.png",
+        "https://images.printify.com/api/catalog/66cc681c5bfebd04440480b5.png",
+        "https://images.printify.com/api/catalog/66cc6820370f6c68a2085d44.png",
+        "https://images.printify.com/api/catalog/5ecf8310d59bd0077253ad9d.png"
+      ]
+    },
+    {
+      "blueprint_id": 923,
+      "name": "Custom Kimono-style Robes | Print On Demand",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/923/generic-brand/long-sleeve-kimono-robe-aop",
+      "description": "Create your own kimono-style robes as a gift or to sell online. No minimums, worldwide shipping, 400+ blank items",
+      "categories": [
+        "Women's Clothing",
+        "All Over Print",
+        "AOP",
+        "AOP Clothing",
+        "Sublimation",
+        "Skirts & Dresses",
+        "Women's Clothing",
+        "All Over Print",
+        "AOP",
+        "AOP Clothing",
+        "Sublimation",
+        "Skirts & Dresses"
+      ],
+      "low_price_usd": 35.3,
+      "high_price_usd": 35.3,
+      "providers": [
+        {
+          "provider": "ArtsAdd",
+          "base_cost_usd": 35.3,
+          "shipping_usd": 5.89
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66e0331fb38ee0041005e3b2.png",
+        "https://images.printify.com/api/catalog/66d89ad36d380c49040e5966.png",
+        "https://images.printify.com/api/catalog/62060e127eaa0153ad483008.png",
+        "https://images.printify.com/api/catalog/62060faf7eaa0153ad48300c.png",
+        "https://images.printify.com/api/catalog/61f3bc3158c26b4be43a2b06.png",
+        "https://images.printify.com/api/catalog/61fbc4e20092a00e850f01b9.png"
+      ]
+    },
+    {
+      "blueprint_id": 828,
+      "name": "Women's Pajamas Short Set | Custom Printed, Relaxed Fit",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/828/generic-brand/womens-short-pajama-set-aop",
+      "description": "Design your women's pajamas short set to sell online. No minimum orders, worldwide shipping, 400+ blank products.",
+      "categories": [
+        "Women's Clothing",
+        "All Over Print",
+        "AOP",
+        "AOP Clothing",
+        "Sublimation",
+        "Bottoms",
+        "T-shirts",
+        "Halloween"
+      ],
+      "low_price_usd": 29.56,
+      "high_price_usd": 29.56,
+      "providers": [
+        {
+          "provider": "ArtsAdd",
+          "base_cost_usd": 29.56,
+          "shipping_usd": 5.89
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66d81c04953258e42905f423.png",
+        "https://images.printify.com/api/catalog/66d81c06db437ae05e066363.png",
+        "https://images.printify.com/api/catalog/61e7ea13952d225d6108b766.png",
+        "https://images.printify.com/api/catalog/61e7ea12e83a0f72d67c3494.png",
+        "https://images.printify.com/api/catalog/61e7ea11e83a0f72d67c3491.png",
+        "https://images.printify.com/api/catalog/61e7ea1062f4481fe3277af6.png"
+      ]
+    },
+    {
+      "blueprint_id": 1296,
+      "name": "Unisex Garment-Dyed Sweatshirt | Comfort Colors 1566",
+      "brand": "Comfort Colors\u00ae",
+      "url": "https://printify.com/app/products/1296/comfort-colors/unisex-garment-dyed-sweatshirt",
+      "description": "This Comfort Colors crewneck sweatshirt delivers premium comfort with garment-dyed fabric, certified dyes, and embroidery or DTG print.",
+      "categories": [
+        "Unisex",
+        "TikTok",
+        "Premium Apparel",
+        "Embroidery",
+        "Women's Clothing",
+        "DTG",
+        "Sweatshirts",
+        "Crew neck",
+        "Athleisure Wear",
+        "Men's Clothing",
+        "4th of July",
+        "Personalization Picks"
+      ],
+      "low_price_usd": 31.29,
+      "high_price_usd": 48.37,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 31.29,
+          "shipping_usd": 7.39
+        },
+        {
+          "provider": "Dimona Tee",
+          "base_cost_usd": 48.37,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "SwiftPOD",
+          "base_cost_usd": 32.22,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "The Print Bar",
+          "base_cost_usd": 44.83,
+          "shipping_usd": 10.39
+        },
+        {
+          "provider": "Monster Digital",
+          "base_cost_usd": 38.69,
+          "shipping_usd": 7.99
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66cdb7192e67fb0f8a044613.png",
+        "https://images.printify.com/api/catalog/66cdb71d0c3dcef30909e194.png",
+        "https://images.printify.com/api/catalog/690338191794bf12d30b70e2.png",
+        "https://images.printify.com/api/catalog/68f72f19537464b0770d2462.png",
+        "https://images.printify.com/api/catalog/6a18809f95502e1f7f033d80.png",
+        "https://images.printify.com/api/catalog/69208238775f56d4b50b76a2.png"
+      ]
+    },
+    {
+      "blueprint_id": 1687,
+      "name": "Nantucket Crewneck Sweatshirt | Print On Demand",
+      "brand": "Lane Seven",
+      "url": "https://printify.com/app/products/1687/lane-seven/unisex-nantucket-crewneck-sweatshirt-embroidery",
+      "description": "Add your designs to the Nantucket Crewneck Sweatshirt and sell online, worldwide, with no minimums. See all custom sweatshirts here. ",
+      "categories": [
+        "Men's Clothing",
+        "Women's Clothing",
+        "Sweatshirts",
+        "Premium Apparel",
+        "Embroidery"
+      ],
+      "low_price_usd": 30.43,
+      "high_price_usd": 30.46,
+      "providers": [
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 30.46,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 30.43,
+          "shipping_usd": 7.39
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/68779dfdfd3c4d41ea0153f2.png",
+        "https://images.printify.com/api/catalog/68779deabaac3428670e9f72.png",
+        "https://images.printify.com/api/catalog/68f7303bce08406a5f09a025.png",
+        "https://images.printify.com/api/catalog/6920828dd42250000b0864e2.png",
+        "https://images.printify.com/api/catalog/68779e1140138e4b7108dd92.png",
+        "https://images.printify.com/api/catalog/6877a00982369fdfd806aff2.png"
+      ]
+    },
+    {
+      "blueprint_id": 49,
+      "name": "Gildan 18000 Sweatshirt | Unisex Heavy Blend\u2122 Crewneck",
+      "brand": "Gildan",
+      "url": "https://printify.com/app/products/49/gildan/unisex-heavy-blend-crewneck-sweatshirt",
+      "description": "The Gildan 18000 sweatshirt is a durable crewneck made from a soft cotton-poly blend that keeps its shape and warmth. Ideal for custom prints and everyday wear.",
+      "categories": [
+        "TikTok",
+        "Women's Clothing",
+        "Men's Clothing",
+        "Sweatshirts",
+        "DTG",
+        "Unisex",
+        "Regular fit",
+        "Neck Labels",
+        "Embroidery",
+        "New Mockups",
+        "New Mockups",
+        "Crew neck",
+        "Glitter",
+        "Glitter print",
+        "Puffy",
+        "Puff",
+        "Puff print",
+        "Metallic",
+        "Metallic print",
+        "Raised print",
+        "Textured print"
+      ],
+      "low_price_usd": 15.53,
+      "high_price_usd": 25.8,
+      "providers": [
+        {
+          "provider": "Printful",
+          "base_cost_usd": 20.79,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "Atelier Katanga",
+          "base_cost_usd": 20.23,
+          "shipping_usd": 31.19
+        },
+        {
+          "provider": "Shirt Monkey",
+          "base_cost_usd": 18.3,
+          "shipping_usd": 31.19
+        },
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 19.69,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 17.87,
+          "shipping_usd": 7.39
+        },
+        {
+          "provider": "Print Clever",
+          "base_cost_usd": 23.76,
+          "shipping_usd": 31.19
+        },
+        {
+          "provider": "Prima Printing",
+          "base_cost_usd": 21.88,
+          "shipping_usd": 21.49
+        },
+        {
+          "provider": "Dimona Tee",
+          "base_cost_usd": 19.15,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "Underground Threads",
+          "base_cost_usd": 21.5,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "Duplium",
+          "base_cost_usd": 24.12,
+          "shipping_usd": 27.49
+        },
+        {
+          "provider": "SwiftPOD",
+          "base_cost_usd": 18.7,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "The Print Bar",
+          "base_cost_usd": 15.53,
+          "shipping_usd": 10.39
+        },
+        {
+          "provider": "Monster Digital",
+          "base_cost_usd": 19.45,
+          "shipping_usd": 7.99
+        },
+        {
+          "provider": "Print Geek",
+          "base_cost_usd": 20.34,
+          "shipping_usd": 28.09
+        },
+        {
+          "provider": "Textildruck Europa",
+          "base_cost_usd": 19.68,
+          "shipping_usd": 33.79
+        },
+        {
+          "provider": "T Shirt and Sons",
+          "base_cost_usd": 25.8,
+          "shipping_usd": 46.79
+        },
+        {
+          "provider": "Marco Fine Arts",
+          "base_cost_usd": 22.97,
+          "shipping_usd": 7.99
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/6ab60cf18fb9063f9f000230.png",
+        "https://images.printify.com/api/catalog/66d8232c53b570547f0b78b3.png",
+        "https://images.printify.com/api/catalog/688c7aec03438e5a8705b181.png",
+        "https://images.printify.com/api/catalog/66d8233de727c92cf40aed62.png",
+        "https://images.printify.com/api/catalog/688c7b2995dced619d0805a2.png",
+        "https://images.printify.com/api/catalog/68f72c62cb20937c670d4fa2.png"
+      ]
+    },
+    {
+      "blueprint_id": 578,
+      "name": "Women's Raglan Pullover Fleece | Bella + Canvas 7505",
+      "brand": "Bella+Canvas",
+      "url": "https://printify.com/app/products/578/bellacanvas/womens-cropped-fleece-pullover",
+      "description": "The Bella + Canvas 7505 women's raglan pullover fleece is a mid-length blank sweatshirt. They're perfectly suitable for custom printing.",
+      "categories": [
+        "Sweatshirts",
+        "Women's Clothing",
+        "DTG",
+        "Crop tops",
+        "Cropped",
+        "Women's Clothing",
+        "Cotton",
+        "Tie-dye",
+        "Crop Hoodie",
+        "Cropped",
+        "Women's Clothing",
+        "Cotton",
+        "Cropped",
+        "Crop",
+        "Premium Apparel"
+      ],
+      "low_price_usd": 41.23,
+      "high_price_usd": 41.23,
+      "providers": [
+        {
+          "provider": "SwiftPOD",
+          "base_cost_usd": 41.23,
+          "shipping_usd": 7.99
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/672deff2114e280b2d0433f3.png",
+        "https://images.printify.com/api/catalog/672de4e4ee6a5e75f00aa3e2.png",
+        "https://images.printify.com/api/catalog/672dee5ff5c856ad94052a83.png",
+        "https://images.printify.com/api/catalog/611b87ff63d3ab739c27e406.png",
+        "https://images.printify.com/api/catalog/615c3c8e3d580a1c78092bd8.png"
+      ]
+    },
+    {
+      "blueprint_id": 5358,
+      "name": "Women's Micro Rib Baby Tee",
+      "brand": "Bella+Canvas",
+      "url": "https://printify.com/app/products/5358/bellacanvas/womens-micro-rib-baby-tee",
+      "description": "Meet your new everyday essential soft, stretchy, and perfectly fitted. The Bella+Canvas Women's Micro Rib Baby Tee delivers a modern mid-length silhouette with premium comfort and a flattering shape.",
+      "categories": [
+        "Women's Clothing",
+        "T-shirts",
+        "Early Access",
+        "Early Access",
+        "DTG",
+        "Embroidery"
+      ],
+      "low_price_usd": 19.74,
+      "high_price_usd": 19.74,
+      "providers": [
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 19.74,
+          "shipping_usd": 4.49
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/699c79dc18e7983700054090.png",
+        "https://images.printify.com/api/catalog/699c6dda5ed284ea8005ed41.png",
+        "https://images.printify.com/api/catalog/699c72a2178fd9070800e310.png",
+        "https://images.printify.com/api/catalog/699c6dcd489852798f09d260.png",
+        "https://images.printify.com/api/catalog/699c6dd3f826b01d5a03f881.png",
+        "https://images.printify.com/api/catalog/699c6dc17c422269bd0775e0.png"
+      ]
+    },
+    {
+      "blueprint_id": 706,
+      "name": "Customize your Comfort Colors 1717 tee \u2013 62 Colors available",
+      "brand": "Comfort Colors\u00ae",
+      "url": "https://printify.com/app/products/706/comfort-colors/unisex-garment-dyed-t-shirt",
+      "description": "Design and print on-demand your unique Comfort Colors 1717 tee  \u2013 seamless process, 62 colors. No order minimums, global shipping.",
+      "categories": [
+        "Streetwear",
+        "Unisex",
+        "Simple designs on large embroidery",
+        "DTG",
+        "Women's Clothing",
+        "Women's Clothing",
+        "Premium",
+        "Embroidery",
+        "Cotton",
+        "Cotton",
+        "Crew neck",
+        "US Elections Season",
+        "Unisex",
+        "TikTok",
+        "T-shirts",
+        "Unisex",
+        "Men's Clothing",
+        "Cotton",
+        "Back to School",
+        "Crew neck",
+        "Women's Clothing",
+        "DTG",
+        "Men's Clothing",
+        "Oversized",
+        "Premium Apparel",
+        "Men's Clothing",
+        "Crew neck",
+        "DTG",
+        "Puff",
+        "Puff print",
+        "Puffy",
+        "Metallic",
+        "Metallic print",
+        "Glitter",
+        "Glitter print",
+        "Textured print",
+        "Raised print"
+      ],
+      "low_price_usd": 12.65,
+      "high_price_usd": 24.16,
+      "providers": [
+        {
+          "provider": "Printful",
+          "base_cost_usd": 20.92,
+          "shipping_usd": 4.49
+        },
+        {
+          "provider": "Shirt Monkey",
+          "base_cost_usd": 17.44,
+          "shipping_usd": 23.99
+        },
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 18.24,
+          "shipping_usd": 4.49
+        },
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 12.65,
+          "shipping_usd": 3.99
+        },
+        {
+          "provider": "Dimona Tee",
+          "base_cost_usd": 17.79,
+          "shipping_usd": 4.49
+        },
+        {
+          "provider": "Stakes Manufacturing",
+          "base_cost_usd": 18.03,
+          "shipping_usd": 5.39
+        },
+        {
+          "provider": "SwiftPOD",
+          "base_cost_usd": 15.65,
+          "shipping_usd": 4.49
+        },
+        {
+          "provider": "The Print Bar",
+          "base_cost_usd": 21.82,
+          "shipping_usd": 6.69
+        },
+        {
+          "provider": "Monster Digital",
+          "base_cost_usd": 13.04,
+          "shipping_usd": 4.49
+        },
+        {
+          "provider": "Print Geek",
+          "base_cost_usd": 20.55,
+          "shipping_usd": 23.49
+        },
+        {
+          "provider": "Marco Fine Arts",
+          "base_cost_usd": 24.16,
+          "shipping_usd": 4.49
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/6ab6192998041106050d71f2.png",
+        "https://images.printify.com/api/catalog/66d952e50dea28254a0d1543.png",
+        "https://images.printify.com/api/catalog/688c5eb775e87e8cd604de32.png",
+        "https://images.printify.com/api/catalog/66d952faa44fb08a9d0773e3.png",
+        "https://images.printify.com/api/catalog/66d952c2db98302a6e0cdc92.png",
+        "https://images.printify.com/api/catalog/66d952b10dea28254a0d1542.png"
+      ]
+    },
+    {
+      "blueprint_id": 1670,
+      "name": "Custom Engraved Tumblers | POD",
+      "brand": "Koozie Group\u00ae",
+      "url": "https://printify.com/app/products/1670/koozie-group/insulated-tumbler-with-lid-40oz-engraving",
+      "description": "Design and sell custom engraved tumblers online, with no minimums. See all print-on-demand tumblers here",
+      "categories": [
+        "Home & Living",
+        "Bottles & Tumblers",
+        "Spring Essentials",
+        "Engraving",
+        "Holiday Picks"
+      ],
+      "low_price_usd": 29.77,
+      "high_price_usd": 29.77,
+      "providers": [
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 29.77,
+          "shipping_usd": 7.89
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/67ef90c26182df965d0bb515.png",
+        "https://images.printify.com/api/catalog/67ef900df9cbd02bd60f76c6.png",
+        "https://images.printify.com/api/catalog/67e3f2ffcecabd65d50eebc3.png",
+        "https://images.printify.com/api/catalog/67e3f25c457925f1dd0c5b72.png",
+        "https://images.printify.com/api/catalog/67e6605dffe6a7e73a0f9cc2.png"
+      ]
+    },
+    {
+      "blueprint_id": 1989,
+      "name": "Sipper Glass with Straw, 16oz (Engraving)",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1989/generic-brand/sipper-glass-with-straw-16oz-engraving",
+      "description": "The 16oz Sipper Glass comes with a bamboo lid with silicone ring and glass straw, and features a beautiful jar design to prevent aroma and natural air from escaping, and to retain the bubbly froth of your beverages.",
+      "categories": [
+        "Glassware",
+        "Mugs",
+        "Home & Living",
+        "Drink",
+        "Drinks",
+        "Engraving",
+        "Engraving"
+      ],
+      "low_price_usd": 19.08,
+      "high_price_usd": 19.08,
+      "providers": [
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 19.08,
+          "shipping_usd": 9.59
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/6a0d55898640cb8cba0c5a20.png",
+        "https://images.printify.com/api/catalog/6a0d5588c81d8ae72307cbe0.png",
+        "https://images.printify.com/api/catalog/6a0d8f47ba3b7b180b044fc2.png",
+        "https://images.printify.com/api/catalog/6a0d55869fa1cfb66603e660.png"
+      ]
+    },
+    {
+      "blueprint_id": 1441,
+      "name": "Personalized Sipper Glass | Print On Demand",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1441/generic-brand/sipper-glass-16oz",
+      "description": "Design and sell a personalized sipper glass line online. Worldwide shipping, no minimum orders. Learn more here.",
+      "categories": [
+        "Indoor",
+        "Drink",
+        "Drinks",
+        "Beverage",
+        "Home & Living",
+        "Kitchen",
+        "Drinks",
+        "Beverage",
+        "Made in USA",
+        "Made in the USA",
+        "Assembled in USA",
+        "Glass",
+        "Glassware",
+        "Outdoor",
+        "Summer Picks",
+        "US Elections Season",
+        "Halloween",
+        "Personalization Picks",
+        "Spring Essentials",
+        "Drinks",
+        "Drinks",
+        "Beverage",
+        "Home & Living",
+        "Kitchen",
+        "Glass",
+        "Glass",
+        "Glassware",
+        "Outdoor",
+        "Indoor",
+        "Assembled in the USA",
+        "Indoor",
+        "Drink",
+        "Drinks",
+        "Glass",
+        "Glassware",
+        "Outdoor",
+        "Beverage",
+        "Home & Living",
+        "Glass",
+        "Glassware",
+        "Outdoor",
+        "Indoor",
+        "Drink",
+        "Glassware",
+        "Outdoor",
+        "Indoor",
+        "Drink",
+        "Drink",
+        "Home & Living",
+        "Kitchen"
+      ],
+      "low_price_usd": 15.42,
+      "high_price_usd": 15.42,
+      "providers": [
+        {
+          "provider": "Chill",
+          "base_cost_usd": 15.42,
+          "shipping_usd": 6.99
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66c47359e5f45b36ed0d20a2.png",
+        "https://images.printify.com/api/catalog/66c4735871fcaceabe088c93.png",
+        "https://images.printify.com/api/catalog/65f42e7499704a31e2022ce3.png",
+        "https://images.printify.com/api/catalog/65fc0ce171697fadb205cf23.png",
+        "https://images.printify.com/api/catalog/65f42e727e36676a640fa8c2.png",
+        "https://images.printify.com/api/catalog/67e3fe4ba4795030fc023ec2.png"
+      ]
+    },
+    {
+      "blueprint_id": 1313,
+      "name": "Personalized Cotton Tote Bag | Print on Demand - Printify",
+      "brand": "Liberty Bags",
+      "url": "https://printify.com/app/products/1313/liberty-bags/cotton-canvas-tote-bag",
+      "description": "Design a personalized cotton tote bag and sell it online to start your eCommerce business. We'll print and ship it worldwide.",
+      "categories": [
+        "Bags",
+        "Totes",
+        "Seasonal Picks",
+        "TikTok",
+        "Holiday Picks",
+        "Spring Essentials",
+        "Cotton",
+        "DTG",
+        "Accessories",
+        "Bestsellers",
+        "Summer Hats & Bags"
+      ],
+      "low_price_usd": 9.67,
+      "high_price_usd": 9.97,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 9.67,
+          "shipping_usd": 4.19
+        },
+        {
+          "provider": "Monster Digital",
+          "base_cost_usd": 9.97,
+          "shipping_usd": 4.49
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66cdad7e4535d849640e155b.png",
+        "https://images.printify.com/api/catalog/66cdad824535d849640e155c.png",
+        "https://images.printify.com/api/catalog/663b2529dc26b48b5d077624.png",
+        "https://images.printify.com/api/catalog/69ba6a82bfaa19fb780bdd70.png",
+        "https://images.printify.com/api/catalog/65537d8e3821454fb80f0872.png",
+        "https://images.printify.com/api/catalog/645de2e7e2efca913e0a6ff7.png"
+      ]
+    },
+    {
+      "blueprint_id": 1389,
+      "name": "Custom Printed Tote Bags No Minimum | Printify",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1389/generic-brand/tote-bag-aop",
+      "description": "Create custom-printed tote bags with no minimum orders. Multiple handle colors, 3 sizes, worldwide shipping. ",
+      "categories": [
+        "Accessories",
+        "US Elections Season",
+        "Halloween",
+        "Bestsellers",
+        "Bags",
+        "All Over Print",
+        "Sublimation",
+        "Made in USA",
+        "Assembled in the USA",
+        "Totes",
+        "4th of July"
+      ],
+      "low_price_usd": 12.6,
+      "high_price_usd": 12.63,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 12.6,
+          "shipping_usd": 4.95
+        },
+        {
+          "provider": "MWW On Demand",
+          "base_cost_usd": 12.63,
+          "shipping_usd": 5.89
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/6883649c0e14ddc83f0e6bb2.png",
+        "https://images.printify.com/api/catalog/66cc6ee30651a4bc3701c792.png",
+        "https://images.printify.com/api/catalog/66cc6ee282f48de85408da62.png",
+        "https://images.printify.com/api/catalog/66cc6edba2150ed2230fd9d3.png",
+        "https://images.printify.com/api/catalog/69ba6696e50f7081200ba5e2.png",
+        "https://images.printify.com/api/catalog/69ba6698cabb03618e0baf62.png"
+      ]
+    },
+    {
+      "blueprint_id": 609,
+      "name": "Personalized Tote Bag | Econscious EC8040",
+      "brand": "Econscious",
+      "url": "https://printify.com/app/products/609/econscious/organic-canvas-tote-bag",
+      "description": "Make your own personalized canvas tote bags. Made with 100% Certified-Organic Cotton and love for the Earth.",
+      "categories": [
+        "Organic",
+        "Eco-friendly",
+        "DTG",
+        "Accessories",
+        "Bags",
+        "Totes",
+        "Bags",
+        "DTG",
+        "Eco-friendly",
+        "Cotton",
+        "Totes",
+        "TikTok",
+        "Cotton"
+      ],
+      "low_price_usd": 20.69,
+      "high_price_usd": 20.72,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 20.69,
+          "shipping_usd": 4.95
+        },
+        {
+          "provider": "Ink Blot",
+          "base_cost_usd": 20.72,
+          "shipping_usd": 5.09
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66d6f370eff00dce9500ec73.png",
+        "https://images.printify.com/api/catalog/66d6f37100256358e5092a52.png",
+        "https://images.printify.com/api/catalog/609e53322249c60eb132ffbe.png",
+        "https://images.printify.com/api/catalog/609cec096646fa2c0a6b2893.png",
+        "https://images.printify.com/api/catalog/609cec0bb4e79149d97a6abc.png"
+      ]
+    },
+    {
+      "blueprint_id": 1288,
+      "name": "Personalized Weekender Bag | Custom Printing - Printify",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1288/generic-brand/weekender-tote-bag",
+      "description": "Sell a personalized weekender bag online or order it for yourself. We'll print your designs on both sides and ship worldwide.",
+      "categories": [
+        "Bags",
+        "Bags",
+        "AOP",
+        "Sublimation",
+        "Made in the USA",
+        "Made in USA",
+        "Assembled in USA",
+        "Assembled in the USA",
+        "All Over Print",
+        "Accessories",
+        "Totes",
+        "Polyester",
+        "Outdoor",
+        "Assembled in USA",
+        "Assembled in the USA",
+        "All Over Print",
+        "Accessories",
+        "Outdoor",
+        "Totes",
+        "Polyester",
+        "Summer Hats & Bags",
+        "AOP",
+        "Sublimation",
+        "Made in the USA",
+        "Made in USA"
+      ],
+      "low_price_usd": 26.24,
+      "high_price_usd": 26.27,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 26.24,
+          "shipping_usd": 4.95
+        },
+        {
+          "provider": "MWW On Demand",
+          "base_cost_usd": 26.27,
+          "shipping_usd": 5.89
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66cdccaa0f0bad075600ad92.png",
+        "https://images.printify.com/api/catalog/66cdcca7b8d8868f690dd1d2.png",
+        "https://images.printify.com/api/catalog/67ee7f30530be42ac70d0cf6.png",
+        "https://images.printify.com/api/catalog/63f49a4853ce43be560ccc27.png",
+        "https://images.printify.com/api/catalog/63f49c864a38c60d200cea13.png",
+        "https://images.printify.com/api/catalog/63f324654c801bf8f6082297.png"
+      ]
+    },
+    {
+      "blueprint_id": 357,
+      "name": "Fully Designable Flat-Bottom Accessory Pouch",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/357/generic-brand/accessory-pouch-w-t-bottom",
+      "description": "From cosmetics to pencil cases our Accessory Pouches can be used to store anything and show your personality on the go. Try designing yours!",
+      "categories": [
+        "Accessories",
+        "Pouches",
+        "All Over Print",
+        "Sublimation",
+        "Made in USA",
+        "Assembled in the USA",
+        "Made in the USA",
+        "Assembled in USA",
+        "Bestsellers",
+        "Bags"
+      ],
+      "low_price_usd": 7.84,
+      "high_price_usd": 7.87,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 7.84,
+          "shipping_usd": 4.95
+        },
+        {
+          "provider": "MWW On Demand",
+          "base_cost_usd": 7.87,
+          "shipping_usd": 4.99
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66c5d88f752f380bad0e3423.png",
+        "https://images.printify.com/api/catalog/66c5d892752f380bad0e3424.png",
+        "https://images.printify.com/api/catalog/5ecf9bb4790e0f3fd6712e0d.png"
+      ]
+    },
+    {
+      "blueprint_id": 2022,
+      "name": "Jewelry Travel Case",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/2022/generic-brand/jewelry-travel-case",
+      "description": "Keep your favorite accessories safe, organized, and tangle-free wherever you wander with this chic travel jewelry box. ",
+      "categories": [
+        "Jewelry&Pins",
+        "Accessories",
+        "Holiday Picks",
+        "Jewelry&Pins",
+        "Accessories"
+      ],
+      "low_price_usd": 12.87,
+      "high_price_usd": 13.16,
+      "providers": [
+        {
+          "provider": "Lumient",
+          "base_cost_usd": 13.16,
+          "shipping_usd": 6.79
+        },
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 12.87,
+          "shipping_usd": 6.79
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/6888acbf7b3055f99b0fba52.png",
+        "https://images.printify.com/api/catalog/6888accc88bb2cdb330f4cd2.png",
+        "https://images.printify.com/api/catalog/68a2e321a08516f451044732.png",
+        "https://images.printify.com/api/catalog/68a2e334112549e3fc0180f2.png",
+        "https://images.printify.com/api/catalog/6888aeda1dae1cedab094532.png",
+        "https://images.printify.com/api/catalog/687f6d785c23e9cca60d8602.png"
+      ]
+    },
+    {
+      "blueprint_id": 2948,
+      "name": "Custom / Personalized Hidden Message Heart Necklace | POD",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/2948/generic-brand/hidden-message-heart-necklace-engraving",
+      "description": "Heart-shaped necklace with hidden blank interior for engraving. Butterfly-opening design ideal for personalized gifts and keepsakes.",
+      "categories": [
+        "Jewelry&Pins",
+        "Engraving",
+        "Engraving",
+        "Necklaces",
+        "Jewelry&Pins",
+        "Necklaces",
+        "Valentine's Day",
+        "Accessories"
+      ],
+      "low_price_usd": 28.45,
+      "high_price_usd": 28.45,
+      "providers": [
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 28.45,
+          "shipping_usd": 4.59
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/695e395853d37665f102d1a3.png",
+        "https://images.printify.com/api/catalog/6a5e0e8f51d72cd1800ff1b1.png",
+        "https://images.printify.com/api/catalog/695e395bfdc2feedd808b242.png",
+        "https://images.printify.com/api/catalog/6a5e0ccfc1dd653c00066e10.png",
+        "https://images.printify.com/api/catalog/6a5e0c6da187df6e6e06f7c2.png"
+      ]
+    },
+    {
+      "blueprint_id": 1488,
+      "name": "Custom Scented Candles | Print On Demand",
+      "brand": "Printed Mint",
+      "url": "https://printify.com/app/products/1488/printed-mint/scented-candles-coconut-apricot-wax-4oz-9oz",
+      "description": "Create and sell custom scented candles in minutes. Add your art to these custom scented candles made of coconut apricot and sell with no minimums. ",
+      "categories": [
+        "Decor",
+        "Assembled in USA",
+        "Assembled in the USA",
+        "Made in the USA",
+        "Made in USA",
+        "Halloween",
+        "Candles",
+        "Home & Living",
+        "Holiday Picks",
+        "Personalization Picks"
+      ],
+      "low_price_usd": 9.33,
+      "high_price_usd": 9.36,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 9.33,
+          "shipping_usd": 6.19
+        },
+        {
+          "provider": "Printed Mint",
+          "base_cost_usd": 9.36,
+          "shipping_usd": 6.19
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/690c9272f5e38b36de045223.png",
+        "https://images.printify.com/api/catalog/690c92734cef12c2230ff293.png",
+        "https://images.printify.com/api/catalog/690c926ed4eda0713c09ff82.png",
+        "https://images.printify.com/api/catalog/690c926ff807e48d2608dd83.png",
+        "https://images.printify.com/api/catalog/690c927105d95b304a03f5e4.png",
+        "https://images.printify.com/api/catalog/6a68630b7e155fc827072b70.png"
+      ]
+    },
+    {
+      "blueprint_id": 1114,
+      "name": "Custom Scrunchie | Printify",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1114/generic-brand/scrunchie",
+      "description": "Design your own custom scrunchie line and sell accessories online. No minimum, worldwide shipping, 400+ blank products",
+      "categories": [
+        "Accessories",
+        "Other",
+        "Other",
+        "Hair",
+        "Sublimation",
+        "All Over Print",
+        "AOP"
+      ],
+      "low_price_usd": 11.22,
+      "high_price_usd": 11.25,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 11.22,
+          "shipping_usd": 5.69
+        },
+        {
+          "provider": "Pic The Gift",
+          "base_cost_usd": 11.25,
+          "shipping_usd": 5.69
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66d5913d9bcb23130900a2a3.png",
+        "https://images.printify.com/api/catalog/66f505f90f975059e30466b3.png",
+        "https://images.printify.com/api/catalog/62bb0cce0ae305d72a0f6a30.png",
+        "https://images.printify.com/api/catalog/62bb0ce7e8fb3cb44d06285c.png"
+      ]
+    },
+    {
+      "blueprint_id": 1941,
+      "name": "Unisex Adult Quarter-Zip Sweatshirt | Comfort Colors 1580",
+      "brand": "Comfort Colors\u00ae",
+      "url": "https://printify.com/app/products/1941/comfort-colors/unisex-adult-quarter-zip-sweatshirt",
+      "description": "Design and sell custom Dimona sweatshirts online, worldwide. No minimums. ",
+      "categories": [
+        "Unisex/Athleisure Wear/Men's Clothing/Women's Clothing/Long Sleeves/Premium Apparel/Sweatshirts/4th of July/Streetwear/Back to School"
+      ],
+      "low_price_usd": 49.28,
+      "high_price_usd": 49.31,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 49.28,
+          "shipping_usd": 8.49
+        },
+        {
+          "provider": "Dimona Tee",
+          "base_cost_usd": 49.31,
+          "shipping_usd": 8.49
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/6882033d69896c2633087202.png",
+        "https://images.printify.com/api/catalog/6882034047da06277a0a63e3.png",
+        "https://images.printify.com/api/catalog/68dbcb49db9cf7623904d322.png",
+        "https://images.printify.com/api/catalog/69eb622b3a6c96f76d08eb82.png",
+        "https://images.printify.com/api/catalog/6882033bb6fe1c21b909b252.png",
+        "https://images.printify.com/api/catalog/6882033ef008d813440f5c92.png"
+      ]
+    },
+    {
+      "blueprint_id": 2650,
+      "name": "Premium Embroidered Sherpa Blanket | Port Authority BP40",
+      "brand": "Port Authority",
+      "url": "https://printify.com/app/products/2650/port-authority/premium-sherpa-blanket-embroidery",
+      "description": "",
+      "categories": [
+        "Bestsellers",
+        "Holiday Picks",
+        "Personalization Picks"
+      ],
+      "low_price_usd": 36.14,
+      "high_price_usd": 36.14,
+      "providers": [
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 36.14,
+          "shipping_usd": 8.99
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66f2b4cce052ff072b07dc12.jpg",
+        "https://images.printify.com/api/catalog/66c4525a82a94958d60a4567.jpg",
+        "https://images.printify.com/api/catalog/66c4525c4a614a076809c14d.jpg",
+        "https://images.printify.com/api/catalog/66c43877c577f943020e2029.jpg",
+        "https://images.printify.com/api/catalog/66c4387c40af02f3cd0aa5b5.jpg",
+        "https://images.printify.com/api/catalog/68875eebc43480efcb0766b3.jpg"
+      ]
+    },
+    {
+      "blueprint_id": 238,
+      "name": "Custom Plush Sherpa Fleece Blanket (50x60\" & 60x80\")",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/238/generic-brand/sherpa-fleece-blanket",
+      "description": "Sell custom sherpa fleece blankets online worldwide, no minimums. Explore all custom blankets here. ",
+      "categories": [
+        "Blankets/All Over Print/AOP/Bedding/Bed/Spring Essentials/Home & Living/Valentine's Day/Seasonal Picks/Bestsellers"
+      ],
+      "low_price_usd": 24.79,
+      "high_price_usd": 24.81,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 24.79,
+          "shipping_usd": 8.29
+        },
+        {
+          "provider": "MWW On Demand",
+          "base_cost_usd": 24.81,
+          "shipping_usd": 8.49
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66c456ff1dafe1ddca07e0f2.png",
+        "https://images.printify.com/api/catalog/66c45708f62c4399850f75d2.png",
+        "https://images.printify.com/api/catalog/66c458021dafe1ddca07e0f3.png",
+        "https://images.printify.com/api/catalog/59024af7b8e7e3411d20b2f3.png",
+        "https://images.printify.com/api/catalog/59020586b8e7e3410c5c7eb2.png",
+        "https://images.printify.com/api/catalog/58eb578bb243923e0274d507.png"
+      ]
+    },
+    {
+      "blueprint_id": 1298,
+      "name": "Unisex Garment-Dyed Heavyweight Hoodie | Comfort Colors 1567",
+      "brand": "Comfort Colors\u00ae",
+      "url": "https://printify.com/app/products/1298/comfort-colors/unisex-garment-dyed-hoodie",
+      "description": "Create your personalized garment-dye hoodie to sell online with Printify. No minimum, worldwide shipping. ",
+      "categories": [
+        "Embroidery/Streetwear/Men's Clothing/Unisex/Women's Clothing/Seasonal Picks/Holiday Picks/Premium Apparel/Athleisure Wear/Hoodies/DTG"
+      ],
+      "low_price_usd": 38.01,
+      "high_price_usd": 43.1,
+      "providers": [
+        {
+          "provider": "SwiftPOD",
+          "base_cost_usd": 38.01,
+          "shipping_usd": 8.49
+        },
+        {
+          "provider": "Monster Digital",
+          "base_cost_usd": 38.45,
+          "shipping_usd": 8.49
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/6a99677c0c60576cf50b5c80.png",
+        "https://images.printify.com/api/catalog/6a99677ce49b2d625a0d0b00.png",
+        "https://images.printify.com/api/catalog/66cdb558bb224d48f9032b33.png",
+        "https://images.printify.com/api/catalog/66cdb555a1a7b908ee090fe5.png",
+        "https://images.printify.com/api/catalog/66cdb55b3a9a0678fe06ec03.png",
+        "https://images.printify.com/api/catalog/63fa10bfb11c250b3a066801.png"
+      ]
+    },
+    {
+      "blueprint_id": 1742,
+      "name": "Vintage Corduroy Embroidered Cap | Big Accessories BX023",
+      "brand": "Big Accessories",
+      "url": "https://printify.com/app/products/1742/big-accessories/vintage-corduroy-cap-embroidery",
+      "description": "Add custom embroidery designs to this vintage corduroy cap and sell online, worldwide, with no minimums. See all caps here. ",
+      "categories": [
+        "Embroidery/Athleisure Wear/Accessories/Hats"
+      ],
+      "low_price_usd": 18.57,
+      "high_price_usd": 18.57,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 18.57,
+          "shipping_usd": 4.99
+        },
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 18.57,
+          "shipping_usd": 5.19
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/681b65ef05f88cdfc603df12.png",
+        "https://images.printify.com/api/catalog/67a1bf28a175ba21c101e343.png",
+        "https://images.printify.com/api/catalog/6926c5291a8a35e74006ccc2.png",
+        "https://images.printify.com/api/catalog/6926c52eb0c020be3d042f5a.png",
+        "https://images.printify.com/api/catalog/682341465d9694db3b0f1df2.png",
+        "https://images.printify.com/api/catalog/682471fadba2f32f110da472.png"
+      ]
+    },
+    {
+      "blueprint_id": 1691,
+      "name": "Classic Cuffed Knit Beanie (Embroidery) | Yupoong 1501KC",
+      "brand": "Yupoong",
+      "url": "https://printify.com/app/products/1691/yupoong/classic-cuffed-beanie-embroidery",
+      "description": "Add your art to this custom embroidery beanie and sell online. No minimums, worldwide shipping. ",
+      "categories": [
+        "Embroidery/Hats/Beanies/Accessories/Unisex"
+      ],
+      "low_price_usd": 15.26,
+      "high_price_usd": 15.26,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 15.26,
+          "shipping_usd": 4.59
+        },
+        {
+          "provider": "Fulfill Engine",
+          "base_cost_usd": 15.26,
+          "shipping_usd": 4.79
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/67e27a4665b07e8bc90a9462.png",
+        "https://images.printify.com/api/catalog/690a09613e7c2d64370376b2.png",
+        "https://images.printify.com/api/catalog/690a099210bc5320eb034b22.png",
+        "https://images.printify.com/api/catalog/683dac296c0669c70b01f422.png",
+        "https://images.printify.com/api/catalog/683dac39a63d08e05d03dfb2.png",
+        "https://images.printify.com/api/catalog/683dac4c2812350f6e0281b2.png"
+      ]
+    },
+    {
+      "blueprint_id": 1095,
+      "name": "Women's Plush Indoor Bridal & Lounge Slippers",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1095/generic-brand/womens-indoor-slippers",
+      "description": "Create your own house slippers for women as a gift or to sell online. No minimum, worldwide shipping, 400+ blank products",
+      "categories": [
+        "Shoes/Indoor/AOP/All Over Print/Women's Clothing/footwear/Valentine's Day/Sublimation/Home & Living/Bathroom"
+      ],
+      "low_price_usd": 9.85,
+      "high_price_usd": 9.85,
+      "providers": [
+        {
+          "provider": "Subliminator",
+          "base_cost_usd": 9.85,
+          "shipping_usd": 6.49
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66d5afa98c321bdc340930c4.png",
+        "https://images.printify.com/api/catalog/66d5afaaf524c32a840fe245.png",
+        "https://images.printify.com/api/catalog/62959aa0da5a4ace6e0674e4.png",
+        "https://images.printify.com/api/catalog/62959a9b3377fa92090560bc.png",
+        "https://images.printify.com/api/catalog/62959a9adc49645e72063211.png",
+        "https://images.printify.com/api/catalog/66c3459c418017b3650e68d4.jpg"
+      ]
+    },
+    {
+      "blueprint_id": 1310,
+      "name": "Personalized Keepsake Acrylic Ornament with Satin Ribbon",
+      "brand": "Generic brand",
+      "url": "https://printify.com/app/products/1310/generic-brand/acrylic-ornament-with-ribbon",
+      "description": "Sell beautiful personalized holiday ornaments to customers around the world. Acrylic, ribbon included, no minimum orders. ",
+      "categories": [
+        "Christmas/Holiday Picks/Home & Living/Seasonal Decorations/Seasonal Picks/Ornaments"
+      ],
+      "low_price_usd": 12.43,
+      "high_price_usd": 12.46,
+      "providers": [
+        {
+          "provider": "Printify Choice",
+          "base_cost_usd": 12.43,
+          "shipping_usd": 4.95
+        },
+        {
+          "provider": "MyLocker",
+          "base_cost_usd": 12.46,
+          "shipping_usd": 5.19
+        }
+      ],
+      "images": [
+        "https://images.printify.com/api/catalog/66deb9cb32eb28611d0d7b02.png",
+        "https://images.printify.com/api/catalog/66cdaed6ec8306a71c081153.png",
+        "https://images.printify.com/api/catalog/64e5d57e8a05d934000d88e7.png",
+        "https://images.printify.com/api/catalog/64e5d5038a05d934000d88e4.png",
+        "https://images.printify.com/api/catalog/66e00f53b01574f9840a97d2.jpg",
+        "https://images.printify.com/api/catalog/66e00f92150c6009900c35b2.jpg"
+      ]
+    }
+  ]
+}
