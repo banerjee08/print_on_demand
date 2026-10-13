@@ -12,65 +12,128 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg-canvas: #FAF8F5;        /* Warm Alabaster */
-      --bg-surface: #FFFFFF;       /* Pure Editorial White */
-      --bg-subtle: #F3EFEA;        /* Soft Oatmeal / Warm Stone */
-      --text-primary: #18181B;     /* Deep Espresso Ink */
-      --text-secondary: #52525B;   /* Warm Charcoal Slate */
-      --text-muted: #71717A;       /* Muted Stone */
-      --accent-brand: #9E4758;     /* Dusty Botanical Rose */
-      --accent-brand-soft: #F9EFF1;/* Soft Botanical Rose Tint */
-      --accent-gold: #B4833E;      /* Warm Champagne Gold */
-      --accent-sage: #2D5A43;      /* Forest Sage */
-      --border-hairline: #E6E1DA;  /* Warm Sand Hairline */
+      --bg-canvas: #FAF8F5;          /* Warm Alabaster */
+      --bg-surface: #FFFFFF;         /* Pure Editorial White */
+      --bg-subtle: #F3EFEA;          /* Soft Oatmeal / Warm Stone */
+      --bg-overlay: rgba(250, 248, 245, 0.96);
+      --text-primary: #18181B;       /* Deep Espresso Ink (16.8:1 — AAA) */
+      --text-secondary: #3F3F46;     /* Rich Charcoal Slate (9.6:1 — AAA) */
+      --text-muted: #52525B;         /* Warm Slate (6.8:1 — AA+) */
+      --accent-brand: #9E4758;       /* Dusty Botanical Rose (5.32:1 with #FFFFFF — AA) */
+      --accent-brand-hover: #843847;
+      --accent-brand-text: #883647;  /* High-Contrast Botanical Rose Text (6.35:1 on #F9EFF1 — AA) */
+      --accent-brand-soft: #F9EFF1;  /* Soft Botanical Rose Tint */
+      --accent-gold: #B4833E;        /* Warm Champagne Gold */
+      --accent-gold-text: #8A5F22;   /* High-Contrast Deep Champagne Gold Text (5.42:1 on #FAF8F5 — AA) */
+      --accent-sage: #2D5A43;        /* Forest Sage */
+      --accent-sage-text: #234734;   /* High-Contrast Forest Sage Text (9.8:1 — AAA) */
+      --accent-sage-soft: #ECFDF3;
+      --border-hairline: #E6E1DA;
+      --border-strong: #C8C0B4;
       --font-heading: 'Cormorant Garamond', Georgia, serif;
       --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-script: 'Dancing Script', cursive;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
+    html.dark {
+      --bg-canvas: #121110;          /* Warm Espresso Obsidian */
+      --bg-surface: #1C1917;         /* Rich Warm Charcoal Surface */
+      --bg-subtle: #262220;          /* Elevated Warm Cocoa Stone */
+      --bg-overlay: rgba(28, 25, 23, 0.96);
+      --text-primary: #FAF8F5;       /* Warm Alabaster Ink (17.4:1 — AAA) */
+      --text-secondary: #E4DFD7;     /* Soft Oat Linen (13.1:1 — AAA) */
+      --text-muted: #B8B0A4;         /* Warm Stone (7.8:1 — AAA) */
+      --accent-brand: #9E4758;
+      --accent-brand-hover: #B55669;
+      --accent-brand-text: #F2A6B5;  /* Luminous Botanical Rose Text (8.9:1 — AAA) */
+      --accent-brand-soft: #2A1A1E;
+      --accent-gold: #D4A359;
+      --accent-gold-text: #E5B869;   /* Luminous Champagne Gold Text (9.8:1 — AAA) */
+      --accent-sage: #2D5A43;
+      --accent-sage-text: #75C99B;   /* Luminous Forest Sage Text (9.2:1 — AAA) */
+      --accent-sage-soft: #14291E;
+      --border-hairline: #332E2A;
+      --border-strong: #4A433D;
+      color-scheme: dark;
+    }
+
     body {
       font-family: var(--font-body);
       background-color: var(--bg-canvas);
       color: var(--text-primary);
+      font-size: 16px;
+      line-height: 1.6;
       margin: 0;
       padding: 0;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
-    .heading-font { font-family: var(--font-heading); }
-    .script-font { font-family: var(--font-script); }
+    h1, h2, h3, .heading-font {
+      font-family: var(--font-heading);
+      line-height: 1.15;
+      font-optical-sizing: auto;
+    }
+    .script-font { font-family: var(--font-script); line-height: 1.3; }
     .mono-font { font-family: var(--font-mono); }
+
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible {
+      outline: 2px solid var(--accent-brand-text);
+      outline-offset: 2px;
+    }
+
+    html.dark .bg-white { background-color: var(--bg-surface) !important; }
+    html.dark .bg-\[\#FAF8F5\] { background-color: var(--bg-canvas) !important; }
+    html.dark .bg-\[\#F9EFF1\] { background-color: var(--accent-brand-soft) !important; }
+    html.dark .bg-\[\#ECFDF3\] { background-color: var(--accent-sage-soft) !important; }
+    html.dark .text-\[\#18181B\] { color: var(--text-primary) !important; }
+    html.dark .text-\[\#3F3F46\],
+    html.dark .text-\[\#52525B\] { color: var(--text-secondary) !important; }
+    html.dark .text-\[\#71717A\] { color: var(--text-muted) !important; }
+    html.dark .text-\[\#9E4758\],
+    html.dark .text-\[\#883647\] { color: var(--accent-brand-text) !important; }
+    html.dark .text-\[\#B4833E\],
+    html.dark .text-\[\#8A5F22\] { color: var(--accent-gold-text) !important; }
+    html.dark .text-\[\#2D5A43\],
+    html.dark .text-\[\#234734\] { color: var(--accent-sage-text) !important; }
+    html.dark .border-\[\#E6E1DA\] { border-color: var(--border-hairline) !important; }
+    html.dark .border-\[\#D4CDC3\],
+    html.dark .border-\[\#C8C0B4\] { border-color: var(--border-strong) !important; }
 
     .pl-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       background: var(--accent-brand);
-      color: #FFFFFF;
+      color: #FFFFFF !important;
       border: 1px solid var(--accent-brand);
       border-radius: 0px;
       padding: 13px 28px;
       font-family: var(--font-body);
-      font-size: 13.5px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      line-height: 1.35;
+      letter-spacing: 0.06em;
       text-transform: lowercase;
       transition: all 0.2s ease;
       cursor: pointer;
     }
     .pl-btn:hover {
-      background: #843847;
-      border-color: #843847;
+      background: var(--accent-brand-hover);
+      border-color: var(--accent-brand-hover);
     }
     .pl-btn-outline {
-      background: #FFFFFF;
-      color: var(--text-primary);
-      border: 1px solid var(--text-primary);
+      background: var(--bg-surface);
+      color: var(--text-primary) !important;
+      border: 1.5px solid var(--text-primary);
     }
     .pl-btn-outline:hover {
       background: var(--text-primary);
-      color: #FFFFFF;
+      color: var(--bg-surface) !important;
     }
 
     @keyframes floatSlow {
@@ -85,27 +148,35 @@
 <body class="min-h-screen flex flex-col justify-between">
 
   <!-- =========================================================================
-       1. TOP ANNOUNCEMENT RIBBON (Soft Botanical Rose #F9EFF1)
+       1. TOP ANNOUNCEMENT RIBBON (Soft Botanical Rose, Accessible 14px Font, Zero Emojis)
        ========================================================================= -->
-  <div class="bg-[#F9EFF1] border-b border-[#E6E1DA] py-2.5 px-4 text-center text-[12.5px] font-semibold tracking-wide text-[#18181B]">
-    <span>🎀✨ <strong>LOULOU &amp; LUXE OFFICIAL BOUTIQUE</strong> — LAUNCHING SOON IN 🇺🇸 USA &amp; 🇨🇦 CANADA • JOIN THE VIP LIST FOR <strong class="text-[#9E4758] underline mono-font">25% OFF</strong> ✨🎀</span>
+  <div class="bg-[#F9EFF1] border-b border-[#E6E1DA] py-2.5 px-4 text-center text-[14px] font-semibold tracking-wide text-[#18181B]">
+    <span><strong>LOULOU &amp; LUXE OFFICIAL BOUTIQUE</strong> — LAUNCHING SOON IN USA &amp; CANADA • JOIN THE VIP LIST FOR <strong class="text-[#883647] underline mono-font">25% OFF</strong></span>
   </div>
 
   <!-- =========================================================================
-       2. MINIMAL PUBLIC BOUTIQUE HEADER
+       2. MINIMAL PUBLIC BOUTIQUE HEADER (With Light/Dark Theme Toggle)
        ========================================================================= -->
   <header class="bg-white border-b border-[#E6E1DA]">
-    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-20 flex items-center justify-between">
+    <div class="max-w-7xl mx-auto px-4 sm:px-8 h-22 py-3.5 flex items-center justify-between gap-4">
       <a href="/" class="flex flex-col leading-none">
-        <span class="heading-font text-[30px] sm:text-[36px] font-bold tracking-[0.08em] text-[#18181B]">LOULOU &amp; LUXE</span>
-        <span class="text-[9.5px] uppercase tracking-[0.28em] text-[#9E4758] font-semibold mt-0.5">Boutique • Bridal • Monogram Atelier</span>
+        <span class="heading-font text-[32px] sm:text-[38px] font-bold tracking-[0.06em] text-[#18181B]">LOULOU &amp; LUXE</span>
+        <span class="text-[12.5px] uppercase tracking-[0.2em] text-[#883647] font-bold mt-1">Boutique • Bridal • Monogram Atelier</span>
       </a>
       <div class="flex items-center gap-3">
-        <span class="hidden md:inline-flex items-center gap-1.5 text-[11.5px] font-semibold uppercase tracking-widest px-3 py-1.5 bg-[#FAF8F5] border border-[#E6E1DA] text-[#52525B]">
-          <span class="w-2 h-2 rounded-full bg-[#B4833E] animate-pulse"></span>
+        <span class="hidden md:inline-flex items-center gap-2 text-[13px] font-semibold uppercase tracking-widest px-3.5 py-2 bg-[#FAF8F5] border border-[#C8C0B4] text-[#3F3F46]">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#B4833E] animate-pulse"></span>
           Atelier Preparing Debut Drop
         </span>
-        <a href="#vip-waitlist" class="pl-btn !py-2.5 !px-5 !text-[12.5px]">
+        <button
+          onclick="toggleThemeMode()"
+          id="cs-theme-btn"
+          class="px-3.5 py-2.5 border border-[#C8C0B4] text-[14px] font-semibold text-[#18181B] hover:border-[#18181B] transition"
+          aria-label="Toggle Dark or Light Theme"
+        >
+          Dark Theme
+        </button>
+        <a href="#vip-waitlist" class="pl-btn !py-2.5 !px-5 !text-[14.5px]">
           get 25% off launch pass
         </a>
       </div>
@@ -120,112 +191,111 @@
 
       <!-- Left Column (7 cols): Launching Soon Message, Countdown & VIP Signup -->
       <div id="vip-waitlist" class="lg:col-span-7 space-y-6">
-        <div class="inline-flex items-center gap-2.5 px-3.5 py-1.5 bg-[#F9EFF1] border border-[#9E4758]/25">
-          <span class="w-2 h-2 rounded-full bg-[#9E4758]"></span>
-          <span class="text-[11px] font-bold uppercase tracking-[0.22em] text-[#9E4758]">OFFICIAL LAUNCHING SOON • AUTUMN / WINTER EDITION</span>
+        <div class="inline-flex items-center gap-2.5 px-4 py-1.5 bg-[#F9EFF1] border border-[#9E4758]/35">
+          <span class="w-2.5 h-2.5 rounded-full bg-[#9E4758]"></span>
+          <span class="text-[13px] font-bold uppercase tracking-[0.18em] text-[#883647]">OFFICIAL LAUNCHING SOON • AUTUMN / WINTER EDITION</span>
         </div>
 
-        <div class="space-y-3">
-          <p class="script-font text-[28px] sm:text-[32px] text-[#B4833E] leading-none">
+        <div class="space-y-3.5">
+          <p class="script-font text-[30px] sm:text-[34px] text-[#8A5F22]">
             Something Effortlessly Luxe is Blooming...
           </p>
-          <h1 class="heading-font text-[44px] sm:text-[60px] font-semibold text-[#18181B] leading-[1.03]">
+          <h1 class="heading-font text-[46px] sm:text-[62px] font-semibold text-[#18181B] leading-[1.12]">
             Our Doors Are Opening Soon.
           </h1>
-          <p class="text-[15px] sm:text-[16px] text-[#52525B] leading-relaxed max-w-2xl">
-            Welcome to <strong>LouLou &amp; Luxe</strong> (<span class="mono-font text-[13.5px]">loulouandluxe.com</span>) — your new destination for elevated <strong>Social-Club Fleece</strong>, <strong>Effortless Boutique Dresses</strong>, <strong>Bridal &amp; Bachelorette Suites</strong>, and <strong>48-Hour Custom Embroidered Monogram Gifts</strong> across the United States &amp; Canada.
+          <p class="text-[16px] sm:text-[17px] text-[#3F3F46] leading-relaxed max-w-2xl">
+            Welcome to <strong>LouLou &amp; Luxe</strong> (<span class="mono-font text-[15px]">loulouandluxe.com</span>) — your new destination for elevated <strong>Social-Club Fleece</strong>, <strong>Effortless Boutique Dresses</strong>, <strong>Bridal &amp; Bachelorette Suites</strong>, and <strong>48-Hour Custom Embroidered Monogram Gifts</strong> across the United States &amp; Canada.
           </p>
         </div>
 
         <!-- 4-Tile Live Launch Countdown Timer -->
         <div>
-          <p class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#71717A] mb-2.5">
-            ⏳ Countdown to Official Public Launch:
+          <p class="text-[13px] font-bold uppercase tracking-[0.18em] text-[#52525B] mb-2.5">
+            Countdown to Official Public Launch:
           </p>
-          <div class="grid grid-cols-4 gap-2.5 sm:gap-3.5 max-w-md">
-            <div class="bg-white border border-[#D4CDC3] p-3 sm:p-4 text-center shadow-sm">
-              <span id="cs-days" class="mono-font text-[26px] sm:text-[34px] font-bold text-[#9E4758] block leading-none">14</span>
-              <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#71717A] mt-1.5 block">Days</span>
+          <div class="grid grid-cols-4 gap-3 sm:gap-4 max-w-md">
+            <div class="bg-white border border-[#C8C0B4] p-3.5 sm:p-4 text-center shadow-sm">
+              <span id="cs-days" class="mono-font text-[28px] sm:text-[36px] font-bold text-[#883647] block leading-none">14</span>
+              <span class="text-[12.5px] font-bold uppercase tracking-[0.14em] text-[#52525B] mt-2 block">Days</span>
             </div>
-            <div class="bg-white border border-[#D4CDC3] p-3 sm:p-4 text-center shadow-sm">
-              <span id="cs-hours" class="mono-font text-[26px] sm:text-[34px] font-bold text-[#18181B] block leading-none">08</span>
-              <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#71717A] mt-1.5 block">Hours</span>
+            <div class="bg-white border border-[#C8C0B4] p-3.5 sm:p-4 text-center shadow-sm">
+              <span id="cs-hours" class="mono-font text-[28px] sm:text-[36px] font-bold text-[#18181B] block leading-none">08</span>
+              <span class="text-[12.5px] font-bold uppercase tracking-[0.14em] text-[#52525B] mt-2 block">Hours</span>
             </div>
-            <div class="bg-white border border-[#D4CDC3] p-3 sm:p-4 text-center shadow-sm">
-              <span id="cs-mins" class="mono-font text-[26px] sm:text-[34px] font-bold text-[#18181B] block leading-none">42</span>
-              <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#71717A] mt-1.5 block">Mins</span>
+            <div class="bg-white border border-[#C8C0B4] p-3.5 sm:p-4 text-center shadow-sm">
+              <span id="cs-mins" class="mono-font text-[28px] sm:text-[36px] font-bold text-[#18181B] block leading-none">42</span>
+              <span class="text-[12.5px] font-bold uppercase tracking-[0.14em] text-[#52525B] mt-2 block">Mins</span>
             </div>
-            <div class="bg-white border border-[#D4CDC3] p-3 sm:p-4 text-center shadow-sm">
-              <span id="cs-secs" class="mono-font text-[26px] sm:text-[34px] font-bold text-[#B4833E] block leading-none">19</span>
-              <span class="text-[10px] font-bold uppercase tracking-[0.18em] text-[#71717A] mt-1.5 block">Secs</span>
+            <div class="bg-white border border-[#C8C0B4] p-3.5 sm:p-4 text-center shadow-sm">
+              <span id="cs-secs" class="mono-font text-[28px] sm:text-[36px] font-bold text-[#8A5F22] block leading-none">19</span>
+              <span class="text-[12.5px] font-bold uppercase tracking-[0.14em] text-[#52525B] mt-2 block">Secs</span>
             </div>
           </div>
         </div>
 
         <!-- VIP Waitlist & 25% Off Founder's Pass Card -->
-        <div class="bg-white border border-[#D4CDC3] p-6 sm:p-7 shadow-sm space-y-4 max-w-xl">
-          <div class="flex items-center justify-between border-b border-[#E6E1DA] pb-3">
+        <div class="bg-white border border-[#C8C0B4] p-6 sm:p-7 shadow-sm space-y-4 max-w-xl">
+          <div class="flex items-center justify-between border-b border-[#E6E1DA] pb-3.5 gap-3">
             <div>
-              <span class="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9E4758] block">✨ FOUNDER'S VIP EARLY ACCESS</span>
-              <h2 class="heading-font text-[26px] sm:text-[28px] font-semibold text-[#18181B] leading-tight">
+              <span class="text-[12.5px] font-bold uppercase tracking-[0.16em] text-[#883647] block">FOUNDER'S VIP EARLY ACCESS</span>
+              <h2 class="heading-font text-[28px] sm:text-[32px] font-semibold text-[#18181B] leading-tight">
                 Unlock Early Access + 25% Off Your First Order
               </h2>
             </div>
-            <span class="mono-font text-[12px] font-bold px-2.5 py-1 bg-[#F9EFF1] text-[#9E4758] border border-[#9E4758]/30">LULLUXE25</span>
+            <span class="mono-font text-[13.5px] font-bold px-3 py-1 bg-[#F9EFF1] text-[#883647] border border-[#9E4758]/35">LULLUXE25</span>
           </div>
 
-          <form onsubmit="submitWaitlist(event)" class="space-y-3">
-            <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
+          <form onsubmit="submitWaitlist(event)" class="space-y-3.5">
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <input
                 id="cs-email"
                 type="email"
                 required
+                aria-label="Email Address"
                 placeholder="Enter your email address..."
-                class="sm:col-span-2 w-full px-3.5 py-3 bg-[#FAF8F5] border border-[#D4CDC3] text-[13.5px] focus:outline-none focus:border-[#9E4758]"
+                class="sm:col-span-2 w-full px-4 py-3 bg-[#FAF8F5] border border-[#C8C0B4] text-[15px] text-[#18181B]"
               />
               <select
                 id="cs-role"
                 aria-label="What are you shopping for?"
-                class="w-full px-3 py-3 bg-[#FAF8F5] border border-[#D4CDC3] text-[13px] font-medium text-[#18181B] focus:outline-none focus:border-[#9E4758]"
+                class="w-full px-3.5 py-3 bg-[#FAF8F5] border border-[#C8C0B4] text-[14.5px] font-semibold text-[#18181B]"
               >
-                <option value="Everyday Boutique">🛍️ Everyday Boutique</option>
-                <option value="Bride / Bridesmaid">💍 Bride / Bridesmaid</option>
-                <option value="Custom Monogram Gift">🧵 Monogram Gifting</option>
+                <option value="Everyday Boutique">Everyday Boutique</option>
+                <option value="Bride / Bridesmaid">Bride / Bridesmaid</option>
+                <option value="Custom Monogram Gift">Monogram Gifting</option>
               </select>
             </div>
-            <button type="submit" class="pl-btn w-full !py-3.5 !text-[14px]">
+            <button type="submit" class="pl-btn w-full !py-3.5 !text-[15.5px]">
               join the vip launch list &amp; reserve 25% off
             </button>
           </form>
 
-          <div id="cs-waitlist-success" class="hidden p-3.5 bg-[#ECFDF3] border border-[#2D5A43]/30 text-[#2D5A43] text-[13px] font-semibold">
-            ✓ You're on the LouLou &amp; Luxe Founder's List! Your private early-access link and <strong>25% OFF</strong> code (<span class="mono-font">LULLUXE25</span>) are reserved for launch day.
+          <div id="cs-waitlist-success" class="hidden p-4 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[#234734] text-[14.5px] font-semibold">
+            You're on the LouLou &amp; Luxe Founder's List! Your private early-access link and <strong>25% OFF</strong> code (<span class="mono-font">LULLUXE25</span>) are reserved for launch day.
           </div>
 
-          <div class="grid grid-cols-3 gap-2 pt-2 text-[11.5px] text-[#52525B] font-medium">
-            <span>✓ Inclusive XS–2XL Fit</span>
-            <span>✓ 48h Custom Embroidery</span>
-            <span>✓ Free US/CA Ship $79+</span>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2 pt-2 text-[13.5px] text-[#3F3F46] font-semibold">
+            <span>Inclusive XS–2XL Fit</span>
+            <span>48h Custom Embroidery</span>
+            <span>Free US/CA Ship $79+</span>
           </div>
         </div>
       </div>
 
       <!-- Right Column (5 cols): Bespoke LouLou & Luxe Botanical Atelier Graphic & Lookbook Artwork -->
       <div class="lg:col-span-5">
-        <div class="bg-white border border-[#D4CDC3] p-5 sm:p-6 shadow-sm relative">
+        <div class="bg-white border border-[#C8C0B4] p-5 sm:p-6 shadow-sm relative">
           <!-- Decorative Inner Gold Hairline Frame -->
-          <div class="border border-[#B4833E]/40 p-5 sm:p-6 bg-[#FAF8F5] space-y-5">
+          <div class="border border-[#B4833E]/50 p-5 sm:p-6 bg-[#FAF8F5] space-y-5">
 
             <!-- Custom Illustrated SVG Botanical Atelier Crest -->
-            <div class="text-center space-y-2">
+            <div class="text-center space-y-2.5">
               <div class="mx-auto w-44 h-44 sm:w-48 sm:h-48 float-crest">
-                <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
-                  <!-- Outer Champagne Gold Scalloped Seal -->
+                <svg viewBox="0 0 240 240" fill="none" xmlns="http://www.w3.org/2000/svg" class="w-full h-full" role="img" aria-label="LouLou & Luxe Botanical Atelier Crest">
                   <circle cx="120" cy="120" r="110" fill="#FFFFFF" stroke="#B4833E" stroke-width="1.5"/>
                   <circle cx="120" cy="120" r="102" fill="#F9EFF1" stroke="#9E4758" stroke-width="1" stroke-dasharray="4 4"/>
                   <circle cx="120" cy="120" r="88" fill="#FAF8F5" stroke="#B4833E" stroke-width="1.2"/>
 
-                  <!-- Left & Right Forest Sage Botanical Olive/Eucalyptus Sprigs -->
                   <path d="M58 148 C48 122, 54 90, 76 70" stroke="#2D5A43" stroke-width="1.8" stroke-linecap="round" fill="none"/>
                   <ellipse cx="52" cy="128" rx="9" ry="4.5" transform="rotate(-35 52 128)" fill="#2D5A43" fill-opacity="0.85"/>
                   <ellipse cx="55" cy="106" rx="9" ry="4.5" transform="rotate(-20 55 106)" fill="#2D5A43" fill-opacity="0.85"/>
@@ -236,58 +306,55 @@
                   <ellipse cx="185" cy="106" rx="9" ry="4.5" transform="rotate(20 185 106)" fill="#2D5A43" fill-opacity="0.85"/>
                   <ellipse cx="174" cy="86" rx="8.5" ry="4" transform="rotate(10 174 86)" fill="#2D5A43" fill-opacity="0.85"/>
 
-                  <!-- Top Botanical Rose Blossom Emblem -->
                   <circle cx="120" cy="54" r="9" fill="#9E4758"/>
                   <circle cx="112" cy="58" r="6.5" fill="#9E4758" fill-opacity="0.75"/>
                   <circle cx="128" cy="58" r="6.5" fill="#9E4758" fill-opacity="0.75"/>
                   <circle cx="120" cy="54" r="3.5" fill="#FAF8F5"/>
 
-                  <!-- Center Interlocking Monogram "L & L" -->
                   <text x="120" y="122" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-size="44" font-weight="700" fill="#18181B" letter-spacing="2">L &amp; L</text>
                   <line x1="78" y1="134" x2="162" y2="134" stroke="#B4833E" stroke-width="1.2"/>
-                  <text x="120" y="150" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="8.5" font-weight="700" fill="#9E4758" letter-spacing="3.5">ATELIER • EST. 2026</text>
-                  <text x="120" y="166" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="13" fill="#52525B">New York • Toronto</text>
+                  <text x="120" y="150" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9.5" font-weight="700" fill="#883647" letter-spacing="3">ATELIER • EST. 2026</text>
+                  <text x="120" y="167" text-anchor="middle" font-family="Cormorant Garamond, Georgia, serif" font-style="italic" font-size="14" fill="#3F3F46">New York • Toronto</text>
 
-                  <!-- Bottom Champagne Gold Bow Motif -->
                   <path d="M120 182 C106 172, 96 184, 110 190 C115 192, 118 186, 120 182 Z" fill="#B4833E"/>
                   <path d="M120 182 C134 172, 144 184, 130 190 C125 192, 122 186, 120 182 Z" fill="#B4833E"/>
                   <path d="M118 184 L110 202 M122 184 L130 202" stroke="#B4833E" stroke-width="2" stroke-linecap="round"/>
                 </svg>
               </div>
-              <p class="text-[11px] font-bold uppercase tracking-[0.24em] text-[#9E4758]">
+              <p class="text-[13px] font-bold uppercase tracking-[0.2em] text-[#883647]">
                 Three Debut Capsules • Launching Soon
               </p>
             </div>
 
             <!-- 3-Card Editorial Lookbook Collage -->
             <div class="grid grid-cols-3 gap-2.5">
-              <div class="relative aspect-[3/4] overflow-hidden border border-[#E6E1DA] bg-white">
+              <div class="relative aspect-[3/4] overflow-hidden border border-[#C8C0B4] bg-white">
                 <img src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=600&q=85" alt="Social Club Fleece" class="w-full h-full object-cover" />
-                <div class="absolute inset-x-0 bottom-0 bg-[#18181B]/85 text-white p-2 text-center">
-                  <span class="heading-font text-[15px] font-semibold block leading-none">club fleece</span>
-                  <span class="text-[9.5px] opacity-85">Heavyweight 380GSM</span>
+                <div class="absolute inset-x-0 bottom-0 bg-[#18181B]/90 text-white p-2 text-center">
+                  <span class="heading-font text-[17px] font-semibold block leading-tight">club fleece</span>
+                  <span class="text-[12px] font-medium">380GSM Fleece</span>
                 </div>
               </div>
-              <div class="relative aspect-[3/4] overflow-hidden border border-[#E6E1DA] bg-white">
+              <div class="relative aspect-[3/4] overflow-hidden border border-[#C8C0B4] bg-white">
                 <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=600&q=85" alt="Bridal & Bachelorette Suite" class="w-full h-full object-cover" />
                 <div class="absolute inset-x-0 bottom-0 bg-[#9E4758]/95 text-white p-2 text-center">
-                  <span class="heading-font text-[15px] font-semibold block leading-none">bridal suite</span>
-                  <span class="text-[9.5px] opacity-90">Custom Bride &amp; Crew</span>
+                  <span class="heading-font text-[17px] font-semibold block leading-tight">bridal suite</span>
+                  <span class="text-[12px] font-medium">Bride &amp; Crew</span>
                 </div>
               </div>
-              <div class="relative aspect-[3/4] overflow-hidden border border-[#E6E1DA] bg-white">
+              <div class="relative aspect-[3/4] overflow-hidden border border-[#C8C0B4] bg-white">
                 <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=600&q=85" alt="Custom Monogram Studio" class="w-full h-full object-cover" />
                 <div class="absolute inset-x-0 bottom-0 bg-[#2D5A43]/95 text-white p-2 text-center">
-                  <span class="heading-font text-[15px] font-semibold block leading-none">monogramming</span>
-                  <span class="text-[9.5px] opacity-90">48h Custom Dispatch</span>
+                  <span class="heading-font text-[17px] font-semibold block leading-tight">monogramming</span>
+                  <span class="text-[12px] font-medium">48h Dispatch</span>
                 </div>
               </div>
             </div>
 
             <!-- Signature Tagline -->
-            <div class="pt-2 border-t border-[#E6E1DA] flex items-center justify-between text-[11.5px] text-[#52525B]">
-              <span class="font-semibold">📍 Designed for USA &amp; Canada</span>
-              <span class="script-font text-[18px] text-[#9E4758]">LouLou &amp; Luxe</span>
+            <div class="pt-2.5 border-t border-[#E6E1DA] flex items-center justify-between text-[13.5px] text-[#3F3F46]">
+              <span class="font-semibold">Designed for USA &amp; Canada</span>
+              <span class="script-font text-[20px] text-[#883647]">LouLou &amp; Luxe</span>
             </div>
           </div>
         </div>
@@ -297,15 +364,17 @@
   </main>
 
   <!-- =========================================================================
-       4. PUBLIC FOOTER (With Cookie & Privacy Settings Trigger)
+       4. PUBLIC FOOTER
        ========================================================================= -->
-  <footer class="bg-white border-t border-[#E6E1DA] py-5 px-4 sm:px-8 text-[12.5px] text-[#71717A]">
+  <footer class="bg-white border-t border-[#E6E1DA] py-6 px-4 sm:px-8 text-[14px] text-[#52525B]">
     <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-4">
       <p>© 2026 LouLou &amp; Luxe Boutique (loulouandluxe.com). All Rights Reserved.</p>
-      <div class="flex items-center gap-4">
-        <button onclick="openCookieConsentModal()" class="underline hover:text-[#9E4758] font-medium">🍪 Cookie &amp; Privacy Preferences</button>
+      <div class="flex flex-wrap items-center gap-4">
+        <button onclick="openCookieConsentModal()" class="underline hover:text-[#883647] font-semibold text-[#18181B]">Cookie &amp; Privacy Preferences</button>
         <span>•</span>
-        <a href="mailto:concierge@loulouandluxe.com" class="hover:underline">concierge@loulouandluxe.com</a>
+        <button onclick="toggleThemeMode()" class="underline hover:text-[#883647] font-semibold text-[#18181B]">Switch Light / Dark Theme</button>
+        <span>•</span>
+        <a href="mailto:concierge@loulouandluxe.com" class="hover:underline text-[#18181B]">concierge@loulouandluxe.com</a>
       </div>
     </div>
   </footer>
@@ -313,49 +382,46 @@
   <!-- =========================================================================
        5. MANDATORY VISITOR ENTRY COOKIE DISCLAIMER & GRANULAR CONSENT POPUP
        ========================================================================= -->
-  <div id="cookie-consent-backdrop" class="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-5 bg-black/40 backdrop-blur-[2px] hidden items-end justify-center">
+  <div id="cookie-consent-backdrop" class="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-5 bg-black/50 backdrop-blur-[2px] hidden items-end justify-center">
     <div class="bg-white max-w-4xl w-full border-2 border-[#18181B] shadow-2xl overflow-hidden">
       <div class="bg-[#F9EFF1] px-5 py-3 border-b border-[#E6E1DA] flex flex-wrap items-center justify-between gap-2">
-        <div class="flex items-center gap-2">
-          <span class="text-base">🍪</span>
-          <span class="text-[11.5px] font-bold uppercase tracking-[0.18em] text-[#9E4758]">Visitor Cookie &amp; Privacy Disclaimer</span>
-        </div>
-        <span class="mono-font text-[11px] text-[#52525B]">GDPR • CCPA/CPRA • Canada PIPEDA Compliant</span>
+        <span class="text-[13px] font-bold uppercase tracking-[0.16em] text-[#883647]">Visitor Cookie &amp; Privacy Disclaimer</span>
+        <span class="mono-font text-[12.5px] font-semibold text-[#3F3F46]">GDPR • CCPA/CPRA • Canada PIPEDA Compliant</span>
       </div>
 
       <div class="p-5 sm:p-6 space-y-4">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-5">
           <div class="space-y-1.5 flex-1">
-            <h3 class="heading-font text-[24px] sm:text-[26px] font-semibold text-[#18181B] leading-tight">
+            <h3 class="heading-font text-[26px] sm:text-[28px] font-semibold text-[#18181B] leading-tight">
               We Value Your Privacy &amp; Cookie Choice
             </h3>
-            <p class="text-[13px] text-[#52525B] leading-relaxed">
-              Before we store any non-essential cookies on your device, please let us know whether we may collect cookies from your visit. We use <strong>Strictly Necessary Cookies</strong> for core site security and saving your privacy choice, and optional <strong>Analytics &amp; VIP Waitlist Cookies</strong> to remember your <span class="mono-font">LULLUXE25</span> launch code.
+            <p class="text-[14.5px] text-[#3F3F46] leading-relaxed">
+              Before we store any non-essential cookies on your device, please let us know whether we may collect cookies from your visit. We use <strong>Strictly Necessary Cookies</strong> for core site security and saving your privacy choice, and optional <strong>Analytics &amp; VIP Waitlist Cookies</strong> to remember your <span class="mono-font font-bold">LULLUXE25</span> launch code.
             </p>
           </div>
 
           <div class="flex flex-col sm:flex-row lg:flex-col xl:flex-row gap-2.5 flex-shrink-0">
-            <button onclick="saveCookieConsent('ALL')" class="pl-btn !py-3 !px-5 !text-[13.5px]">
+            <button onclick="saveCookieConsent('ALL')" class="pl-btn !py-3 !px-5 !text-[14.5px]">
               accept all cookies
             </button>
-            <button onclick="saveCookieConsent('NECESSARY_ONLY')" class="pl-btn pl-btn-outline !py-3 !px-5 !text-[13.5px]">
+            <button onclick="saveCookieConsent('NECESSARY_ONLY')" class="pl-btn pl-btn-outline !py-3 !px-5 !text-[14.5px]">
               decline non-essential
             </button>
-            <button onclick="toggleCookieCustomizer()" class="px-4 py-2.5 border border-[#D4CDC3] text-[12.5px] font-bold uppercase tracking-wider text-[#52525B] hover:border-[#18181B] hover:text-[#18181B] transition">
+            <button onclick="toggleCookieCustomizer()" class="px-4 py-2.5 border border-[#C8C0B4] text-[13.5px] font-bold uppercase tracking-wider text-[#3F3F46] hover:border-[#18181B] hover:text-[#18181B] transition">
               customize
             </button>
           </div>
         </div>
 
         <!-- Granular Customizer Drawer -->
-        <div id="cookie-customizer-panel" class="hidden pt-4 border-t border-[#E6E1DA] space-y-3 text-[12.5px]">
+        <div id="cookie-customizer-panel" class="hidden pt-4 border-t border-[#E6E1DA] space-y-3 text-[14px]">
           <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
             <div class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA]">
               <div class="flex items-center justify-between mb-1">
                 <span class="font-bold text-[#18181B]">1. Strictly Necessary</span>
-                <span class="mono-font text-[10.5px] font-bold px-2 py-0.5 bg-[#ECFDF3] text-[#2D5A43] border border-[#2D5A43]/20">Always Active</span>
+                <span class="mono-font text-[12px] font-bold px-2 py-0.5 bg-[#ECFDF3] text-[#234734] border border-[#2D5A43]/30">Always Active</span>
               </div>
-              <p class="text-[11.5px] text-[#52525B]">Required for security, rate-limiting protection, and remembering your cookie consent choice.</p>
+              <p class="text-[13.5px] text-[#3F3F46]">Required for security, rate-limiting protection, and remembering your cookie consent choice.</p>
             </div>
 
             <label class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA] cursor-pointer block">
@@ -363,7 +429,7 @@
                 <span class="font-bold text-[#18181B]">2. Analytics &amp; Speed</span>
                 <input id="chk-cookie-analytics" type="checkbox" checked class="w-4 h-4 accent-[#9E4758]" />
               </div>
-              <p class="text-[11.5px] text-[#52525B]">Helps us measure page load performance across USA &amp; Canada.</p>
+              <p class="text-[13.5px] text-[#3F3F46]">Helps us measure page load performance across USA &amp; Canada.</p>
             </label>
 
             <label class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA] cursor-pointer block">
@@ -371,13 +437,13 @@
                 <span class="font-bold text-[#18181B]">3. VIP Launch Perks</span>
                 <input id="chk-cookie-marketing" type="checkbox" checked class="w-4 h-4 accent-[#9E4758]" />
               </div>
-              <p class="text-[11.5px] text-[#52525B]">Remembers your reserved 25% OFF (<span class="mono-font">LULLUXE25</span>) launch pass on launch day.</p>
+              <p class="text-[13.5px] text-[#3F3F46]">Remembers your reserved 25% OFF (<span class="mono-font">LULLUXE25</span>) launch pass on launch day.</p>
             </label>
           </div>
 
           <div class="flex flex-wrap items-center justify-between gap-2 pt-2">
-            <span class="mono-font text-[11px] text-[#71717A]">Protected by LouLou &amp; Luxe Privacy Gatekeeper</span>
-            <button onclick="saveCookieConsent('CUSTOM')" class="pl-btn !py-2 !px-5 !text-[12.5px]">
+            <span class="mono-font text-[12.5px] text-[#52525B]">Protected by LouLou &amp; Luxe Privacy Gatekeeper</span>
+            <button onclick="saveCookieConsent('CUSTOM')" class="pl-btn !py-2.5 !px-5 !text-[14px]">
               save my cookie preferences
             </button>
           </div>
@@ -386,10 +452,34 @@
     </div>
   </div>
 
-  <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden bg-[#18181B] text-white px-5 py-3.5 shadow-xl border border-white/20 text-[13.5px] font-semibold"></div>
+  <div id="toast-box" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-50 hidden bg-[#18181B] text-[#FAF8F5] px-5 py-3.5 shadow-xl border border-white/25 text-[15px] font-semibold"></div>
 
   <script>
     const COOKIE_CONSENT_KEY = 'loulou_cookie_consent_v1';
+    let currentTheme = 'light';
+
+    function applyThemeMode(mode) {
+      currentTheme = mode === 'dark' ? 'dark' : 'light';
+      document.documentElement.classList.toggle('dark', currentTheme === 'dark');
+      try { localStorage.setItem('loulou_theme_mode_v1', currentTheme); } catch (e) {}
+      const btn = document.getElementById('cs-theme-btn');
+      if (btn) btn.textContent = currentTheme === 'dark' ? 'Light Theme' : 'Dark Theme';
+    }
+
+    function toggleThemeMode() {
+      applyThemeMode(currentTheme === 'dark' ? 'light' : 'dark');
+      showToast(`Switched to ${currentTheme === 'dark' ? 'Dark' : 'Light'} Theme`);
+    }
+
+    (function initTheme() {
+      let saved = 'light';
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('theme') === 'dark' || params.get('theme') === 'light') saved = params.get('theme');
+        else saved = localStorage.getItem('loulou_theme_mode_v1') || 'light';
+      } catch (e) {}
+      applyThemeMode(saved);
+    })();
 
     function showToast(msg) {
       const box = document.getElementById('toast-box');
@@ -435,7 +525,7 @@
       }
       document.getElementById('cs-waitlist-success').classList.remove('hidden');
       emailInput.value = '';
-      showToast(`🎀 Welcome (${email})! Your 25% OFF launch pass (LULLUXE25) is reserved for ${role}.`);
+      showToast(`Welcome (${email})! Your 25% OFF launch pass (LULLUXE25) is reserved for ${role}.`);
     }
 
     function openCookieConsentModal() {
@@ -467,7 +557,7 @@
     }
 
     function persistLocalCookieConsent(payload) {
-      const maxAge = 365 * 86400; // 1 full year — never annoy user on every page visit
+      const maxAge = 365 * 86400;
       try {
         localStorage.setItem(COOKIE_CONSENT_KEY, JSON.stringify(payload));
       } catch (e) {}
@@ -507,10 +597,10 @@
       } catch (e) {}
 
       showToast(level === 'ALL'
-        ? '🍪 Preferences Saved: All Cookies Accepted'
+        ? 'Preferences Saved: All Cookies Accepted'
         : level === 'NECESSARY_ONLY'
-          ? '🍪 Preferences Saved: Strictly Necessary Cookies Only'
-          : '🍪 Custom Cookie Preferences Saved');
+          ? 'Preferences Saved: Strictly Necessary Cookies Only'
+          : 'Custom Cookie Preferences Saved');
     }
 
     // Countdown Timer
@@ -523,7 +613,6 @@
       document.getElementById('cs-secs').textContent = String(diff % 60).padStart(2, '0');
     }, 1000);
 
-    // Check Cookie Consent ONCE per user (Local Storage + HTTP Cookie + Backend Visitor Check)
     (async function () {
       if (hasLocalCookieConsent()) return;
       try {
