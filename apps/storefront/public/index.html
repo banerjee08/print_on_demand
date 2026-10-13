@@ -11,19 +11,25 @@
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      /* ORIGINAL LOULOU & LUXE COLOR PALETTE (100% Preserved) */
-      --bg-canvas: #FAF8F5;        /* Warm Alabaster */
-      --bg-surface: #FFFFFF;       /* Pure Editorial White */
-      --bg-subtle: #F3EFEA;        /* Soft Oatmeal / Warm Stone */
-      --text-primary: #18181B;     /* Deep Espresso Ink */
-      --text-secondary: #52525B;   /* Warm Charcoal Slate */
-      --text-muted: #71717A;       /* Muted Stone */
-      --accent-brand: #9E4758;     /* Dusty Botanical Rose */
-      --accent-brand-soft: #F9EFF1;/* Soft Botanical Rose Tint */
-      --accent-gold: #B4833E;      /* Warm Champagne Gold */
-      --accent-sage: #2D5A43;      /* Forest Sage */
-      --border-hairline: #E6E1DA;  /* Warm Sand Hairline */
-      --border-strong: #D4CDC3;
+      /* ORIGINAL LOULOU & LUXE COLOR PALETTE — WCAG 2.1 AA/AAA CONTRAST CALIBRATED (LIGHT THEME) */
+      --bg-canvas: #FAF8F5;          /* Warm Alabaster */
+      --bg-surface: #FFFFFF;         /* Pure Editorial White */
+      --bg-subtle: #F3EFEA;          /* Soft Oatmeal / Warm Stone */
+      --bg-overlay: rgba(250, 248, 245, 0.96);
+      --text-primary: #18181B;       /* Deep Espresso Ink (16.8:1 contrast on #FAF8F5 — AAA) */
+      --text-secondary: #3F3F46;     /* Rich Charcoal Slate (9.6:1 contrast on #FAF8F5 — AAA) */
+      --text-muted: #52525B;         /* Warm Slate (6.8:1 on #FAF8F5, 6.1:1 on #F3EFEA — AA+) */
+      --accent-brand: #9E4758;       /* Dusty Botanical Rose (5.32:1 with #FFFFFF — AA) */
+      --accent-brand-hover: #843847; /* Deeper Botanical Rose Hover */
+      --accent-brand-text: #883647;  /* High-Contrast Botanical Rose for small text (6.35:1 on #F9EFF1 — AA) */
+      --accent-brand-soft: #F9EFF1;  /* Soft Botanical Rose Tint */
+      --accent-gold: #B4833E;        /* Warm Champagne Gold */
+      --accent-gold-text: #8A5F22;   /* High-Contrast Deep Champagne Gold for text/stars (5.42:1 on #FAF8F5 — AA) */
+      --accent-sage: #2D5A43;        /* Forest Sage (7.85:1 with #FFFFFF — AAA) */
+      --accent-sage-text: #234734;   /* High-Contrast Forest Sage text (9.8:1 on #ECFDF3 — AAA) */
+      --accent-sage-soft: #ECFDF3;   /* Soft Sage Mint Tint */
+      --border-hairline: #E6E1DA;    /* Warm Sand Hairline */
+      --border-strong: #C8C0B4;      /* Defined Warm Stone Border */
 
       /* ORIGINAL LOULOU & LUXE FONTS (100% Preserved) */
       --font-heading: 'Cormorant Garamond', Georgia, serif;
@@ -32,24 +38,66 @@
       --font-mono: 'JetBrains Mono', monospace;
     }
 
+    /* =========================================================================
+       LOULOU & LUXE DARK THEME (WCAG 2.1 AA/AAA HIGH-CONTRAST EDITORIAL PALETTE)
+       ========================================================================= */
+    html.dark {
+      --bg-canvas: #121110;          /* Warm Espresso Obsidian */
+      --bg-surface: #1C1917;         /* Rich Warm Charcoal Surface */
+      --bg-subtle: #262220;          /* Elevated Warm Cocoa Stone */
+      --bg-overlay: rgba(28, 25, 23, 0.96);
+      --text-primary: #FAF8F5;       /* Warm Alabaster Ink (17.4:1 on #121110 — AAA) */
+      --text-secondary: #E4DFD7;     /* Soft Oat Linen (13.1:1 on #121110 — AAA) */
+      --text-muted: #B8B0A4;         /* Warm Stone (7.8:1 on #121110, 6.6:1 on #1C1917 — AA+) */
+      --accent-brand: #9E4758;       /* Dusty Botanical Rose Button Fill (5.32:1 with #FFFFFF — AA) */
+      --accent-brand-hover: #B55669;
+      --accent-brand-text: #F2A6B5;  /* Luminous Botanical Rose Text (8.9:1 on #121110 — AAA) */
+      --accent-brand-soft: #2A1A1E;  /* Deep Velvet Rose Surface */
+      --accent-gold: #D4A359;
+      --accent-gold-text: #E5B869;   /* Luminous Champagne Gold Text/Stars (9.8:1 on #121110 — AAA) */
+      --accent-sage: #2D5A43;
+      --accent-sage-text: #75C99B;   /* Luminous Forest Sage Text (9.2:1 on #121110 — AAA) */
+      --accent-sage-soft: #14291E;   /* Deep Forest Sage Surface */
+      --border-hairline: #332E2A;    /* Dark Warm Hairline */
+      --border-strong: #4A433D;      /* Defined Dark Stone Border */
+      color-scheme: dark;
+    }
+
+    /* Upgraded Accessible Base Typography (16px Base, Tall Line-Height) */
     body {
       font-family: var(--font-body);
       background-color: var(--bg-canvas);
       color: var(--text-primary);
-      font-size: 14.5px;
-      line-height: 1.5;
+      font-size: 16px;
+      line-height: 1.6;
       margin: 0;
       padding: 0;
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
+      transition: background-color 0.2s ease, color 0.2s ease;
     }
 
     h1, h2, h3, .heading-font {
       font-family: var(--font-heading);
       letter-spacing: 0.01em;
+      line-height: 1.16;
+      font-optical-sizing: auto;
     }
-    .script-font { font-family: var(--font-script); }
+    .script-font {
+      font-family: var(--font-script);
+      line-height: 1.3;
+    }
     .mono-font { font-family: var(--font-mono); }
+
+    /* WCAG 2.4.7 Accessible Keyboard Focus Ring */
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible,
+    select:focus-visible,
+    summary:focus-visible {
+      outline: 2px solid var(--accent-brand-text);
+      outline-offset: 2px;
+    }
 
     .pl-container {
       width: 100%;
@@ -58,54 +106,72 @@
       padding: 0 24px;
     }
     @media (max-width: 767px) {
-      .pl-container { padding: 0 12px; }
+      .pl-container { padding: 0 14px; }
     }
 
-    .color-scheme-1 { background: var(--bg-canvas); color: var(--text-primary); }
-    .color-scheme-2 { background: var(--bg-subtle); color: var(--text-primary); }
-    .color-scheme-pink { background: var(--accent-brand-soft); color: var(--text-primary); }
-    .color-scheme-plum { background: var(--accent-brand); color: #FFFFFF; }
-    .color-scheme-sage { background: var(--accent-sage); color: #FFFFFF; }
+    /* Semantic Theme Surfaces */
+    .color-scheme-1 { background-color: var(--bg-canvas); color: var(--text-primary); }
+    .color-scheme-2 { background-color: var(--bg-subtle); color: var(--text-primary); }
+    .color-scheme-surface { background-color: var(--bg-surface); color: var(--text-primary); }
+    .color-scheme-pink { background-color: var(--accent-brand-soft); color: var(--text-primary); }
+    .color-scheme-plum { background-color: var(--accent-brand); color: #FFFFFF; }
+    .color-scheme-sage { background-color: var(--accent-sage); color: #FFFFFF; }
 
-    /* Pink Lily Lowercase Sharp-Corner Editorial CTA Buttons */
+    /* Dark-Mode Automatic Adaptation for Tailwind Utility Classes */
+    html.dark .bg-white { background-color: var(--bg-surface) !important; }
+    html.dark .bg-white\/95,
+    html.dark .bg-white\/90 { background-color: var(--bg-overlay) !important; }
+    html.dark .bg-\[\#FAF8F5\],
+    html.dark .bg-\[\#FAF8F5\]\/95 { background-color: var(--bg-canvas) !important; }
+    html.dark .bg-\[\#F3EFEA\] { background-color: var(--bg-subtle) !important; }
+    html.dark .bg-\[\#F9EFF1\] { background-color: var(--accent-brand-soft) !important; }
+    html.dark .bg-\[\#ECFDF3\] { background-color: var(--accent-sage-soft) !important; }
+    html.dark .text-\[\#18181B\] { color: var(--text-primary) !important; }
+    html.dark .text-\[\#3F3F46\],
+    html.dark .text-\[\#52525B\] { color: var(--text-secondary) !important; }
+    html.dark .text-\[\#71717A\] { color: var(--text-muted) !important; }
+    html.dark .text-\[\#9E4758\],
+    html.dark .text-\[\#883647\] { color: var(--accent-brand-text) !important; }
+    html.dark .text-\[\#B4833E\],
+    html.dark .text-\[\#8A5F22\] { color: var(--accent-gold-text) !important; }
+    html.dark .text-\[\#2D5A43\],
+    html.dark .text-\[\#234734\] { color: var(--accent-sage-text) !important; }
+    html.dark .border-\[\#E6E1DA\] { border-color: var(--border-hairline) !important; }
+    html.dark .border-\[\#D4CDC3\],
+    html.dark .border-\[\#C8C0B4\] { border-color: var(--border-strong) !important; }
+    html.dark .divide-\[\#E6E1DA\] > :not([hidden]) ~ :not([hidden]) { border-color: var(--border-hairline) !important; }
+
+    /* Pink Lily Lowercase Sharp-Corner Editorial CTA Buttons (Taller & Larger Font) */
     .pl-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
       background: var(--accent-brand);
-      color: #FFFFFF;
+      color: #FFFFFF !important;
       border: 1px solid var(--accent-brand);
       border-radius: 0px;
-      padding: 11px 24px;
+      padding: 13px 26px;
       font-family: var(--font-body);
-      font-size: 13.5px;
+      font-size: 15px;
       font-weight: 700;
-      letter-spacing: 0.06em;
+      line-height: 1.35;
+      letter-spacing: 0.05em;
       text-transform: lowercase;
       transition: all 0.2s ease;
       cursor: pointer;
     }
     .pl-btn:hover {
-      background: #843847;
-      border-color: #843847;
+      background: var(--accent-brand-hover);
+      border-color: var(--accent-brand-hover);
     }
     .pl-btn-outline {
-      background: #FFFFFF;
-      color: var(--text-primary);
-      border: 1px solid var(--text-primary);
+      background: var(--bg-surface);
+      color: var(--text-primary) !important;
+      border: 1.5px solid var(--text-primary);
     }
     .pl-btn-outline:hover {
       background: var(--text-primary);
-      color: #FFFFFF;
-    }
-    .pl-btn-white {
-      background: #FFFFFF;
-      color: var(--accent-brand);
-      border: 1px solid #FFFFFF;
-    }
-    .pl-btn-white:hover {
-      background: var(--bg-canvas);
-      color: var(--text-primary);
+      color: var(--bg-surface) !important;
     }
 
     /* GPU-Accelerated Top Announcement Ticker (Zero Main-Thread Reflow) */
@@ -120,34 +186,35 @@
       will-change: opacity;
     }
 
-    /* Uncrowded Nav Links + Collapsed Mega Dropdowns */
+    /* Uncrowded Nav Links + Collapsed Mega Dropdowns (Upgraded to 15.5px) */
     .pl-nav-item {
       position: relative;
     }
     .pl-nav-link {
       font-family: var(--font-body);
-      font-size: 14px;
+      font-size: 15.5px;
       font-weight: 600;
+      line-height: 1.4;
       color: var(--text-primary);
-      padding: 10px 14px;
+      padding: 12px 15px;
       display: inline-flex;
       align-items: center;
-      gap: 5px;
+      gap: 6px;
       position: relative;
       transition: color 0.15s ease;
       white-space: nowrap;
     }
     .pl-nav-link:hover, .pl-nav-link.active {
-      color: var(--accent-brand);
+      color: var(--accent-brand-text);
     }
     .pl-dropdown-menu {
       position: absolute;
       top: 100%;
       left: 0;
-      min-width: 250px;
-      background: #FFFFFF;
+      min-width: 280px;
+      background: var(--bg-surface);
       border: 1px solid var(--border-strong);
-      box-shadow: 0 14px 30px rgba(24, 24, 27, 0.10);
+      box-shadow: 0 16px 34px rgba(0, 0, 0, 0.16);
       padding: 12px 0;
       opacity: 0;
       visibility: hidden;
@@ -165,39 +232,41 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       width: 100%;
       text-align: left;
-      padding: 9px 18px;
-      font-size: 13.5px;
+      padding: 11px 20px;
+      font-size: 15px;
       font-weight: 500;
+      line-height: 1.4;
       color: var(--text-primary);
       transition: background 0.15s ease, color 0.15s ease;
     }
     .pl-dropdown-link:hover {
       background: var(--accent-brand-soft);
-      color: var(--accent-brand);
+      color: var(--accent-brand-text);
     }
 
-    /* Pink Lily Tight 11px Product & Category Grids */
+    /* Product & Category Grids */
     .pl-grid-4 {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 11px;
+      gap: 16px;
     }
     .pl-grid-3 {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 11px;
+      gap: 16px;
     }
     @media (max-width: 1023px) {
-      .pl-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
-      .pl-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+      .pl-grid-4 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+      .pl-grid-3 { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
     }
     @media (max-width: 639px) {
-      .pl-grid-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 11px; }
+      .pl-grid-3 { grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 14px; }
     }
 
-    /* Product Card (0px sharp corners, 2:3 vertical portrait, floating circular bag button) */
+    /* Product Card (0px sharp corners, 2:3 vertical portrait, generous readable typography) */
     .pl-product-card {
       display: flex;
       flex-direction: column;
@@ -213,6 +282,7 @@
       overflow: hidden;
       border-radius: 0px;
       cursor: pointer;
+      border: 1px solid var(--border-hairline);
     }
     .pl-product-card .image-container img.main-img {
       width: 100%;
@@ -226,18 +296,18 @@
 
     .pl-badge {
       display: inline-block;
-      background: rgba(250, 248, 245, 0.94);
+      background: var(--bg-overlay);
       color: var(--text-primary);
-      border: 1px solid var(--border-hairline);
+      border: 1px solid var(--border-strong);
       border-radius: 20px;
-      padding: 2px 10px;
-      font-size: 11px;
-      font-weight: 600;
-      line-height: 1.4;
+      padding: 4px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 1.35;
     }
     .pl-badge-sale {
       background: var(--accent-brand);
-      color: #FFFFFF;
+      color: #FFFFFF !important;
       border-color: var(--accent-brand);
     }
 
@@ -245,23 +315,23 @@
       position: absolute;
       right: 10px;
       bottom: 10px;
-      width: 36px;
-      height: 36px;
+      width: 40px;
+      height: 40px;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.95);
+      background: var(--bg-overlay);
       color: var(--text-primary);
-      border: 1px solid var(--border-hairline);
+      border: 1px solid var(--border-strong);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.16);
       transition: all 0.2s ease;
       z-index: 3;
       cursor: pointer;
     }
     .pl-floating-bag:hover {
       background: var(--accent-brand);
-      color: #FFFFFF;
+      color: #FFFFFF !important;
       border-color: var(--accent-brand);
       transform: scale(1.06);
     }
@@ -269,66 +339,70 @@
     .pl-quick-sizes {
       position: absolute;
       left: 8px;
-      right: 52px;
+      right: 56px;
       bottom: 10px;
       display: flex;
-      gap: 4px;
+      gap: 5px;
       flex-wrap: wrap;
       opacity: 0;
       transform: translateY(4px);
       transition: all 0.2s ease;
       z-index: 3;
     }
-    .pl-product-card:hover .pl-quick-sizes {
+    .pl-product-card:hover .pl-quick-sizes,
+    .pl-product-card:focus-within .pl-quick-sizes {
       opacity: 1;
       transform: translateY(0);
     }
 
     .pl-card-info {
-      padding: 9px 2px 14px 2px;
+      padding: 12px 2px 16px 2px;
     }
     .pl-card-title {
       font-family: var(--font-body);
-      font-size: 13.5px;
-      font-weight: 500;
+      font-size: 15.5px;
+      font-weight: 600;
       color: var(--text-primary);
-      line-height: 1.35;
-      margin-bottom: 4px;
+      line-height: 1.45;
+      margin-bottom: 6px;
       display: -webkit-box;
-      -webkit-line-clamp: 1;
+      -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
       overflow: hidden;
       cursor: pointer;
     }
-    .pl-card-title:hover { color: var(--accent-brand); }
+    .pl-card-title:hover { color: var(--accent-brand-text); }
 
     .pl-price {
       display: flex;
       align-items: baseline;
-      gap: 6px;
-      font-size: 14px;
+      gap: 8px;
+      font-size: 16.5px;
+      line-height: 1.4;
     }
     .pl-price .offer { font-weight: 700; color: var(--text-primary); }
     .pl-price .compare {
-      font-size: 12.5px;
+      font-size: 14px;
       color: var(--text-muted);
       text-decoration: line-through;
     }
     .pl-product-promos {
-      font-size: 11.5px;
+      font-size: 13.5px;
       font-weight: 700;
-      color: var(--accent-brand);
-      margin-top: 2px;
+      color: var(--accent-brand-text);
+      margin-top: 4px;
+      line-height: 1.4;
     }
 
     .pl-util-tab {
       font-family: var(--font-heading);
-      font-size: 30px;
+      font-size: 34px;
       font-weight: 600;
+      line-height: 1.2;
       color: var(--text-muted);
       background: none;
       border: none;
-      padding: 0 24px 6px 0;
+      padding: 0 28px 8px 0;
       cursor: pointer;
       text-transform: lowercase;
       transition: color 0.15s ease;
@@ -336,8 +410,8 @@
     .pl-util-tab.active {
       color: var(--text-primary);
       text-decoration: underline;
-      text-underline-offset: 6px;
-      text-decoration-thickness: 1.5px;
+      text-underline-offset: 8px;
+      text-decoration-thickness: 2px;
     }
 
     .pl-info-card {
@@ -346,7 +420,8 @@
       border-radius: 0px;
       overflow: hidden;
       cursor: pointer;
-      border: 1px solid var(--border-hairline);
+      border: 1px solid var(--border-strong);
+      background: var(--bg-surface);
     }
     .pl-info-card .img-box {
       width: 100%;
@@ -363,24 +438,24 @@
     }
     .pl-info-card:hover .img-box img { transform: scale(1.04); }
     .pl-info-card .card-caption {
-      padding: 14px 12px;
+      padding: 18px 14px;
       text-align: center;
     }
     .pl-info-card .card-caption .title {
       font-family: var(--font-heading);
-      font-size: 24px;
+      font-size: 28px;
       font-weight: 600;
-      line-height: 1.1;
+      line-height: 1.2;
       text-transform: lowercase;
     }
     .pl-info-card .card-caption .small-label {
       font-family: var(--font-body);
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.08em;
+      line-height: 1.4;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
-      margin-top: 4px;
-      opacity: 0.9;
+      margin-top: 6px;
     }
 
     .font-mono-serif { font-family: var(--font-heading); letter-spacing: 0.12em; }
@@ -393,125 +468,128 @@
   <!-- =========================================================================
        0. SBANERJEE.CLOUD DEVELOPMENT & TESTING ENVIRONMENT BAR
        ========================================================================= -->
-  <div class="bg-[#18181B] text-[#FAF8F5] py-1.5 px-4 text-[11.5px] border-b border-white/15">
+  <div class="bg-[#18181B] text-[#FAF8F5] py-2 px-4 text-[13.5px] border-b border-white/20">
     <div class="pl-container flex flex-wrap items-center justify-between gap-2">
-      <div class="flex items-center gap-2">
-        <span class="inline-flex items-center gap-1.5 px-2 py-0.5 bg-[#2D5A43] text-white font-bold text-[10.5px] uppercase tracking-wider">
-          ● sbanerjee.cloud Dev Branch (Oct 20 US/CA Launch Ready)
+      <div class="flex items-center gap-3">
+        <span class="inline-flex items-center px-2.5 py-0.5 bg-[#2D5A43] text-white font-bold text-[12.5px] uppercase tracking-wider">
+          sbanerjee.cloud Dev Branch (Oct 20 US/CA Launch)
         </span>
-        <span class="hidden md:inline text-white/75">Public Prod (<a href="https://loulouandluxe.com" target="_blank" class="underline text-[#F9EFF1]">loulouandluxe.com</a>): <strong>Launching Soon Page</strong></span>
+        <span class="hidden md:inline text-white/90 text-[13.5px]">Public Prod (<a href="https://loulouandluxe.com" target="_blank" class="underline text-[#F9EFF1] font-semibold">loulouandluxe.com</a>): <strong>Launching Soon Page</strong></span>
       </div>
-      <div class="flex items-center gap-2">
-        <button id="nav-pill-home" onclick="switchMainPageView('home')" class="px-2.5 py-1 font-bold bg-[#9E4758] text-white text-[10.5px] uppercase tracking-wider">
-          🏠 Homepage (5-Scroll CRO)
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="nav-pill-home" onclick="switchMainPageView('home')" class="px-3 py-1 font-bold bg-[#9E4758] text-white text-[12.5px] uppercase tracking-wider">
+          Homepage
         </button>
-        <button id="nav-pill-wishlist" onclick="switchMainPageView('wishlist')" class="px-2.5 py-1 font-semibold bg-white/10 text-white hover:bg-white/20 text-[10.5px] uppercase tracking-wider">
-          ♡ Wishlist Page (<span id="dev-bar-wish-count">2</span>)
+        <button id="nav-pill-wishlist" onclick="switchMainPageView('wishlist')" class="px-3 py-1 font-semibold bg-white/15 text-white hover:bg-white/25 text-[12.5px] uppercase tracking-wider">
+          Wishlist Page (<span id="dev-bar-wish-count">2</span>)
         </button>
-        <button id="nav-pill-pdp" onclick="switchMainPageView('pdp')" class="px-2.5 py-1 font-semibold bg-white/10 text-white hover:bg-white/20 text-[10.5px] uppercase tracking-wider">
-          🧵 Product &amp; Monogram Page
+        <button id="nav-pill-pdp" onclick="switchMainPageView('pdp')" class="px-3 py-1 font-semibold bg-white/15 text-white hover:bg-white/25 text-[12.5px] uppercase tracking-wider">
+          Product &amp; Monogram Page
         </button>
-        <button onclick="openCookieConsentModal()" class="px-2 py-1 underline text-[#F9EFF1] hover:text-white text-[11px]">
-          🍪 Cookie Popup
+        <button onclick="toggleThemeMode()" id="dev-bar-theme-btn" class="px-3 py-1 font-bold bg-white/15 text-white hover:bg-white/25 text-[12.5px] uppercase tracking-wider border border-white/30">
+          Theme: Light
+        </button>
+        <button onclick="openCookieConsentModal()" class="px-2.5 py-1 underline text-[#FAF8F5] hover:text-white text-[13px] font-medium">
+          Cookie Popup
         </button>
       </div>
     </div>
   </div>
 
   <!-- =========================================================================
-       1. GPU-ACCELERATED 3-QUOTE SLIDING ANNOUNCEMENT BAR (36px Fixed Height)
-          Pauses on hover, zero layout shift (CLS = 0.00), <12 words per slide
+       1. GPU-ACCELERATED 3-QUOTE SLIDING ANNOUNCEMENT BAR (44px Fixed Height)
+          Pauses on hover, zero layout shift (CLS = 0.00), accessible 14px text
        ========================================================================= -->
   <div
     id="shopify-section-announcement"
-    class="color-scheme-pink border-b border-[#E6E1DA] h-[38px] flex items-center"
+    class="color-scheme-pink border-b border-[#E6E1DA] h-[44px] flex items-center"
     onmouseenter="pauseAnnouncementTicker(true)"
     onmouseleave="pauseAnnouncementTicker(false)"
   >
-    <div class="pl-container flex items-center justify-between gap-2 text-[12px] sm:text-[12.5px] font-semibold tracking-wide text-[#18181B]">
+    <div class="pl-container flex items-center justify-between gap-3 text-[14px] sm:text-[14.5px] font-semibold tracking-wide text-[#18181B]">
       <!-- Left: Prev/Next Quote Controls -->
-      <div class="hidden sm:flex items-center gap-1.5">
-        <button onclick="stepAnnouncementQuote(-1)" aria-label="Previous Offer" class="w-5 h-5 flex items-center justify-center text-[#52525B] hover:text-[#9E4758] font-bold">‹</button>
-        <span id="ann-slide-counter" class="mono-font text-[10.5px] text-[#71717A]">1/3</span>
-        <button onclick="stepAnnouncementQuote(1)" aria-label="Next Offer" class="w-5 h-5 flex items-center justify-center text-[#52525B] hover:text-[#9E4758] font-bold">›</button>
+      <div class="hidden sm:flex items-center gap-2">
+        <button onclick="stepAnnouncementQuote(-1)" aria-label="Previous Offer" class="w-6 h-6 flex items-center justify-center text-[#3F3F46] hover:text-[#883647] font-bold text-[16px]">‹</button>
+        <span id="ann-slide-counter" class="mono-font text-[13px] font-semibold text-[#52525B]">1/3</span>
+        <button onclick="stepAnnouncementQuote(1)" aria-label="Next Offer" class="w-6 h-6 flex items-center justify-center text-[#3F3F46] hover:text-[#883647] font-bold text-[16px]">›</button>
       </div>
 
-      <!-- Center: Sliding 3-Quote Viewport -->
-      <div class="flex-1 text-center overflow-hidden h-[22px] relative flex items-center justify-center">
+      <!-- Center: Sliding 3-Quote Viewport (Zero Decorative Icons) -->
+      <div class="flex-1 text-center overflow-hidden h-[26px] relative flex items-center justify-center">
         <div id="ann-quote-0" class="announcement-slide absolute inset-0 flex items-center justify-center opacity-100 translate-y-0">
           <a href="#tabs-nosto-section" onclick="togglePromoCode(); return false;" class="hover:underline font-bold truncate">
-            🎀 AUTUMN &amp; HOLIDAY EDIT: <strong class="text-[#9E4758] underline mono-font">25% OFF</strong> SITEWIDE W/ CODE <strong class="mono-font text-[#9E4758]">LULLUXE25</strong> — <span class="lowercase text-[#9E4758] underline">apply now</span>
+            AUTUMN &amp; HOLIDAY EDIT: <strong class="text-[#883647] underline mono-font">25% OFF</strong> SITEWIDE WITH CODE <strong class="mono-font text-[#883647]">LULLUXE25</strong> — <span class="lowercase text-[#883647] underline">apply now</span>
           </a>
         </div>
         <div id="ann-quote-1" class="announcement-slide absolute inset-0 flex items-center justify-center opacity-0 translate-y-4 pointer-events-none">
           <a href="#tabs-nosto-section" class="hover:underline font-bold truncate">
-            ✈️ FREE EXPRESS 🇺🇸 USA &amp; 🇨🇦 CANADA SHIPPING ON ORDERS OVER <strong id="top-free-ship-amt" class="text-[#9E4758]">$79</strong> + EASY 30-DAY EXCHANGES
+            FREE EXPRESS USA &amp; CANADA SHIPPING ON ORDERS OVER <strong id="top-free-ship-amt" class="text-[#883647]">$79</strong> + EASY 30-DAY EXCHANGES
           </a>
         </div>
         <div id="ann-quote-2" class="announcement-slide absolute inset-0 flex items-center justify-center opacity-0 translate-y-4 pointer-events-none">
           <a href="#" onclick="openBridalModal(true); return false;" class="hover:underline font-bold truncate">
-            💍 NEWLY ENGAGED OR PLANNING A BACH? UNLOCK <strong class="text-[#9E4758] underline">10% OFF</strong> + FREE 48H CUSTOM EMBROIDERY
+            NEWLY ENGAGED OR PLANNING A BACH? UNLOCK <strong class="text-[#883647] underline">10% OFF</strong> + FREE 48H CUSTOM EMBROIDERY
           </a>
         </div>
       </div>
 
       <!-- Right: Currency Selector -->
-      <div class="flex items-center gap-2 text-[11.5px] flex-shrink-0">
-        <select id="region-select" onchange="switchRegion(this.value)" aria-label="Select Currency" class="bg-transparent font-bold cursor-pointer focus:outline-none">
-          <option value="USD">🇺🇸 $ USD</option>
-          <option value="CAD">🇨🇦 $ CAD</option>
-          <option value="GBP">🇬🇧 £ GBP</option>
-          <option value="AUD">🇦🇺 $ AUD</option>
+      <div class="flex items-center gap-2 text-[14px] flex-shrink-0">
+        <select id="region-select" onchange="switchRegion(this.value)" aria-label="Select Currency" class="bg-transparent font-bold cursor-pointer text-[#18181B]">
+          <option value="USD" class="bg-white text-[#18181B]">$ USD</option>
+          <option value="CAD" class="bg-white text-[#18181B]">$ CAD</option>
+          <option value="GBP" class="bg-white text-[#18181B]">£ GBP</option>
+          <option value="AUD" class="bg-white text-[#18181B]">$ AUD</option>
         </select>
       </div>
     </div>
   </div>
 
   <!-- =========================================================================
-       2. UNCROWDED STICKY HEADER (5 Collapsed Mega-Headings + Click-to-Expand Search Icon)
+       2. UNCROWDED STICKY HEADER (5 Collapsed Mega-Headings + Click-to-Expand Search + Dark Theme Toggle)
        ========================================================================= -->
   <header id="shopify-section-header" class="sticky top-0 z-40 bg-white border-b border-[#E6E1DA] transition-all">
-    <div class="pl-container h-[72px] lg:h-[80px] flex items-center justify-between gap-4">
+    <div class="pl-container h-[76px] lg:h-[84px] flex items-center justify-between gap-4">
 
       <!-- Mobile Left Controls (Hamburger + Magnifying Glass Search Trigger) -->
       <div class="flex lg:hidden items-center gap-2.5">
-        <button onclick="toggleMobileMenu()" aria-label="Open Categories Menu" class="p-1.5 text-[#18181B]">
+        <button onclick="toggleMobileMenu()" aria-label="Open Categories Menu" class="p-2 text-[#18181B]">
           <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
-        <button onclick="toggleExpandableSearch()" aria-label="Toggle Search Bar" class="p-1.5 text-[#18181B] hover:text-[#9E4758]">
+        <button onclick="toggleExpandableSearch()" aria-label="Toggle Search Bar" class="p-2 text-[#18181B] hover:text-[#883647]">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.3-4.3"/></svg>
         </button>
       </div>
 
-      <!-- Left: LouLou & Luxe Logo + Uncrowded 5-Heading Collapsed Navigation -->
+      <!-- Left: LouLou & Luxe Logo + Uncrowded 5-Heading Collapsed Navigation (Zero Decorative Icons) -->
       <div class="flex items-center gap-6 xl:gap-9">
         <a href="#" onclick="switchMainPageView('home'); filterCategory('ALL'); return false;" class="block text-center lg:text-left flex-shrink-0">
-          <span class="heading-font italic font-semibold text-[30px] sm:text-[36px] tracking-tight text-[#18181B] leading-none block">
-            LouLou <span class="text-[#9E4758] not-italic font-semibold">&amp;</span> Luxe
+          <span class="heading-font italic font-semibold text-[32px] sm:text-[38px] tracking-tight text-[#18181B] leading-none block">
+            LouLou <span class="text-[#883647] not-italic font-semibold">&amp;</span> Luxe
           </span>
         </a>
 
-        <!-- Desktop Uncrowded Navigation (Only 5 Top-Level Headings with Collapsed Sub-Menus) -->
-        <nav class="hidden lg:flex items-center gap-1" aria-label="Main Boutique Navigation">
+        <!-- Desktop Uncrowded Navigation (5 Top-Level Headings with Clean Typography, No Emojis) -->
+        <nav class="hidden lg:flex items-center gap-1.5" aria-label="Main Boutique Navigation">
 
           <!-- 1. New & Trending (Collapsed Dropdown) -->
           <div class="pl-nav-item">
             <button onclick="switchMainPageView('home'); setTabAndScroll('new')" class="pl-nav-link">
               <span>New &amp; Trending</span>
-              <span class="text-[10px] opacity-70">▾</span>
+              <span class="text-[13px] opacity-80" aria-hidden="true">▾</span>
             </button>
             <div class="pl-dropdown-menu">
               <button onclick="switchMainPageView('home'); setTabAndScroll('new')" class="pl-dropdown-link">
-                <span>✨ Oct 20 Autumn &amp; Holiday Drop</span>
-                <span class="text-[10px] font-bold px-1.5 py-0.5 bg-[#F9EFF1] text-[#9E4758]">NEW</span>
+                <span>Oct 20 Autumn &amp; Holiday Drop</span>
+                <span class="text-[12.5px] font-bold px-2 py-0.5 bg-[#F9EFF1] text-[#883647]">NEW</span>
               </button>
               <button onclick="switchMainPageView('home'); setTabAndScroll('bestsellers')" class="pl-dropdown-link">
-                <span>🔥 Most-Loved Best Sellers</span>
+                <span>Most-Loved Best Sellers</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('CLUB_FLEECE')" class="pl-dropdown-link">
-                <span>🍵 Matcha &amp; Pilates Social Club Edit</span>
+                <span>Matcha &amp; Pilates Social Club Edit</span>
               </button>
-              <button onclick="switchMainPageView('home'); filterCategory('ALL')" class="pl-dropdown-link font-bold text-[#9E4758]">
+              <button onclick="switchMainPageView('home'); filterCategory('ALL')" class="pl-dropdown-link font-bold text-[#883647]">
                 <span>Shop All New Arrivals →</span>
               </button>
             </div>
@@ -521,12 +599,12 @@
           <div class="pl-nav-item">
             <button onclick="switchMainPageView('home'); filterCategory('ALL')" class="pl-nav-link">
               <span>Shop Clothing</span>
-              <span class="text-[10px] opacity-70">▾</span>
+              <span class="text-[13px] opacity-80" aria-hidden="true">▾</span>
             </button>
             <div class="pl-dropdown-menu">
               <button onclick="switchMainPageView('home'); filterCategory('CLUB_FLEECE')" class="pl-dropdown-link">
                 <span>Heavyweight Crewnecks &amp; Hoodies (380GSM)</span>
-                <span class="text-[10px] font-bold text-[#2D5A43]">#1 Seller</span>
+                <span class="text-[12.5px] font-bold text-[#234734]">#1 Seller</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('OUTERWEAR')" class="pl-dropdown-link">
                 <span>Quarter-Zips, Sherpa &amp; Cozy Layers</span>
@@ -537,164 +615,180 @@
               <button onclick="switchMainPageView('home'); filterCategory('GRAPHICS')" class="pl-dropdown-link">
                 <span>Game Day &amp; Everyday Graphic Tees</span>
               </button>
-              <button onclick="switchMainPageView('home'); filterCategory('ALL')" class="pl-dropdown-link font-bold text-[#9E4758] border-t border-[#E6E1DA] mt-1 pt-2.5">
+              <button onclick="switchMainPageView('home'); filterCategory('ALL')" class="pl-dropdown-link font-bold text-[#883647] border-t border-[#E6E1DA] mt-1 pt-2.5">
                 <span>View All Boutique Apparel (XS–2XL) →</span>
               </button>
             </div>
           </div>
 
-          <!-- 3. Bridal & Engagement (Collapsed Dropdown) -->
+          <!-- 3. Bridal & Engagement (Collapsed Dropdown — No Ring Emoji) -->
           <div class="pl-nav-item">
-            <button onclick="switchMainPageView('home'); enterBridalSection()" class="pl-nav-link font-semibold text-[#9E4758]">
-              <span>💍 Bridal &amp; Bach</span>
-              <span class="text-[10px] opacity-70">▾</span>
+            <button onclick="switchMainPageView('home'); enterBridalSection()" class="pl-nav-link font-semibold text-[#883647]">
+              <span>Bridal &amp; Bach</span>
+              <span class="text-[13px] opacity-80" aria-hidden="true">▾</span>
             </button>
             <div class="pl-dropdown-menu">
               <button onclick="switchMainPageView('home'); filterCategory('BRIDAL')" class="pl-dropdown-link">
-                <span>👰‍♀️ Newly Engaged "Future Mrs." Sweatshirts</span>
-                <span class="text-[10px] font-bold px-1.5 py-0.5 bg-[#F9EFF1] text-[#9E4758]">Peak Season</span>
+                <span>Newly Engaged "Future Mrs." Sweatshirts</span>
+                <span class="text-[12.5px] font-bold px-2 py-0.5 bg-[#F9EFF1] text-[#883647]">Peak Season</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('BRIDAL')" class="pl-dropdown-link">
-                <span>🥂 7-Piece Bridesmaid Proposal Gift Boxes</span>
+                <span>7-Piece Bridesmaid Proposal Gift Boxes</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('BRIDAL')" class="pl-dropdown-link">
-                <span>✈️ Bachelorette Weekend Crewnecks &amp; Totes</span>
+                <span>Bachelorette Weekend Crewnecks &amp; Totes</span>
               </button>
-              <button onclick="openBridalModal(true)" class="pl-dropdown-link font-bold text-[#9E4758] border-t border-[#E6E1DA] mt-1 pt-2.5">
-                <span>🎁 Unlock 10% Off Bridal Party Code (BRIDAL10) →</span>
+              <button onclick="openBridalModal(true)" class="pl-dropdown-link font-bold text-[#883647] border-t border-[#E6E1DA] mt-1 pt-2.5">
+                <span>Unlock 10% Off Bridal Party Code (BRIDAL10) →</span>
               </button>
             </div>
           </div>
 
-          <!-- 4. Holiday & Custom Gifts (Collapsed Dropdown) -->
+          <!-- 4. Holiday & Custom Gifts (Collapsed Dropdown — No Decorative Emojis) -->
           <div class="pl-nav-item">
             <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="pl-nav-link">
               <span>Custom Monogram Gifts</span>
-              <span class="text-[10px] opacity-70">▾</span>
+              <span class="text-[13px] opacity-80" aria-hidden="true">▾</span>
             </button>
             <div class="pl-dropdown-menu">
               <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="pl-dropdown-link">
-                <span>👜 Custom Embroidered Canvas Weekender Totes</span>
+                <span>Custom Embroidered Canvas Weekender Totes</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="pl-dropdown-link">
-                <span>🥤 40oz Laser-Engraved Quencher Tumblers</span>
+                <span>40oz Laser-Engraved Quencher Tumblers</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="pl-dropdown-link">
-                <span>🧶 Plush Monogrammed Sherpa Blankets</span>
-                <span class="text-[10px] font-bold text-[#9E4758]">Holiday Hit</span>
+                <span>Plush Monogrammed Sherpa Blankets</span>
+                <span class="text-[12.5px] font-bold text-[#883647]">Holiday Hit</span>
               </button>
-              <button onclick="switchMainPageView('pdp')" class="pl-dropdown-link font-bold text-[#2D5A43] border-t border-[#E6E1DA] mt-1 pt-2.5">
-                <span>🧵 Open Interactive Monogram Studio →</span>
+              <button onclick="switchMainPageView('pdp')" class="pl-dropdown-link font-bold text-[#234734] border-t border-[#E6E1DA] mt-1 pt-2.5">
+                <span>Open Interactive Monogram Studio →</span>
               </button>
             </div>
           </div>
 
           <!-- 5. Sale -->
-          <button onclick="switchMainPageView('home'); toggleSaleFilter()" class="pl-nav-link !text-[#9E4758] !font-bold">
+          <button onclick="switchMainPageView('home'); toggleSaleFilter()" class="pl-nav-link !text-[#883647] !font-bold">
             Sale (-25%)
           </button>
         </nav>
       </div>
 
-      <!-- Right Utilities: Click-to-Expand Magnifying Glass, Customer Account (Guest/Signed-In), Wishlist Page Link, Bag Drawer -->
-      <div class="flex items-center gap-2 sm:gap-3.5">
+      <!-- Right Utilities: Click-to-Expand Magnifying Glass, Dark/Light Theme Toggle, Customer Account, Wishlist Page, Bag Drawer -->
+      <div class="flex items-center gap-2 sm:gap-3">
 
-        <!-- Click-to-Expand Magnifying Glass Search (Collapsed by default so header is never crowded!) -->
+        <!-- Click-to-Expand Magnifying Glass Search (Collapsed by default) -->
         <div class="flex items-center">
-          <div id="expandable-search-box" class="hidden items-center border border-[#18181B] bg-[#FAF8F5] px-3 py-1.5 mr-1.5 transition-all">
+          <div id="expandable-search-box" class="hidden items-center border border-[#18181B] bg-[#FAF8F5] px-3.5 py-2 mr-1.5 transition-all">
             <input
               id="desktop-search"
               type="search"
               oninput="handleSearch(this.value)"
               placeholder="Search crewnecks, sherpa, bridal, totes..."
-              class="w-44 sm:w-60 text-[13px] bg-transparent focus:outline-none text-[#18181B]"
+              aria-label="Search Catalog"
+              class="w-48 sm:w-64 text-[15px] bg-transparent focus:outline-none text-[#18181B]"
             />
-            <button onclick="toggleExpandableSearch(false)" class="text-xs font-bold text-[#71717A] hover:text-[#18181B] ml-1.5" aria-label="Close Search">✕</button>
+            <button onclick="toggleExpandableSearch(false)" class="text-[14px] font-bold text-[#52525B] hover:text-[#18181B] ml-2" aria-label="Close Search">✕</button>
           </div>
           <button
             onclick="toggleExpandableSearch()"
-            class="p-1.5 text-[#18181B] hover:text-[#9E4758] transition"
+            class="p-2 text-[#18181B] hover:text-[#883647] transition"
             title="Click to Search Catalog"
             aria-label="Search Catalog"
           >
-            <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.3-4.3"/></svg>
+            <svg class="w-[21px] h-[21px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path stroke-linecap="round" d="m21 21-4.3-4.3"/></svg>
           </button>
         </div>
 
-        <!-- Customer Sign-In / Account Status Button (Shows Guest vs Signed-In Cloud Sync) -->
+        <!-- Accessible Light / Dark Theme Toggle Button -->
+        <button
+          onclick="toggleThemeMode()"
+          id="header-theme-toggle"
+          class="flex items-center gap-1.5 px-2.5 py-1.5 border border-[#D4CDC3] hover:border-[#18181B] text-[13.5px] font-semibold text-[#18181B] transition"
+          title="Switch between Light and Dark Theme"
+          aria-label="Toggle Dark Theme"
+        >
+          <svg id="theme-icon-moon" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/></svg>
+          <svg id="theme-icon-sun" class="w-[18px] h-[18px] hidden" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path stroke-linecap="round" stroke-linejoin="round" d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+          <span id="header-theme-label" class="hidden xl:inline text-[13.5px]">Dark</span>
+        </button>
+
+        <!-- Customer Sign-In / Account Status Button -->
         <button
           onclick="openAccountModal()"
-          class="flex items-center gap-1.5 px-2 py-1 border border-transparent hover:border-[#E6E1DA] text-[12.5px] font-semibold text-[#18181B] hover:text-[#9E4758]"
+          class="flex items-center gap-1.5 px-2.5 py-1.5 border border-transparent hover:border-[#D4CDC3] text-[14px] font-semibold text-[#18181B] hover:text-[#883647]"
           title="Account & Wishlist/Bag Cloud Sync"
+          aria-label="Customer Account"
         >
           <div class="relative">
-            <svg class="w-[20px] h-[20px]" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
-            <span id="account-status-dot" class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-400 border border-white" title="Guest Session"></span>
+            <svg class="w-[21px] h-[21px]" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"/></svg>
+            <span id="account-status-dot" class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-500 border border-white" title="Guest Session"></span>
           </div>
-          <span id="header-account-label" class="hidden xl:inline text-[12px]">Sign In</span>
+          <span id="header-account-label" class="hidden xl:inline text-[14px]">Sign In</span>
         </button>
 
         <!-- Saved Wishlist Icon (Always Visible! Clicking opens the Dedicated Wishlist Page) -->
         <button
           onclick="switchMainPageView('wishlist')"
-          class="relative p-1.5 text-[#18181B] hover:text-[#9E4758]"
+          class="relative p-2 text-[#18181B] hover:text-[#883647]"
           title="Open Dedicated Saved Wishlist Page"
           aria-label="Saved Wishlist Page"
         >
-          <svg class="w-[21px] h-[21px]" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
-          <span id="wishlist-badge" class="absolute -top-0.5 -right-0.5 w-[18px] h-[18px] rounded-full bg-[#F9EFF1] border border-[#9E4758]/40 text-[#9E4758] text-[10.5px] font-bold flex items-center justify-center">2</span>
+          <svg class="w-[22px] h-[22px]" fill="none" stroke="currentColor" stroke-width="1.7" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"/></svg>
+          <span id="wishlist-badge" class="absolute -top-0.5 -right-0.5 w-[20px] h-[20px] rounded-full bg-[#F9EFF1] border border-[#9E4758] text-[#883647] text-[12px] font-bold flex items-center justify-center">2</span>
         </button>
 
         <!-- Shopping Bag Icon (Always Visible! Opens Slide-Out Bag Drawer) -->
         <button
           onclick="toggleCartDrawer(true)"
-          class="relative p-1.5 text-[#18181B] hover:text-[#9E4758] flex items-center"
+          class="relative p-2 text-[#18181B] hover:text-[#883647] flex items-center"
           aria-label="Shopping Bag"
           title="Open Shopping Bag"
         >
-          <svg aria-hidden="true" role="presentation" class="w-[21px] h-[21px]" viewBox="0 0 32 32">
+          <svg aria-hidden="true" role="presentation" class="w-[22px] h-[22px]" viewBox="0 0 32 32">
             <path fill="currentColor" d="M29.47,32H2.53c-.24,0-.46-.1-.62-.27-.16-.17-.24-.41-.22-.64l1.68-20.21c.04-.44.4-.77.84-.77h4.21v-2.53c0-4.18,3.4-7.58,7.58-7.58s7.58,3.4,7.58,7.58v2.53h4.21c.44,0,.8.34.84.77l1.68,20.21c.02.24-.06.47-.22.64-.16.17-.38.27-.62.27ZM3.44,30.32h25.12l-1.54-18.53h-3.44v2.53c0,.47-.38.84-.84.84s-.84-.38-.84-.84v-2.53h-11.79v2.53c0,.47-.38.84-.84.84s-.84-.38-.84-.84v-2.53h-3.44l-1.54,18.53ZM10.11,10.11h11.79v-2.53c0-3.25-2.64-5.89-5.89-5.89s-5.89,2.64-5.89,5.89v2.53Z"/>
           </svg>
-          <span id="cart-count-badge" class="absolute -top-0.5 -right-1 w-[18px] h-[18px] rounded-full bg-[#9E4758] text-white text-[10.5px] font-bold flex items-center justify-center">2</span>
+          <span id="cart-count-badge" class="absolute -top-0.5 -right-1 w-[20px] h-[20px] rounded-full bg-[#9E4758] text-white text-[12px] font-bold flex items-center justify-center">2</span>
         </button>
       </div>
     </div>
 
-    <!-- Mobile Accordion Category Drawer (With Collapsed Sub-Headings) -->
-    <div id="mobile-menu-drawer" class="hidden lg:hidden border-t border-[#E6E1DA] bg-white px-5 py-4 space-y-2 shadow-xl">
-      <details class="border-b border-[#E6E1DA] pb-2" open>
-        <summary class="font-bold text-[14px] py-1 cursor-pointer flex justify-between items-center text-[#18181B]">
+    <!-- Mobile Accordion Category Drawer (Clean Typography, Zero Decorative Icons) -->
+    <div id="mobile-menu-drawer" class="hidden lg:hidden border-t border-[#E6E1DA] bg-white px-5 py-4 space-y-2.5 shadow-xl">
+      <details class="border-b border-[#E6E1DA] pb-2.5" open>
+        <summary class="font-bold text-[15.5px] py-1.5 cursor-pointer flex justify-between items-center text-[#18181B]">
           <span>1. Shop Clothing (Oct 20 Autumn/Winter)</span><span>⌄</span>
         </summary>
-        <div class="pl-3 pt-1 space-y-1.5 text-[13.5px] text-[#52525B]">
-          <button onclick="switchMainPageView('home'); filterCategory('CLUB_FLEECE'); toggleMobileMenu();" class="block py-1 font-semibold text-[#9E4758]">Heavyweight Crewnecks &amp; Hoodies (380GSM)</button>
+        <div class="pl-3 pt-1 space-y-2 text-[15px] text-[#3F3F46]">
+          <button onclick="switchMainPageView('home'); filterCategory('CLUB_FLEECE'); toggleMobileMenu();" class="block py-1 font-semibold text-[#883647]">Heavyweight Crewnecks &amp; Hoodies (380GSM)</button>
           <button onclick="switchMainPageView('home'); filterCategory('OUTERWEAR'); toggleMobileMenu();" class="block py-1">Quarter-Zips, Sherpa &amp; Cozy Layers</button>
           <button onclick="switchMainPageView('home'); filterCategory('DRESSES'); toggleMobileMenu();" class="block py-1">Autumn &amp; Holiday Dresses</button>
           <button onclick="switchMainPageView('home'); filterCategory('GRAPHICS'); toggleMobileMenu();" class="block py-1">Game Day &amp; Graphic Tees</button>
         </div>
       </details>
-      <details class="border-b border-[#E6E1DA] pb-2">
-        <summary class="font-bold text-[14px] py-1 cursor-pointer flex justify-between items-center text-[#9E4758]">
-          <span>2. 💍 Bridal &amp; Engagement Season</span><span>⌄</span>
+      <details class="border-b border-[#E6E1DA] pb-2.5">
+        <summary class="font-bold text-[15.5px] py-1.5 cursor-pointer flex justify-between items-center text-[#883647]">
+          <span>2. Bridal &amp; Engagement Season</span><span>⌄</span>
         </summary>
-        <div class="pl-3 pt-1 space-y-1.5 text-[13.5px] text-[#52525B]">
+        <div class="pl-3 pt-1 space-y-2 text-[15px] text-[#3F3F46]">
           <button onclick="switchMainPageView('home'); enterBridalSection(); toggleMobileMenu();" class="block py-1">Newly Engaged "Future Mrs." Edit</button>
-          <button onclick="openBridalModal(true); toggleMobileMenu();" class="block py-1 font-bold text-[#9E4758]">Claim 10% Off Bridal Party Code (BRIDAL10)</button>
+          <button onclick="openBridalModal(true); toggleMobileMenu();" class="block py-1 font-bold text-[#883647]">Claim 10% Off Bridal Party Code (BRIDAL10)</button>
         </div>
       </details>
-      <details class="border-b border-[#E6E1DA] pb-2">
-        <summary class="font-bold text-[14px] py-1 cursor-pointer flex justify-between items-center text-[#18181B]">
+      <details class="border-b border-[#E6E1DA] pb-2.5">
+        <summary class="font-bold text-[15.5px] py-1.5 cursor-pointer flex justify-between items-center text-[#18181B]">
           <span>3. Holiday &amp; Custom Monogram Gifts</span><span>⌄</span>
         </summary>
-        <div class="pl-3 pt-1 space-y-1.5 text-[13.5px] text-[#52525B]">
+        <div class="pl-3 pt-1 space-y-2 text-[15px] text-[#3F3F46]">
           <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS'); toggleMobileMenu();" class="block py-1">Embroidered Weekender Totes &amp; 40oz Tumblers</button>
           <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS'); toggleMobileMenu();" class="block py-1">Plush Monogrammed Sherpa Blankets</button>
-          <button onclick="switchMainPageView('pdp'); toggleMobileMenu();" class="block py-1 font-bold text-[#2D5A43]">Open Live Monogram Studio →</button>
+          <button onclick="switchMainPageView('pdp'); toggleMobileMenu();" class="block py-1 font-bold text-[#234734]">Open Live Monogram Studio →</button>
         </div>
       </details>
-      <div class="pt-2 flex items-center justify-between">
-        <button onclick="switchMainPageView('wishlist'); toggleMobileMenu();" class="text-[13px] font-bold text-[#9E4758] underline">♡ Saved Wishlist Page</button>
-        <button onclick="openAccountModal(); toggleMobileMenu();" class="text-[13px] font-bold text-[#18181B] underline">👤 Account / Cloud Sync</button>
+      <div class="pt-2 flex flex-wrap items-center justify-between gap-3">
+        <button onclick="switchMainPageView('wishlist'); toggleMobileMenu();" class="text-[14.5px] font-bold text-[#883647] underline">Saved Wishlist Page</button>
+        <button onclick="openAccountModal(); toggleMobileMenu();" class="text-[14.5px] font-bold text-[#18181B] underline">Account / Cloud Sync</button>
+        <button onclick="toggleThemeMode(); toggleMobileMenu();" class="text-[14.5px] font-bold text-[#18181B] underline">Toggle Dark / Light Theme</button>
       </div>
     </div>
   </header>
@@ -706,7 +800,7 @@
 
     <!-- =======================================================================
          SCROLL 1: 3-SLIDE REPEATING PINK LILY HERO CAROUSEL
-         80% Visual / 20% Scannable Copy (22 words max per slide, 1 Primary CTA)
+         80% Visual / 20% Scannable Copy (Tall Line-Height, High Contrast, Zero Emojis)
          ======================================================================= -->
     <section
       id="shopify-section-hero"
@@ -714,29 +808,29 @@
       onmouseenter="pauseHeroCarousel(true)"
       onmouseleave="pauseHeroCarousel(false)"
     >
-      <div class="relative min-h-[450px] lg:min-h-[540px]">
+      <div class="relative min-h-[470px] lg:min-h-[560px]">
 
         <!-- HERO SLIDE 1: Cozy Autumn & Social Club Drop (Oct 20 Launch) -->
-        <div id="hero-slide-0" class="hero-slide grid grid-cols-1 lg:grid-cols-12 min-h-[450px] lg:min-h-[540px] opacity-100">
-          <div class="lg:col-span-7 relative min-h-[300px] lg:min-h-[540px] overflow-hidden">
+        <div id="hero-slide-0" class="hero-slide grid grid-cols-1 lg:grid-cols-12 min-h-[470px] lg:min-h-[560px] opacity-100">
+          <div class="lg:col-span-7 relative min-h-[320px] lg:min-h-[560px] overflow-hidden">
             <img
               src="https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1600&q=85"
               alt="Cozy Autumn & Social Club Fleece Drop"
               class="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <div class="absolute bottom-3 left-3 bg-[#FAF8F5]/95 border border-[#E6E1DA] px-3 py-1 text-[11.5px] font-bold text-[#18181B]">
-              ✨ SLIDE 01/03 • CLOUD-SOFT 380GSM FLEECE &amp; AUTUMN LAYERS (XS–2XL)
+            <div class="absolute bottom-3.5 left-3.5 bg-[#FAF8F5]/95 border border-[#C8C0B4] px-3.5 py-1.5 text-[13px] font-bold tracking-wide text-[#18181B]">
+              SLIDE 01/03 • CLOUD-SOFT 380GSM FLEECE &amp; AUTUMN LAYERS (XS–2XL)
             </div>
           </div>
-          <div class="lg:col-span-5 flex flex-col justify-center items-center text-center px-6 py-9 lg:px-12 bg-[#F9EFF1]">
-            <p class="script-font text-[26px] text-[#9E4758] mb-1">Just dropped for US &amp; Canada</p>
-            <h1 class="heading-font text-[40px] sm:text-[50px] lg:text-[56px] font-semibold text-[#18181B] leading-[1.02] mb-3">
-              the autumn &amp; social<br/><span class="italic font-normal text-[#9E4758]">club edit</span>
+          <div class="lg:col-span-5 flex flex-col justify-center items-center text-center px-6 py-10 lg:px-12 bg-[#F9EFF1]">
+            <p class="script-font text-[28px] sm:text-[30px] text-[#883647] mb-1.5">Just dropped for US &amp; Canada</p>
+            <h1 class="heading-font text-[44px] sm:text-[54px] lg:text-[60px] font-semibold text-[#18181B] leading-[1.12] mb-4">
+              the autumn &amp; social<br/><span class="italic font-normal text-[#883647]">club edit</span>
             </h1>
-            <p class="text-[15px] text-[#52525B] mb-5 max-w-sm">
-              Heavyweight embroidered crewnecks, cozy quarter-zips &amp; pocket midi dresses — <strong>25% OFF</strong> w/ code <span class="mono-font font-bold text-[#9E4758] underline">LULLUXE25</span>.
+            <p class="text-[16px] sm:text-[17px] text-[#3F3F46] leading-relaxed mb-6 max-w-md">
+              Heavyweight embroidered crewnecks, cozy quarter-zips &amp; pocket midi dresses — <strong>25% OFF</strong> with code <span class="mono-font font-bold text-[#883647] underline">LULLUXE25</span>.
             </p>
-            <div class="flex flex-wrap items-center justify-center gap-3">
+            <div class="flex flex-wrap items-center justify-center gap-3.5">
               <button onclick="togglePromoCode(); setTabAndScroll('new');" class="pl-btn">
                 shop new arrivals (-25% off)
               </button>
@@ -748,26 +842,26 @@
         </div>
 
         <!-- HERO SLIDE 2: Engagement & Bridal Season Suite -->
-        <div id="hero-slide-1" class="hero-slide hidden grid-cols-1 lg:grid-cols-12 min-h-[450px] lg:min-h-[540px] opacity-0">
-          <div class="lg:col-span-7 relative min-h-[300px] lg:min-h-[540px] overflow-hidden">
+        <div id="hero-slide-1" class="hero-slide hidden grid-cols-1 lg:grid-cols-12 min-h-[470px] lg:min-h-[560px] opacity-0">
+          <div class="lg:col-span-7 relative min-h-[320px] lg:min-h-[560px] overflow-hidden">
             <img
               src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=1600&q=85"
               alt="Newly Engaged & 2026 Bridal Party Suite"
               class="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <div class="absolute bottom-3 left-3 bg-[#FAF8F5]/95 border border-[#E6E1DA] px-3 py-1 text-[11.5px] font-bold text-[#9E4758]">
-              💍 SLIDE 02/03 • ENGAGEMENT SEASON &amp; BRIDAL PARTY CONCIERGE
+            <div class="absolute bottom-3.5 left-3.5 bg-[#FAF8F5]/95 border border-[#C8C0B4] px-3.5 py-1.5 text-[13px] font-bold tracking-wide text-[#883647]">
+              SLIDE 02/03 • ENGAGEMENT SEASON &amp; BRIDAL PARTY CONCIERGE
             </div>
           </div>
-          <div class="lg:col-span-5 flex flex-col justify-center items-center text-center px-6 py-9 lg:px-12 bg-[#FAF8F5]">
-            <p class="script-font text-[26px] text-[#B4833E] mb-1">Planning the big day?</p>
-            <h2 class="heading-font text-[40px] sm:text-[50px] lg:text-[56px] font-semibold text-[#18181B] leading-[1.02] mb-3">
-              newly engaged?<br/><span class="italic font-normal text-[#9E4758]">the bridal suite</span>
+          <div class="lg:col-span-5 flex flex-col justify-center items-center text-center px-6 py-10 lg:px-12 bg-[#FAF8F5]">
+            <p class="script-font text-[28px] sm:text-[30px] text-[#8A5F22] mb-1.5">Planning the big day?</p>
+            <h2 class="heading-font text-[44px] sm:text-[54px] lg:text-[60px] font-semibold text-[#18181B] leading-[1.12] mb-4">
+              newly engaged?<br/><span class="italic font-normal text-[#883647]">the bridal suite</span>
             </h2>
-            <p class="text-[15px] text-[#52525B] mb-5 max-w-sm">
+            <p class="text-[16px] sm:text-[17px] text-[#3F3F46] leading-relaxed mb-6 max-w-md">
               Custom "Future Mrs." pearl chenille sweatshirts, bridesmaid proposal boxes &amp; free 48h monogramming.
             </p>
-            <div class="flex flex-wrap items-center justify-center gap-3">
+            <div class="flex flex-wrap items-center justify-center gap-3.5">
               <button onclick="enterBridalSection()" class="pl-btn">
                 unlock bridal 10% off
               </button>
@@ -779,26 +873,26 @@
         </div>
 
         <!-- HERO SLIDE 3: Holiday & Custom Monogram Gift Shop -->
-        <div id="hero-slide-2" class="hero-slide hidden grid-cols-1 lg:grid-cols-12 min-h-[450px] lg:min-h-[540px] opacity-0">
-          <div class="lg:col-span-7 relative min-h-[300px] lg:min-h-[540px] overflow-hidden">
+        <div id="hero-slide-2" class="hero-slide hidden grid-cols-1 lg:grid-cols-12 min-h-[470px] lg:min-h-[560px] opacity-0">
+          <div class="lg:col-span-7 relative min-h-[320px] lg:min-h-[560px] overflow-hidden">
             <img
               src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1600&q=85"
               alt="Holiday Custom Monogram Gift Shop"
               class="absolute inset-0 w-full h-full object-cover object-center"
             />
-            <div class="absolute bottom-3 left-3 bg-[#FAF8F5]/95 border border-[#E6E1DA] px-3 py-1 text-[11.5px] font-bold text-[#2D5A43]">
-              🎁 SLIDE 03/03 • IN-HOUSE EMBROIDERY &amp; LASER ENGRAVING (SHIPS IN 48H)
+            <div class="absolute bottom-3.5 left-3.5 bg-[#FAF8F5]/95 border border-[#C8C0B4] px-3.5 py-1.5 text-[13px] font-bold tracking-wide text-[#234734]">
+              SLIDE 03/03 • IN-HOUSE EMBROIDERY &amp; LASER ENGRAVING (SHIPS IN 48H)
             </div>
           </div>
-          <div class="lg:col-span-5 flex flex-col justify-center items-center text-center px-6 py-9 lg:px-12 bg-[#F3EFEA]">
-            <p class="script-font text-[26px] text-[#2D5A43] mb-1">Personalized in-house free</p>
-            <h2 class="heading-font text-[40px] sm:text-[50px] lg:text-[56px] font-semibold text-[#18181B] leading-[1.02] mb-3">
-              the custom monogram<br/><span class="italic font-normal text-[#2D5A43]">holiday gift shop</span>
+          <div class="lg:col-span-5 flex flex-col justify-center items-center text-center px-6 py-10 lg:px-12 bg-[#F3EFEA]">
+            <p class="script-font text-[28px] sm:text-[30px] text-[#234734] mb-1.5">Personalized in-house free</p>
+            <h2 class="heading-font text-[44px] sm:text-[54px] lg:text-[60px] font-semibold text-[#18181B] leading-[1.12] mb-4">
+              the custom monogram<br/><span class="italic font-normal text-[#234734]">holiday gift shop</span>
             </h2>
-            <p class="text-[15px] text-[#52525B] mb-5 max-w-sm">
+            <p class="text-[16px] sm:text-[17px] text-[#3F3F46] leading-relaxed mb-6 max-w-md">
               Embroidered canvas weekender totes, plush sherpa blankets &amp; 40oz laser-engraved quenchers under $50.
             </p>
-            <div class="flex flex-wrap items-center justify-center gap-3">
+            <div class="flex flex-wrap items-center justify-center gap-3.5">
               <button onclick="filterCategory('MONOGRAM_GIFTS')" class="pl-btn !bg-[#2D5A43] !border-[#2D5A43]">
                 shop custom gifts
               </button>
@@ -810,32 +904,31 @@
         </div>
 
         <!-- Hero Carousel Controls (Bottom-Right Dots + Prev/Next Arrows) -->
-        <div class="absolute bottom-3 right-4 z-20 flex items-center gap-2 bg-white/90 border border-[#D4CDC3] px-3 py-1.5">
-          <button onclick="stepHeroSlide(-1)" aria-label="Previous Hero Slide" class="text-sm font-bold px-1 hover:text-[#9E4758]">‹</button>
-          <button onclick="goToHeroSlide(0)" id="hero-dot-0" class="w-6 h-2 bg-[#9E4758] transition-all" aria-label="Slide 1"></button>
-          <button onclick="goToHeroSlide(1)" id="hero-dot-1" class="w-2.5 h-2 bg-[#D4CDC3] transition-all" aria-label="Slide 2"></button>
-          <button onclick="goToHeroSlide(2)" id="hero-dot-2" class="w-2.5 h-2 bg-[#D4CDC3] transition-all" aria-label="Slide 3"></button>
-          <button onclick="stepHeroSlide(1)" aria-label="Next Hero Slide" class="text-sm font-bold px-1 hover:text-[#9E4758]">›</button>
+        <div class="absolute bottom-3.5 right-4 z-20 flex items-center gap-2.5 bg-white/95 border border-[#C8C0B4] px-3.5 py-2">
+          <button onclick="stepHeroSlide(-1)" aria-label="Previous Hero Slide" class="text-[16px] font-bold px-1.5 text-[#18181B] hover:text-[#883647]">‹</button>
+          <button onclick="goToHeroSlide(0)" id="hero-dot-0" class="w-7 h-2.5 bg-[#9E4758] transition-all" aria-label="Slide 1"></button>
+          <button onclick="goToHeroSlide(1)" id="hero-dot-1" class="w-3 h-2.5 bg-[#C8C0B4] transition-all" aria-label="Slide 2"></button>
+          <button onclick="goToHeroSlide(2)" id="hero-dot-2" class="w-3 h-2.5 bg-[#C8C0B4] transition-all" aria-label="Slide 3"></button>
+          <button onclick="stepHeroSlide(1)" aria-label="Next Hero Slide" class="text-[16px] font-bold px-1.5 text-[#18181B] hover:text-[#883647]">›</button>
         </div>
       </div>
     </section>
 
     <!-- =======================================================================
-         SCROLL 2: 4-UP VISUAL CATEGORY TILES (Immediate Scroll View — Zero Text Ribbons!)
-         Shows full Q4 US/Canada Breadth: Cozy Fleece, Quarter-Zips/Dresses, Bridal, Custom Gifts
+         SCROLL 2: 4-UP VISUAL CATEGORY TILES (Clean Typography, Upgraded Font Size)
          ======================================================================= -->
-    <section class="py-8 lg:py-10 bg-[#FAF8F5] border-b border-[#E6E1DA]">
+    <section class="py-10 lg:py-12 bg-[#FAF8F5] border-b border-[#E6E1DA]">
       <div class="pl-container">
         <div class="pl-grid-4">
           <!-- Category Tile 1: Social Club Fleece -->
           <div onclick="filterCategory('CLUB_FLEECE')" class="pl-info-card">
             <div class="img-box">
               <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=800&q=85" alt="Social Club Fleece" />
-              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-[#18181B] border border-[#E6E1DA]">#1 Q4 Best Seller</span>
+              <span class="absolute top-3 left-3 bg-white/95 px-3 py-1 text-[12.5px] font-bold uppercase tracking-wider text-[#18181B] border border-[#C8C0B4]">#1 Q4 Best Seller</span>
             </div>
             <div class="card-caption color-scheme-pink border-t border-[#E6E1DA]">
               <div class="title">social club fleece</div>
-              <div class="small-label text-[#9E4758]">380GSM Heavyweight • Shop →</div>
+              <div class="small-label text-[#883647]">380GSM Heavyweight • Shop →</div>
             </div>
           </div>
 
@@ -843,11 +936,11 @@
           <div onclick="filterCategory('DRESSES')" class="pl-info-card">
             <div class="img-box">
               <img src="https://images.unsplash.com/photo-1595777457583-95e059d581b8?auto=format&fit=crop&w=800&q=85" alt="Autumn & Holiday Dresses" />
-              <span class="absolute top-2.5 left-2.5 bg-white/95 px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider text-[#18181B] border border-[#E6E1DA]">With Pockets • XS–2XL</span>
+              <span class="absolute top-3 left-3 bg-white/95 px-3 py-1 text-[12.5px] font-bold uppercase tracking-wider text-[#18181B] border border-[#C8C0B4]">With Pockets • XS–2XL</span>
             </div>
             <div class="card-caption color-scheme-plum">
               <div class="title">dresses &amp; cozy layers</div>
-              <div class="small-label">Autumn &amp; Holiday • Shop →</div>
+              <div class="small-label text-white">Autumn &amp; Holiday • Shop →</div>
             </div>
           </div>
 
@@ -855,11 +948,11 @@
           <div onclick="enterBridalSection()" class="pl-info-card">
             <div class="img-box">
               <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=85" alt="Bridal & Engagement Suite" />
-              <span class="absolute top-2.5 left-2.5 bg-[#9E4758] text-white px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider">10% Off Bride Crew</span>
+              <span class="absolute top-3 left-3 bg-[#9E4758] text-white px-3 py-1 text-[12.5px] font-bold uppercase tracking-wider">10% Off Bride Crew</span>
             </div>
             <div class="card-caption bg-white border-t border-[#E6E1DA]">
               <div class="title text-[#18181B]">bridal &amp; engagement</div>
-              <div class="small-label text-[#9E4758]">Future Mrs. &amp; Bach • Shop →</div>
+              <div class="small-label text-[#883647]">Future Mrs. &amp; Bach • Shop →</div>
             </div>
           </div>
 
@@ -867,11 +960,11 @@
           <div onclick="filterCategory('MONOGRAM_GIFTS')" class="pl-info-card">
             <div class="img-box">
               <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=85" alt="Custom Monogram Holiday Gifts" />
-              <span class="absolute top-2.5 left-2.5 bg-[#2D5A43] text-white px-2.5 py-0.5 text-[10.5px] font-bold uppercase tracking-wider">Free 48h Embroidery</span>
+              <span class="absolute top-3 left-3 bg-[#2D5A43] text-white px-3 py-1 text-[12.5px] font-bold uppercase tracking-wider">Free 48h Embroidery</span>
             </div>
             <div class="card-caption color-scheme-sage">
               <div class="title">custom monogram gifts</div>
-              <div class="small-label">Totes, Sherpa &amp; 40oz • Shop →</div>
+              <div class="small-label text-white">Totes, Sherpa &amp; 40oz • Shop →</div>
             </div>
           </div>
         </div>
@@ -879,23 +972,23 @@
     </section>
 
     <!-- =======================================================================
-         SCROLL 3: TABBED PRODUCT SHOWCASE (new arrivals | best sellers)
-         Printify Q4 US & Canada High-Velocity Lineup (8 cards = 2 rows of 4)
+         SCROLL 3: TABBED PRODUCT SHOWCASE (new arrivals | most-loved best sellers)
+         Zero Decorative Icons, Larger Accessible Font Sizes
          ======================================================================= -->
-    <section id="tabs-nosto-section" class="py-8 lg:py-12 bg-[#FAF8F5]">
+    <section id="tabs-nosto-section" class="py-10 lg:py-14 bg-[#FAF8F5]">
       <div class="pl-container">
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-5">
-          <div class="flex items-center">
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+          <div class="flex flex-wrap items-center">
             <button id="tab-btn-new" onclick="switchMainTab('new')" class="pl-util-tab active">
               new arrivals
             </button>
             <button id="tab-btn-bestsellers" onclick="switchMainTab('bestsellers')" class="pl-util-tab">
-              best sellers
+              most-loved best sellers
             </button>
           </div>
-          <div class="flex items-center gap-3">
-            <button onclick="togglePromoCode()" id="grid-promo-pill" class="text-[12.5px] font-bold px-3 py-1.5 border border-[#9E4758] bg-white text-[#9E4758] hover:bg-[#9E4758] hover:text-white transition">
-              🏷️ Code <span class="mono-font">LULLUXE25</span> (-25%): <span id="promo-status-label">OFF</span>
+          <div class="flex flex-wrap items-center gap-3">
+            <button onclick="togglePromoCode()" id="grid-promo-pill" class="text-[14.5px] font-bold px-4 py-2.5 border border-[#9E4758] bg-white text-[#883647] hover:bg-[#9E4758] hover:text-white transition">
+              Code <span class="mono-font">LULLUXE25</span> (-25%): <span id="promo-status-label">OFF</span>
             </button>
             <button onclick="filterCategory('ALL')" id="tab-cta-link" class="pl-btn">
               view all styles
@@ -903,32 +996,32 @@
           </div>
         </div>
 
-        <!-- Clean Pill Filter Strip -->
-        <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#E6E1DA]">
-          <div class="flex items-center gap-2 overflow-x-auto pb-1">
-            <button onclick="filterCategory('ALL')" data-pill="ALL" class="cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#18181B] bg-[#18181B] text-white">
+        <!-- Clean Pill Filter Strip (14.5px Font Size, Zero Emojis) -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pb-5 mb-7 border-b border-[#E6E1DA]">
+          <div class="flex items-center gap-2.5 overflow-x-auto pb-1">
+            <button onclick="filterCategory('ALL')" data-pill="ALL" class="cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#18181B] bg-[#18181B] text-white">
               all q4 drops (8)
             </button>
-            <button onclick="filterCategory('CLUB_FLEECE')" data-pill="CLUB_FLEECE" class="cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#D4CDC3] bg-white text-[#18181B] hover:border-[#18181B]">
+            <button onclick="filterCategory('CLUB_FLEECE')" data-pill="CLUB_FLEECE" class="cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#C8C0B4] bg-white text-[#18181B] hover:border-[#18181B]">
               heavyweight crewnecks
             </button>
-            <button onclick="filterCategory('OUTERWEAR')" data-pill="OUTERWEAR" class="cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#D4CDC3] bg-white text-[#18181B] hover:border-[#18181B]">
+            <button onclick="filterCategory('OUTERWEAR')" data-pill="OUTERWEAR" class="cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#C8C0B4] bg-white text-[#18181B] hover:border-[#18181B]">
               quarter-zips &amp; sherpa
             </button>
-            <button onclick="filterCategory('DRESSES')" data-pill="DRESSES" class="cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#D4CDC3] bg-white text-[#18181B] hover:border-[#18181B]">
+            <button onclick="filterCategory('DRESSES')" data-pill="DRESSES" class="cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#C8C0B4] bg-white text-[#18181B] hover:border-[#18181B]">
               autumn &amp; holiday dresses
             </button>
-            <button onclick="enterBridalSection()" data-pill="BRIDAL" class="cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#9E4758]/40 bg-[#F9EFF1] text-[#9E4758] hover:border-[#9E4758]">
-              💍 bridal &amp; engagement
+            <button onclick="enterBridalSection()" data-pill="BRIDAL" class="cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#9E4758] bg-[#F9EFF1] text-[#883647] hover:border-[#18181B]">
+              bridal &amp; engagement
             </button>
-            <button onclick="filterCategory('MONOGRAM_GIFTS')" data-pill="MONOGRAM_GIFTS" class="cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#D4CDC3] bg-white text-[#18181B] hover:border-[#18181B]">
+            <button onclick="filterCategory('MONOGRAM_GIFTS')" data-pill="MONOGRAM_GIFTS" class="cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#C8C0B4] bg-white text-[#18181B] hover:border-[#18181B]">
               custom totes, blankets &amp; 40oz
             </button>
           </div>
 
-          <div class="flex items-center gap-2 text-[12.5px]">
-            <span id="showing-count-text" class="text-[#52525B] font-semibold">8 styles</span>
-            <select id="sort-select" onchange="setSortMode(this.value)" aria-label="Sort products" class="border border-[#D4CDC3] px-2.5 py-1 text-[12.5px] bg-white focus:outline-none">
+          <div class="flex items-center gap-2.5 text-[14.5px]">
+            <span id="showing-count-text" class="text-[#3F3F46] font-semibold">8 styles</span>
+            <select id="sort-select" onchange="setSortMode(this.value)" aria-label="Sort products" class="border border-[#C8C0B4] px-3 py-2 text-[14.5px] font-medium bg-white text-[#18181B]">
               <option value="FEATURED">Sort: Featured Q4 Hits</option>
               <option value="PRICE_ASC">Price: Low to High</option>
               <option value="PRICE_DESC">Price: High to Low</option>
@@ -944,50 +1037,49 @@
 
     <!-- =======================================================================
          SCROLL 4: 40/60 INTERACTIVE LIVE MONOGRAM & BRIDAL SPLIT SHOWCASE
-         Replaces the heavy 394-word inline PDP on the homepage with a sleek
-         15-second Interactive Monogram Tester + 3 Featured Custom Gifts!
          ======================================================================= -->
-    <section class="color-scheme-pink py-10 lg:py-12 border-t border-b border-[#E6E1DA]">
+    <section class="color-scheme-pink py-12 lg:py-14 border-t border-b border-[#E6E1DA]">
       <div class="pl-container">
-        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-center">
-          <!-- Left 40% Column: Live 15-Second Monogram Tester (38 Words Max) -->
-          <div class="lg:col-span-5 bg-white p-6 sm:p-7 border border-[#E6E1DA] shadow-sm space-y-4">
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-7 items-center">
+          <!-- Left 40% Column: Live 15-Second Monogram Tester -->
+          <div class="lg:col-span-5 bg-white p-7 sm:p-8 border border-[#C8C0B4] shadow-sm space-y-5">
             <div class="flex items-center justify-between">
-              <span class="script-font text-[24px] text-[#9E4758]">Free in-house embroidery</span>
-              <span class="mono-font text-[10.5px] font-bold px-2 py-0.5 bg-[#ECFDF3] text-[#2D5A43] border border-[#2D5A43]/20">Ships in 48h</span>
+              <span class="script-font text-[28px] text-[#883647]">Free in-house embroidery</span>
+              <span class="mono-font text-[13px] font-bold px-2.5 py-1 bg-[#ECFDF3] text-[#234734] border border-[#2D5A43]/30">Ships in 48h</span>
             </div>
-            <h2 class="heading-font text-[32px] sm:text-[38px] font-semibold text-[#18181B] leading-tight">
+            <h2 class="heading-font text-[36px] sm:text-[42px] font-semibold text-[#18181B] leading-[1.15]">
               Test Your Custom Monogram Live
             </h2>
-            <p class="text-[13.5px] text-[#52525B]">
+            <p class="text-[15.5px] text-[#3F3F46] leading-relaxed">
               Type your initials or bridal title below to preview our raised embroidery stitch on every custom tote, sherpa blanket, and pullover.
             </p>
 
             <!-- Live Preview Pill Box -->
-            <div class="p-4 bg-[#FAF8F5] border border-[#D4CDC3] flex items-center justify-between">
+            <div class="p-4 sm:p-5 bg-[#FAF8F5] border border-[#C8C0B4] flex items-center justify-between gap-3">
               <div>
-                <span class="text-[10px] font-bold uppercase tracking-widest text-[#71717A] block">LIVE STITCH PREVIEW</span>
-                <span id="home-mono-preview" class="font-mono-serif text-2xl font-bold text-[#9E4758]">MRS. DAVIS</span>
+                <span class="text-[12.5px] font-bold uppercase tracking-widest text-[#52525B] block mb-1">LIVE STITCH PREVIEW</span>
+                <span id="home-mono-preview" class="font-mono-serif text-[26px] font-bold text-[#883647]">MRS. DAVIS</span>
               </div>
-              <div class="flex items-center gap-1.5">
-                <button onclick="setHomeMonoColor('#9E4758')" class="w-5 h-5 rounded-full bg-[#9E4758] ring-1 ring-offset-1 ring-[#18181B]" title="Botanical Rose"></button>
-                <button onclick="setHomeMonoColor('#B4833E')" class="w-5 h-5 rounded-full bg-[#B4833E]" title="Champagne Gold"></button>
-                <button onclick="setHomeMonoColor('#2D5A43')" class="w-5 h-5 rounded-full bg-[#2D5A43]" title="Forest Sage"></button>
-                <button onclick="setHomeMonoColor('#18181B')" class="w-5 h-5 rounded-full bg-[#18181B]" title="Espresso Ink"></button>
+              <div class="flex items-center gap-2">
+                <button onclick="setHomeMonoColor('#9E4758')" aria-label="Botanical Rose Thread" class="w-6 h-6 rounded-full bg-[#9E4758] ring-2 ring-offset-2 ring-[#18181B]" title="Botanical Rose"></button>
+                <button onclick="setHomeMonoColor('#B4833E')" aria-label="Champagne Gold Thread" class="w-6 h-6 rounded-full bg-[#B4833E]" title="Champagne Gold"></button>
+                <button onclick="setHomeMonoColor('#2D5A43')" aria-label="Forest Sage Thread" class="w-6 h-6 rounded-full bg-[#2D5A43]" title="Forest Sage"></button>
+                <button onclick="setHomeMonoColor('#18181B')" aria-label="Espresso Ink Thread" class="w-6 h-6 rounded-full bg-[#18181B]" title="Espresso Ink"></button>
               </div>
             </div>
 
-            <div class="flex gap-2">
+            <div class="flex flex-col sm:flex-row gap-2.5">
               <input
                 id="home-mono-input"
                 type="text"
                 maxlength="14"
                 value="MRS. DAVIS"
+                aria-label="Custom Monogram Text"
                 oninput="document.getElementById('home-mono-preview').textContent = this.value || 'L & L'"
                 placeholder="Type initials or MRS. NAME..."
-                class="flex-1 px-3.5 py-2.5 bg-[#FAF8F5] border border-[#D4CDC3] text-[13.5px] focus:outline-none focus:border-[#18181B]"
+                class="flex-1 px-4 py-3 bg-[#FAF8F5] border border-[#C8C0B4] text-[15.5px] font-medium text-[#18181B]"
               />
-              <button onclick="openMonogramStudioFromHome()" class="pl-btn !py-2.5 !px-5">
+              <button onclick="openMonogramStudioFromHome()" class="pl-btn !py-3 !px-6">
                 customize item →
               </button>
             </div>
@@ -1000,96 +1092,97 @@
     </section>
 
     <!-- =======================================================================
-         SCROLL 5: PHOTO-VERIFIED REVIEWS + 4-ICON RISK-REVERSAL BAR + NEWSLETTER
+         SCROLL 5: PHOTO-VERIFIED REVIEWS + 4-PILLAR RISK-REVERSAL BAR + NEWSLETTER
          ======================================================================= -->
-    <section id="yotpo-reviews" class="py-10 lg:py-12 bg-white border-b border-[#E6E1DA]">
+    <section id="yotpo-reviews" class="py-12 lg:py-14 bg-white border-b border-[#E6E1DA]">
       <div class="pl-container">
-        <div class="flex flex-wrap items-end justify-between gap-4 mb-6">
+        <div class="flex flex-wrap items-end justify-between gap-4 mb-7">
           <div>
-            <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#9E4758] block">★ 4.94 OUT OF 5 (1,420+ VERIFIED NORTH AMERICAN BUYERS)</span>
-            <h2 class="heading-font text-[32px] sm:text-[38px] font-semibold text-[#18181B] leading-tight">
+            <span class="text-[13px] font-bold uppercase tracking-[0.18em] text-[#883647] block mb-1">★ 4.94 OUT OF 5 (1,420+ VERIFIED NORTH AMERICAN BUYERS)</span>
+            <h2 class="heading-font text-[36px] sm:text-[44px] font-semibold text-[#18181B] leading-[1.15]">
               Real Girls in LouLou &amp; Luxe
             </h2>
           </div>
-          <div class="flex items-center gap-3 text-[12.5px] font-semibold text-[#2D5A43] bg-[#ECFDF3] px-3.5 py-1.5 border border-[#2D5A43]/20">
-            <span>✓ 94% Say Fits True to Size (XS–2XL)</span>
+          <div class="flex items-center gap-3 text-[14.5px] font-bold text-[#234734] bg-[#ECFDF3] px-4 py-2 border border-[#2D5A43]/30">
+            <span>94% Say Fits True to Size (XS–2XL)</span>
           </div>
         </div>
 
-        <!-- 3 Photo-Verified Review Cards (With On-Body Thumbnail + Buyer Height/Size Fit Badge) -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          <div class="p-4 border border-[#E6E1DA] bg-[#FAF8F5] flex gap-3.5 items-start">
-            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=240&q=80" alt="Buyer Photo" class="w-20 h-28 object-cover flex-shrink-0 border border-[#D4CDC3]" />
-            <div class="text-[12.5px]">
-              <div class="text-[#B4833E] font-bold text-xs mb-0.5">★★★★★ <span class="text-[#71717A] font-normal">• Austin, TX</span></div>
-              <p class="font-bold text-[#18181B] mb-1">"Thick 380GSM fleece &amp; real embroidery!"</p>
-              <p class="text-[#52525B] mb-1.5">Ordered 7 custom crewnecks for Scottsdale bach. Shipped in 48 hours!</p>
-              <span class="inline-block bg-white border border-[#D4CDC3] px-2 py-0.5 text-[11px] font-bold text-[#9E4758]">Buyer: 5'6" • Size M (Relaxed Fit)</span>
+        <!-- 3 Photo-Verified Review Cards (Upgraded 15px Font Size & High Contrast) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+          <div class="p-5 border border-[#C8C0B4] bg-[#FAF8F5] flex gap-4 items-start">
+            <img src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=240&q=80" alt="Buyer Photo" class="w-20 h-28 object-cover flex-shrink-0 border border-[#C8C0B4]" />
+            <div class="text-[15px] leading-relaxed">
+              <div class="text-[#8A5F22] font-bold text-[14px] mb-1">★★★★★ <span class="text-[#52525B] font-medium">• Austin, TX</span></div>
+              <p class="font-bold text-[#18181B] text-[16px] mb-1">"Thick 380GSM fleece &amp; real embroidery!"</p>
+              <p class="text-[#3F3F46] mb-2.5">Ordered 7 custom crewnecks for Scottsdale bach. Shipped in 48 hours!</p>
+              <span class="inline-block bg-white border border-[#C8C0B4] px-2.5 py-1 text-[13px] font-bold text-[#883647]">Buyer: 5'6" • Size M (Relaxed Fit)</span>
             </div>
           </div>
 
-          <div class="p-4 border border-[#E6E1DA] bg-[#FAF8F5] flex gap-3.5 items-start">
-            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=240&q=80" alt="Buyer Photo" class="w-20 h-28 object-cover flex-shrink-0 border border-[#D4CDC3]" />
-            <div class="text-[12.5px]">
-              <div class="text-[#B4833E] font-bold text-xs mb-0.5">★★★★★ <span class="text-[#71717A] font-normal">• Nashville, TN</span></div>
-              <p class="font-bold text-[#18181B] mb-1">"Best engagement gift ever"</p>
-              <p class="text-[#52525B] mb-1.5">The Future Mrs. pearl chenille stitch looks like a $140 Revolve sweater.</p>
-              <span class="inline-block bg-white border border-[#D4CDC3] px-2 py-0.5 text-[11px] font-bold text-[#9E4758]">Buyer: 5'7" • Size S (True to Size)</span>
+          <div class="p-5 border border-[#C8C0B4] bg-[#FAF8F5] flex gap-4 items-start">
+            <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=240&q=80" alt="Buyer Photo" class="w-20 h-28 object-cover flex-shrink-0 border border-[#C8C0B4]" />
+            <div class="text-[15px] leading-relaxed">
+              <div class="text-[#8A5F22] font-bold text-[14px] mb-1">★★★★★ <span class="text-[#52525B] font-medium">• Nashville, TN</span></div>
+              <p class="font-bold text-[#18181B] text-[16px] mb-1">"Best engagement gift ever"</p>
+              <p class="text-[#3F3F46] mb-2.5">The Future Mrs. pearl chenille stitch looks like a $140 Revolve sweater.</p>
+              <span class="inline-block bg-white border border-[#C8C0B4] px-2.5 py-1 text-[13px] font-bold text-[#883647]">Buyer: 5'7" • Size S (True to Size)</span>
             </div>
           </div>
 
-          <div class="p-4 border border-[#E6E1DA] bg-[#FAF8F5] flex gap-3.5 items-start">
-            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=240&q=80" alt="Buyer Photo" class="w-20 h-28 object-cover flex-shrink-0 border border-[#D4CDC3]" />
-            <div class="text-[12.5px]">
-              <div class="text-[#B4833E] font-bold text-xs mb-0.5">★★★★★ <span class="text-[#71717A] font-normal">• Toronto, ON</span></div>
-              <p class="font-bold text-[#18181B] mb-1">"Fast Canadian delivery, zero duties!"</p>
-              <p class="text-[#52525B] mb-1.5">Paid in CAD and my monogrammed tote + sherpa blanket arrived in 3 days.</p>
-              <span class="inline-block bg-white border border-[#D4CDC3] px-2 py-0.5 text-[11px] font-bold text-[#2D5A43]">Verified CAD Order • Ships Local</span>
+          <div class="p-5 border border-[#C8C0B4] bg-[#FAF8F5] flex gap-4 items-start">
+            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=240&q=80" alt="Buyer Photo" class="w-20 h-28 object-cover flex-shrink-0 border border-[#C8C0B4]" />
+            <div class="text-[15px] leading-relaxed">
+              <div class="text-[#8A5F22] font-bold text-[14px] mb-1">★★★★★ <span class="text-[#52525B] font-medium">• Toronto, ON</span></div>
+              <p class="font-bold text-[#18181B] text-[16px] mb-1">"Fast Canadian delivery, zero duties!"</p>
+              <p class="text-[#3F3F46] mb-2.5">Paid in CAD and my monogrammed tote + sherpa blanket arrived in 3 days.</p>
+              <span class="inline-block bg-white border border-[#C8C0B4] px-2.5 py-1 text-[13px] font-bold text-[#234734]">Verified CAD Order • Ships Local</span>
             </div>
           </div>
         </div>
 
-        <!-- 4-Icon Trust & Risk-Reversal Strip (28 Words Total) -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 pt-6 border-t border-[#E6E1DA] text-center">
-          <div class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA]">
-            <span class="font-bold text-[13px] text-[#18181B] block">⚡ 48-Hour Custom Dispatch</span>
-            <span class="text-[11.5px] text-[#52525B]">Local US &amp; Canadian Printify hubs</span>
+        <!-- 4-Pillar Trust & Risk-Reversal Strip (Zero Decorative Icons, Larger 15.5px/14px Text) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-7 border-t border-[#E6E1DA] text-center">
+          <div class="p-4 bg-[#FAF8F5] border border-[#C8C0B4]">
+            <span class="font-bold text-[15.5px] text-[#18181B] block mb-0.5">48-Hour Custom Dispatch</span>
+            <span class="text-[14px] text-[#3F3F46]">Local US &amp; Canadian Printify hubs</span>
           </div>
-          <div class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA]">
-            <span class="font-bold text-[13px] text-[#18181B] block">🧵 Free Custom Monogram</span>
-            <span class="text-[11.5px] text-[#52525B]">Included free ($15 value) on gifts</span>
+          <div class="p-4 bg-[#FAF8F5] border border-[#C8C0B4]">
+            <span class="font-bold text-[15.5px] text-[#18181B] block mb-0.5">Free Custom Monogram</span>
+            <span class="text-[14px] text-[#3F3F46]">Included free ($15 value) on gifts</span>
           </div>
-          <div class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA]">
-            <span class="font-bold text-[13px] text-[#18181B] block">👗 Inclusive XS–2XL Sizing</span>
-            <span class="text-[11.5px] text-[#52525B]">Fit-tested on real proportions</span>
+          <div class="p-4 bg-[#FAF8F5] border border-[#C8C0B4]">
+            <span class="font-bold text-[15.5px] text-[#18181B] block mb-0.5">Inclusive XS–2XL Sizing</span>
+            <span class="text-[14px] text-[#3F3F46]">Fit-tested on real proportions</span>
           </div>
-          <div class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA]">
-            <span class="font-bold text-[13px] text-[#18181B] block">🔄 Easy 30-Day Exchanges</span>
-            <span class="text-[11.5px] text-[#52525B]">Instant self-serve size swaps</span>
+          <div class="p-4 bg-[#FAF8F5] border border-[#C8C0B4]">
+            <span class="font-bold text-[15.5px] text-[#18181B] block mb-0.5">Easy 30-Day Exchanges</span>
+            <span class="text-[14px] text-[#3F3F46]">Instant self-serve size swaps</span>
           </div>
         </div>
       </div>
     </section>
 
     <!-- Newsletter Signup Hook ("like being first?") -->
-    <section class="color-scheme-pink py-10 lg:py-12 border-b border-[#E6E1DA]">
+    <section class="color-scheme-pink py-12 lg:py-14 border-b border-[#E6E1DA]">
       <div class="pl-container max-w-2xl text-center">
-        <p class="script-font text-[25px] text-[#9E4758] mb-0.5">Dance through whatever comes next</p>
-        <h2 class="heading-font text-[34px] sm:text-[42px] font-semibold text-[#18181B] mb-1.5">
+        <p class="script-font text-[28px] text-[#883647] mb-1">Dance through whatever comes next</p>
+        <h2 class="heading-font text-[38px] sm:text-[46px] font-semibold text-[#18181B] mb-2">
           like being first? get 25% off.
         </h2>
-        <p class="text-[14px] text-[#52525B] mb-5">
-          Join the VIP list for early access to our Oct 20th Holiday drops + <strong>25% OFF</strong> your first order (<span class="mono-font">LULLUXE25</span>).
+        <p class="text-[16px] text-[#3F3F46] mb-6">
+          Join the VIP list for early access to our Oct 20th Holiday drops + <strong>25% OFF</strong> your first order (<span class="mono-font font-bold">LULLUXE25</span>).
         </p>
-        <form onsubmit="submitStorefrontNewsletter(event)" class="flex flex-col sm:flex-row gap-2.5 max-w-lg mx-auto">
+        <form onsubmit="submitStorefrontNewsletter(event)" class="flex flex-col sm:flex-row gap-3 max-w-lg mx-auto">
           <input
             id="sf-newsletter-email"
             type="email"
             required
+            aria-label="Email Address for 25% Off VIP List"
             placeholder="Enter your email address..."
-            class="flex-1 px-4 py-3.5 bg-white border border-[#D4CDC3] text-[14px] focus:outline-none focus:border-[#18181B]"
+            class="flex-1 px-4 py-3.5 bg-white border border-[#C8C0B4] text-[15.5px] text-[#18181B]"
           />
-          <button type="submit" class="pl-btn !px-7 !py-3.5">
+          <button type="submit" class="pl-btn !px-8 !py-3.5">
             unlock 25% off
           </button>
         </form>
@@ -1100,41 +1193,38 @@
 
   <!-- =========================================================================
        VIEW B: DEDICATED SAVED WISHLIST PAGE (#wishlist-page-view)
-       Triggered when clicking the Heart (♡) icon in the header!
+       Triggered when clicking the Heart icon in the header
        ========================================================================= -->
-  <section id="wishlist-page-view" class="hidden py-10 lg:py-14 bg-[#FAF8F5] min-h-[70vh]">
+  <section id="wishlist-page-view" class="hidden py-12 lg:py-16 bg-[#FAF8F5] min-h-[70vh]">
     <div class="pl-container">
       <!-- Breadcrumb & Back to Shopping -->
-      <div class="flex flex-wrap items-center justify-between gap-3 pb-4 mb-6 border-b border-[#E6E1DA]">
-        <div class="text-[13px] text-[#52525B]">
-          <button onclick="switchMainPageView('home')" class="hover:underline font-semibold text-[#18181B]">← Back to Homepage</button>
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-5 mb-7 border-b border-[#E6E1DA]">
+        <div class="text-[15px] text-[#3F3F46]">
+          <button onclick="switchMainPageView('home')" class="hover:underline font-bold text-[#18181B]">← Back to Homepage</button>
           <span class="mx-2">/</span>
-          <span class="text-[#9E4758] font-bold">Saved Wishlist (<span id="wishlist-page-count">2</span> Items)</span>
+          <span class="text-[#883647] font-bold">Saved Wishlist (<span id="wishlist-page-count">2</span> Items)</span>
         </div>
-        <div class="flex flex-wrap items-center gap-2.5">
-          <button onclick="shareWishlistLink()" class="pl-btn pl-btn-outline !py-2 !px-4 !text-[12.5px]">
-            🔗 share wishlist (drop a hint)
+        <div class="flex flex-wrap items-center gap-3">
+          <button onclick="shareWishlistLink()" class="pl-btn pl-btn-outline !py-2.5 !px-5 !text-[14.5px]">
+            share wishlist (drop a hint)
           </button>
-          <button onclick="moveAllWishlistToBag()" class="pl-btn !py-2 !px-4 !text-[12.5px]">
-            🛍️ move all to bag
+          <button onclick="moveAllWishlistToBag()" class="pl-btn !py-2.5 !px-5 !text-[14.5px]">
+            move all to bag
           </button>
         </div>
       </div>
 
-      <!-- Guest vs. Signed-In Cloud Sync Banner (Answers Requirement 2.2) -->
-      <div id="wishlist-sync-banner" class="mb-6 p-4 bg-[#F9EFF1] border border-[#9E4758]/30 flex flex-wrap items-center justify-between gap-4">
-        <div class="flex items-center gap-3">
-          <span class="text-xl">☁️</span>
-          <div>
-            <p id="wishlist-sync-title" class="font-bold text-[13.5px] text-[#18181B]">
-              Browsing as a Guest — Your saved wishlist is stored on this device.
-            </p>
-            <p id="wishlist-sync-sub" class="text-[12.5px] text-[#52525B]">
-              Sign in with 1 click to permanently sync your wishlist &amp; shopping bag across your phone and laptop, plus get low-stock alerts!
-            </p>
-          </div>
+      <!-- Guest vs. Signed-In Cloud Sync Banner -->
+      <div id="wishlist-sync-banner" class="mb-7 p-5 bg-[#F9EFF1] border border-[#9E4758]/40 flex flex-wrap items-center justify-between gap-4">
+        <div>
+          <p id="wishlist-sync-title" class="font-bold text-[16px] text-[#18181B]">
+            Browsing as a Guest — Your saved wishlist is stored on this device.
+          </p>
+          <p id="wishlist-sync-sub" class="text-[14.5px] text-[#3F3F46] mt-0.5">
+            Sign in with 1 click to permanently sync your wishlist &amp; shopping bag across your phone and laptop, plus get low-stock alerts!
+          </p>
         </div>
-        <button id="wishlist-sync-btn" onclick="openAccountModal()" class="pl-btn !py-2 !px-4 !text-[12.5px]">
+        <button id="wishlist-sync-btn" onclick="openAccountModal()" class="pl-btn !py-2.5 !px-5 !text-[14.5px]">
           sign in to sync across devices
         </button>
       </div>
@@ -1146,94 +1236,93 @@
 
   <!-- =========================================================================
        VIEW C: DEDICATED PRODUCT DETAIL & LIVE MONOGRAM STUDIO PAGE (#pdp-page-view)
-       Opened when clicking any product card (Keeps Homepage clean & fast!)
        ========================================================================= -->
-  <section id="pdp-page-view" class="hidden py-10 lg:py-14 bg-white border-b border-[#E6E1DA]">
+  <section id="pdp-page-view" class="hidden py-12 lg:py-16 bg-white border-b border-[#E6E1DA]">
     <div class="pl-container">
-      <div class="flex flex-wrap items-center justify-between gap-2 pb-5 mb-6 border-b border-[#E6E1DA] text-[13px] text-[#52525B]">
+      <div class="flex flex-wrap items-center justify-between gap-3 pb-5 mb-7 border-b border-[#E6E1DA] text-[15px] text-[#3F3F46]">
         <div>
-          <button onclick="switchMainPageView('home')" class="hover:underline font-bold text-[#9E4758]">← Back to Homepage</button>
+          <button onclick="switchMainPageView('home')" class="hover:underline font-bold text-[#883647]">← Back to Homepage</button>
           <span class="mx-2">/</span>
-          <span id="pdp-breadcrumb-cat" class="text-[#18181B] font-medium">Club Sweatshirts</span>
+          <span id="pdp-breadcrumb-cat" class="text-[#18181B] font-semibold">Club Sweatshirts</span>
           <span class="mx-1.5">/</span>
-          <span id="pdp-breadcrumb-title" class="text-[#52525B]">"Matcha &amp; Pilates Social Club" Heavyweight Crewneck</span>
+          <span id="pdp-breadcrumb-title" class="text-[#3F3F46]">"Matcha &amp; Pilates Social Club" Heavyweight Crewneck</span>
         </div>
-        <span class="text-[12px] font-semibold text-[#2D5A43]">✨ Free US &amp; Canada Shipping Over <span id="pdp-ship-thresh">$79</span> + 48h Custom Dispatch</span>
+        <span class="text-[14px] font-bold text-[#234734]">Free US &amp; Canada Shipping Over <span id="pdp-ship-thresh">$79</span> + 48h Custom Dispatch</span>
       </div>
 
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
         <!-- Left 7 Cols: Vertical Thumbnail Strip + 2:3 Main Image w/ Live Monogram Overlay -->
-        <div class="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-3">
-          <div id="pdp-thumbs" class="flex sm:flex-col gap-2.5 overflow-x-auto sm:w-20 flex-shrink-0"></div>
+        <div class="lg:col-span-7 flex flex-col-reverse sm:flex-row gap-3.5">
+          <div id="pdp-thumbs" class="flex sm:flex-col gap-3 overflow-x-auto sm:w-20 flex-shrink-0"></div>
 
-          <div class="relative flex-1 bg-[#F3EFEA] aspect-[2/3] max-h-[660px] overflow-hidden">
+          <div class="relative flex-1 bg-[#F3EFEA] aspect-[2/3] max-h-[660px] overflow-hidden border border-[#E6E1DA]">
             <img id="pdp-main-img" src="https://images.unsplash.com/photo-1556905055-8f358a7a47b2?auto=format&fit=crop&w=1000&q=85" alt="Selected Product" class="w-full h-full object-cover" />
-            <div class="absolute top-3 right-3">
+            <div class="absolute top-3.5 right-3.5">
               <span id="pdp-badge" class="pl-badge">Best Seller</span>
             </div>
-            <div id="pdp-monogram-preview-pill" class="absolute bottom-14 left-1/2 -translate-x-1/2 bg-white/95 border border-[#D4CDC3] px-5 py-2.5 shadow-md text-center min-w-[180px]">
-              <span class="block text-[9.5px] uppercase tracking-[0.2em] text-[#71717A] font-bold mb-0.5">LIVE CUSTOM EMBROIDERY PREVIEW</span>
-              <span id="pdp-monogram-live-text" class="font-mono-serif text-xl font-bold text-[#9E4758]">L &amp; L</span>
+            <div id="pdp-monogram-preview-pill" class="absolute bottom-16 left-1/2 -translate-x-1/2 bg-white/95 border border-[#C8C0B4] px-6 py-3 shadow-md text-center min-w-[200px]">
+              <span class="block text-[12px] uppercase tracking-[0.18em] text-[#52525B] font-bold mb-0.5">LIVE CUSTOM EMBROIDERY PREVIEW</span>
+              <span id="pdp-monogram-live-text" class="font-mono-serif text-2xl font-bold text-[#883647]">L &amp; L</span>
             </div>
-            <div class="absolute bottom-3 left-3 right-3 bg-white/95 border border-[#E6E1DA] px-3.5 py-2 flex items-center justify-between text-[12px]">
-              <span id="pdp-model-stat" class="font-medium text-[#18181B]">👗 Model is 5'7" wearing size S</span>
-              <span class="font-bold text-[#2D5A43] hidden sm:inline">● In Stock • Ships in 48h</span>
+            <div class="absolute bottom-3.5 left-3.5 right-3.5 bg-white/95 border border-[#C8C0B4] px-4 py-2.5 flex items-center justify-between text-[14px]">
+              <span id="pdp-model-stat" class="font-semibold text-[#18181B]">Model is 5'7" wearing size S</span>
+              <span class="font-bold text-[#234734] hidden sm:inline">In Stock • Ships in 48h</span>
             </div>
           </div>
         </div>
 
         <!-- Right 5 Cols: Buy Box + Custom Monogram Studio -->
-        <div class="lg:col-span-5 space-y-5">
+        <div class="lg:col-span-5 space-y-6">
           <div>
-            <div class="flex items-center justify-between gap-2 mb-1">
-              <span id="pdp-sku-label" class="mono-font text-[11.5px] uppercase tracking-widest text-[#71717A]">SKU: LL-CLUB-01</span>
-              <span class="flex items-center gap-1 text-[13px] font-semibold text-[#18181B]">
-                <span class="text-[#B4833E]">★★★★★</span>
+            <div class="flex items-center justify-between gap-2 mb-1.5">
+              <span id="pdp-sku-label" class="mono-font text-[13.5px] uppercase tracking-widest text-[#52525B] font-semibold">SKU: LL-CLUB-01</span>
+              <span class="flex items-center gap-1.5 text-[15px] font-semibold text-[#18181B]">
+                <span class="text-[#8A5F22]">★★★★★</span>
                 <span id="pdp-rating-text">4.9 (184 Reviews)</span>
               </span>
             </div>
-            <h2 id="pdp-title" class="heading-font text-[28px] sm:text-[34px] font-semibold text-[#18181B] leading-tight mb-2">
+            <h2 id="pdp-title" class="heading-font text-[32px] sm:text-[38px] font-semibold text-[#18181B] leading-[1.15] mb-3">
               "Matcha &amp; Pilates Social Club" Heavyweight Crewneck
             </h2>
-            <div class="flex items-baseline gap-3 mb-1">
-              <span id="pdp-price" class="text-[24px] font-bold text-[#9E4758]">$58.00</span>
-              <span id="pdp-compare-price" class="text-[16px] text-[#71717A] line-through">$74.00</span>
-              <span class="pl-badge !border-[#9E4758] !text-[#9E4758] !font-bold">25% OFF W/ CODE LULLUXE25</span>
+            <div class="flex flex-wrap items-baseline gap-3 mb-1.5">
+              <span id="pdp-price" class="text-[26px] font-bold text-[#883647]">$58.00</span>
+              <span id="pdp-compare-price" class="text-[17px] text-[#52525B] line-through">$74.00</span>
+              <span class="pl-badge !border-[#9E4758] !text-[#883647] !font-bold">25% OFF W/ CODE LULLUXE25</span>
             </div>
-            <p class="text-[12.5px] text-[#52525B]">
+            <p class="text-[14.5px] text-[#3F3F46]">
               or 4 interest-free payments of <strong id="pdp-bnpl-price" class="text-[#18181B]">$14.50</strong> with <strong>Afterpay</strong> or <strong>Shop Pay</strong>
             </p>
           </div>
 
-          <div class="pt-3 border-t border-[#E6E1DA]">
-            <div class="flex items-center justify-between text-[13px] mb-2">
+          <div class="pt-4 border-t border-[#E6E1DA]">
+            <div class="flex items-center justify-between text-[15px] mb-2.5">
               <span>Color: <strong id="pdp-color-name">Oatmeal Heather</strong></span>
             </div>
-            <div id="pdp-color-swatches" class="flex items-center gap-2.5"></div>
+            <div id="pdp-color-swatches" class="flex items-center gap-3"></div>
           </div>
 
           <div>
-            <div class="flex items-center justify-between text-[13px] mb-2">
+            <div class="flex items-center justify-between text-[15px] mb-2.5">
               <span>Size: <strong id="pdp-size-name">M</strong></span>
-              <button onclick="openSizeGuideModal()" class="underline text-[12.5px] font-semibold text-[#9E4758]">Size Chart &amp; Fit Guide</button>
+              <button onclick="openSizeGuideModal()" class="underline text-[14.5px] font-bold text-[#883647]">Size Chart &amp; Fit Guide</button>
             </div>
-            <div id="pdp-size-buttons" class="grid grid-cols-6 gap-2"></div>
+            <div id="pdp-size-buttons" class="grid grid-cols-6 gap-2.5"></div>
           </div>
 
           <!-- Live Custom Monogram Studio -->
-          <div class="p-4 bg-[#F9EFF1] border border-[#9E4758]/25 space-y-3">
+          <div class="p-5 bg-[#F9EFF1] border border-[#9E4758]/35 space-y-3.5">
             <div class="flex items-center justify-between">
-              <span class="text-[12px] font-extrabold uppercase tracking-wider text-[#9E4758]">✨ Custom Monogram / Embroidery (Included Free)</span>
-              <span class="text-[11px] font-bold bg-[#ECFDF3] text-[#2D5A43] px-2 py-0.5 border border-[#2D5A43]/20">Ships in 48h</span>
+              <span class="text-[14px] font-extrabold uppercase tracking-wider text-[#883647]">Custom Monogram / Embroidery (Included Free)</span>
+              <span class="text-[13px] font-bold bg-[#ECFDF3] text-[#234734] px-2.5 py-0.5 border border-[#2D5A43]/30">Ships in 48h</span>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label for="monogram-input" class="block text-[11.5px] font-semibold mb-1">Custom Text / Initials (Max 14 chars)</label>
-                <input id="monogram-input" type="text" maxlength="14" value="L & L" oninput="updateMonogramPreview()" placeholder="e.g. MRS. DAVIS" class="w-full px-3 py-2 text-[13.5px] bg-white border border-[#D4CDC3] focus:outline-none focus:border-[#18181B]" />
+                <label for="monogram-input" class="block text-[13.5px] font-bold mb-1 text-[#18181B]">Custom Text / Initials (Max 14 chars)</label>
+                <input id="monogram-input" type="text" maxlength="14" value="L & L" oninput="updateMonogramPreview()" placeholder="e.g. MRS. DAVIS" class="w-full px-3.5 py-2.5 text-[15px] bg-white border border-[#C8C0B4] text-[#18181B]" />
               </div>
               <div>
-                <label for="monogram-font" class="block text-[11.5px] font-semibold mb-1">Embroidery Font Style</label>
-                <select id="monogram-font" onchange="updateMonogramPreview()" class="w-full px-3 py-2 text-[13.5px] bg-white border border-[#D4CDC3] focus:outline-none">
+                <label for="monogram-font" class="block text-[13.5px] font-bold mb-1 text-[#18181B]">Embroidery Font Style</label>
+                <select id="monogram-font" onchange="updateMonogramPreview()" class="w-full px-3.5 py-2.5 text-[15px] bg-white border border-[#C8C0B4] text-[#18181B]">
                   <option value="serif">Cormorant Editorial Serif</option>
                   <option value="script">Dancing Script Cursive</option>
                   <option value="block">Jakarta Varsity Block</option>
@@ -1241,41 +1330,41 @@
               </div>
             </div>
             <div>
-              <span class="block text-[11.5px] font-semibold mb-1.5">Thread Color: <strong id="thread-color-label">Botanical Rose</strong></span>
-              <div class="flex items-center gap-2">
-                <button onclick="selectThreadColor('#9E4758', 'Botanical Rose')" class="w-6 h-6 rounded-full bg-[#9E4758] ring-2 ring-offset-1 ring-[#18181B]" title="Botanical Rose"></button>
-                <button onclick="selectThreadColor('#18181B', 'Espresso Ink')" class="w-6 h-6 rounded-full bg-[#18181B] border border-black/20" title="Espresso Ink"></button>
-                <button onclick="selectThreadColor('#B4833E', 'Champagne Gold')" class="w-6 h-6 rounded-full bg-[#B4833E] border border-black/20" title="Champagne Gold"></button>
-                <button onclick="selectThreadColor('#2D5A43', 'Forest Sage')" class="w-6 h-6 rounded-full bg-[#2D5A43] border border-black/20" title="Forest Sage"></button>
-                <button onclick="selectThreadColor('#FFFFFF', 'Bridal Ivory')" class="w-6 h-6 rounded-full bg-white border border-black/40" title="Bridal Ivory"></button>
+              <span class="block text-[13.5px] font-bold mb-2 text-[#18181B]">Thread Color: <strong id="thread-color-label">Botanical Rose</strong></span>
+              <div class="flex items-center gap-2.5">
+                <button onclick="selectThreadColor('#9E4758', 'Botanical Rose')" aria-label="Botanical Rose" class="w-7 h-7 rounded-full bg-[#9E4758] ring-2 ring-offset-2 ring-[#18181B]" title="Botanical Rose"></button>
+                <button onclick="selectThreadColor('#18181B', 'Espresso Ink')" aria-label="Espresso Ink" class="w-7 h-7 rounded-full bg-[#18181B] border border-black/20" title="Espresso Ink"></button>
+                <button onclick="selectThreadColor('#B4833E', 'Champagne Gold')" aria-label="Champagne Gold" class="w-7 h-7 rounded-full bg-[#B4833E] border border-black/20" title="Champagne Gold"></button>
+                <button onclick="selectThreadColor('#2D5A43', 'Forest Sage')" aria-label="Forest Sage" class="w-7 h-7 rounded-full bg-[#2D5A43] border border-black/20" title="Forest Sage"></button>
+                <button onclick="selectThreadColor('#FFFFFF', 'Bridal Ivory')" aria-label="Bridal Ivory" class="w-7 h-7 rounded-full bg-white border border-black/40" title="Bridal Ivory"></button>
               </div>
             </div>
           </div>
 
-          <div class="flex gap-2.5 pt-1">
-            <button onclick="addSelectedPdpToCart()" class="pl-btn flex-1 !py-4 !text-[15.5px]">
+          <div class="flex gap-3 pt-1">
+            <button onclick="addSelectedPdpToCart()" class="pl-btn flex-1 !py-4 !text-[16px]">
               add to bag — <span id="pdp-btn-price">$58.00</span>
             </button>
-            <button onclick="togglePdpWishlist()" class="px-4 border border-[#D4CDC3] hover:bg-[#F9EFF1] transition flex items-center justify-center" aria-label="Save to Wishlist">
+            <button onclick="togglePdpWishlist()" class="px-5 border border-[#C8C0B4] hover:bg-[#F9EFF1] text-[18px] font-bold transition flex items-center justify-center text-[#18181B]" aria-label="Save to Wishlist">
               ♡
             </button>
           </div>
 
           <!-- Accordion Details -->
-          <div class="divide-y divide-[#E6E1DA] border-t border-b border-[#E6E1DA] text-[13.5px]">
-            <details class="py-3 group" open>
-              <summary class="font-bold cursor-pointer flex justify-between items-center">
+          <div class="divide-y divide-[#E6E1DA] border-t border-b border-[#E6E1DA] text-[15px]">
+            <details class="py-3.5 group" open>
+              <summary class="font-bold cursor-pointer flex justify-between items-center text-[#18181B]">
                 <span>Printify Blank &amp; Fit Specifications</span><span>⌄</span>
               </summary>
-              <p class="pt-2 text-[#52525B] leading-relaxed">
+              <p class="pt-2.5 text-[#3F3F46] leading-relaxed">
                 Crafted on our heavyweight ring-spun cotton/fleece blanks (380 GSM) with double-needle coverstitching and high-density North American embroidery. True to size for a relaxed everyday fit; size up one for an oversized lounge look.
               </p>
             </details>
-            <details class="py-3 group">
-              <summary class="font-bold cursor-pointer flex justify-between items-center">
+            <details class="py-3.5 group">
+              <summary class="font-bold cursor-pointer flex justify-between items-center text-[#18181B]">
                 <span>48-Hour US &amp; Canada Local Fulfillment</span><span>⌄</span>
               </summary>
-              <p class="pt-2 text-[#52525B] leading-relaxed">
+              <p class="pt-2.5 text-[#3F3F46] leading-relaxed">
                 Fulfilled locally inside the United States and Canada with zero cross-border surprise duties. Free shipping over $79 USD ($95 CAD).
               </p>
             </details>
@@ -1286,22 +1375,22 @@
   </section>
 
   <!-- =========================================================================
-       FOOTER
+       FOOTER (Upgraded 14.5px–15px Font Sizes & High Contrast)
        ========================================================================= -->
-  <footer id="footer" class="bg-white border-t border-[#E6E1DA] pt-10 pb-8 text-[13px]">
+  <footer id="footer" class="bg-white border-t border-[#E6E1DA] pt-12 pb-10 text-[15px]">
     <div class="pl-container">
-      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-8 border-b border-[#E6E1DA]">
-        <div class="space-y-2.5">
-          <span class="heading-font italic font-semibold text-[30px] text-[#18181B] block">
-            LouLou <span class="text-[#9E4758] not-italic">&amp;</span> Luxe
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8 pb-9 border-b border-[#E6E1DA]">
+        <div class="space-y-3">
+          <span class="heading-font italic font-semibold text-[34px] text-[#18181B] block">
+            LouLou <span class="text-[#883647] not-italic">&amp;</span> Luxe
           </span>
-          <p class="text-[#52525B] text-[12.5px] leading-relaxed">
+          <p class="text-[#3F3F46] text-[14.5px] leading-relaxed">
             Cozy social-club fleece, autumn/holiday dresses, bridal &amp; engagement suites, and 48-hour custom monogrammed gifts across USA &amp; Canada.
           </p>
         </div>
         <div>
-          <h4 class="font-bold uppercase tracking-wider text-[12px] mb-2.5 text-[#18181B]">Q4 Oct 20 Launch Edit</h4>
-          <ul class="space-y-1.5 text-[#52525B]">
+          <h3 class="font-bold uppercase tracking-wider text-[13.5px] mb-3 text-[#18181B]" style="font-family: var(--font-body);">Q4 Oct 20 Launch Edit</h3>
+          <ul class="space-y-2 text-[#3F3F46]">
             <li><button onclick="switchMainPageView('home'); filterCategory('CLUB_FLEECE')" class="hover:underline">Heavyweight Crewnecks (380GSM)</button></li>
             <li><button onclick="switchMainPageView('home'); filterCategory('OUTERWEAR')" class="hover:underline">Quarter-Zips &amp; Sherpa Blankets</button></li>
             <li><button onclick="switchMainPageView('home'); enterBridalSection()" class="hover:underline">Newly Engaged &amp; Bridal Suite</button></li>
@@ -1309,8 +1398,8 @@
           </ul>
         </div>
         <div>
-          <h4 class="font-bold uppercase tracking-wider text-[12px] mb-2.5 text-[#18181B]">Customer Care</h4>
-          <ul class="space-y-1.5 text-[#52525B]">
+          <h3 class="font-bold uppercase tracking-wider text-[13.5px] mb-3 text-[#18181B]" style="font-family: var(--font-body);">Customer Care</h3>
+          <ul class="space-y-2 text-[#3F3F46]">
             <li><button onclick="switchMainPageView('wishlist')" class="hover:underline">Saved Wishlist (<span id="footer-wish-count">2</span>)</button></li>
             <li><button onclick="openAccountModal()" class="hover:underline">Account &amp; Device Cloud Sync</button></li>
             <li><button onclick="openOrderTrackerModal()" class="hover:underline">Track Order / 30-Day Exchanges</button></li>
@@ -1318,59 +1407,60 @@
           </ul>
         </div>
         <div>
-          <h4 class="font-bold uppercase tracking-wider text-[12px] mb-2.5 text-[#18181B]">Privacy &amp; Perks</h4>
-          <ul class="space-y-1.5 text-[#52525B]">
-            <li><button onclick="openCookieConsentModal()" class="underline text-[#9E4758] font-semibold">🍪 Cookie &amp; Privacy Preferences</button></li>
+          <h3 class="font-bold uppercase tracking-wider text-[13.5px] mb-3 text-[#18181B]" style="font-family: var(--font-body);">Privacy &amp; Perks</h3>
+          <ul class="space-y-2 text-[#3F3F46]">
+            <li><button onclick="openCookieConsentModal()" class="underline text-[#883647] font-bold">Cookie &amp; Privacy Preferences</button></li>
             <li><button onclick="openBridalModal(true)" class="hover:underline">Bridal Party 10% Off Concierge</button></li>
+            <li><button onclick="toggleThemeMode()" class="hover:underline font-semibold">Switch Light / Dark Theme</button></li>
             <li><a href="https://loulouandluxe.com" target="_blank" class="hover:underline">Public Launching Soon Page</a></li>
           </ul>
         </div>
       </div>
-      <div class="pt-5 flex flex-wrap items-center justify-between gap-4 text-[12px] text-[#71717A]">
+      <div class="pt-6 flex flex-wrap items-center justify-between gap-4 text-[14px] text-[#52525B]">
         <p>© 2026 LouLou &amp; Luxe Boutique (loulouandluxe.com). Development Branch on sbanerjee.cloud.</p>
-        <div class="flex items-center gap-2 font-semibold text-[#52525B]">
-          <span class="px-2 py-0.5 border border-[#E6E1DA]">Apple Pay</span>
-          <span class="px-2 py-0.5 border border-[#E6E1DA]">Shop Pay</span>
-          <span class="px-2 py-0.5 border border-[#E6E1DA]">Afterpay</span>
-          <span class="px-2 py-0.5 border border-[#E6E1DA]">Klarna</span>
+        <div class="flex items-center gap-2.5 font-semibold text-[#3F3F46]">
+          <span class="px-2.5 py-1 border border-[#C8C0B4]">Apple Pay</span>
+          <span class="px-2.5 py-1 border border-[#C8C0B4]">Shop Pay</span>
+          <span class="px-2.5 py-1 border border-[#C8C0B4]">Afterpay</span>
+          <span class="px-2.5 py-1 border border-[#C8C0B4]">Klarna</span>
         </div>
       </div>
     </div>
   </footer>
 
   <!-- =========================================================================
-       CUSTOMER SIGN-IN & WISHLIST/BAG CLOUD SYNC MODAL (Answers Requirement 2.2)
+       CUSTOMER SIGN-IN & WISHLIST/BAG CLOUD SYNC MODAL
        ========================================================================= -->
   <div id="account-modal-backdrop" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
-    <div class="bg-white max-w-md w-full border border-[#D4CDC3] shadow-2xl relative overflow-hidden">
-      <button onclick="closeAccountModal()" class="absolute top-3 right-3 w-8 h-8 bg-white border border-[#D4CDC3] flex items-center justify-center font-bold">✕</button>
-      <div class="color-scheme-pink px-6 py-4 border-b border-[#E6E1DA]">
-        <span class="text-[11px] font-bold uppercase tracking-[0.18em] text-[#9E4758] block">👤 CUSTOMER ACCOUNT &amp; CLOUD SYNC</span>
-        <h3 class="heading-font text-[28px] font-semibold text-[#18181B] leading-tight">Sync Your Wishlist &amp; Bag</h3>
+    <div class="bg-white max-w-md w-full border border-[#C8C0B4] shadow-2xl relative overflow-hidden">
+      <button onclick="closeAccountModal()" aria-label="Close Account Modal" class="absolute top-3.5 right-3.5 w-8 h-8 bg-white border border-[#C8C0B4] flex items-center justify-center font-bold text-[#18181B]">✕</button>
+      <div class="color-scheme-pink px-6 py-5 border-b border-[#E6E1DA]">
+        <span class="text-[12.5px] font-bold uppercase tracking-[0.18em] text-[#883647] block">CUSTOMER ACCOUNT &amp; CLOUD SYNC</span>
+        <h3 class="heading-font text-[30px] font-semibold text-[#18181B] leading-tight">Sync Your Wishlist &amp; Bag</h3>
       </div>
-      <div class="p-6 space-y-4 text-[13.5px]">
-        <div class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA] space-y-1">
+      <div class="p-6 space-y-4 text-[15px]">
+        <div class="p-4 bg-[#FAF8F5] border border-[#E6E1DA] space-y-1.5">
           <div class="flex items-center justify-between">
             <span class="font-bold text-[#18181B]">Current Session Status:</span>
-            <span id="modal-auth-badge" class="text-[11px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900">Guest Session (Local Storage)</span>
+            <span id="modal-auth-badge" class="text-[12.5px] font-bold px-2.5 py-0.5 bg-amber-100 text-amber-900">Guest Session (Local Storage)</span>
           </div>
-          <p class="text-[12px] text-[#52525B]">
-            Your <strong>Wishlist (♡)</strong> and <strong>Shopping Bag (🛍️)</strong> icons are always visible for Guests so you never hit a login wall. When you sign in below, your guest items automatically merge with your cloud account across Mobile &amp; Desktop!
+          <p class="text-[14px] text-[#3F3F46] leading-relaxed">
+            Your <strong>Wishlist</strong> and <strong>Shopping Bag</strong> icons are always visible for Guests so you never hit a login wall. When you sign in below, your guest items automatically merge with your cloud account across Mobile &amp; Desktop.
           </p>
         </div>
 
-        <form onsubmit="handleCustomerSignIn(event)" class="space-y-3">
+        <form onsubmit="handleCustomerSignIn(event)" class="space-y-3.5">
           <div>
-            <label for="auth-email-input" class="block font-bold text-[12.5px] mb-1">Email Address (Passwordless Magic Code or VIP Login):</label>
-            <input id="auth-email-input" type="email" required value="sophia.lauren@example.com" class="w-full px-3.5 py-2.5 border border-[#D4CDC3] bg-[#FAF8F5] text-[13.5px]" />
+            <label for="auth-email-input" class="block font-bold text-[14px] mb-1 text-[#18181B]">Email Address (Passwordless Magic Code or VIP Login):</label>
+            <input id="auth-email-input" type="email" required value="sophia.lauren@example.com" class="w-full px-3.5 py-2.5 border border-[#C8C0B4] bg-[#FAF8F5] text-[15px] text-[#18181B]" />
           </div>
-          <button type="submit" class="pl-btn w-full !py-3">
+          <button type="submit" class="pl-btn w-full !py-3.5">
             sign in &amp; merge guest wishlist + bag
           </button>
         </form>
 
         <div id="signout-box" class="hidden pt-3 border-t border-[#E6E1DA] text-center">
-          <button onclick="handleCustomerSignOut()" class="text-[12.5px] underline font-bold text-[#71717A] hover:text-[#18181B]">
+          <button onclick="handleCustomerSignOut()" class="text-[14px] underline font-bold text-[#52525B] hover:text-[#18181B]">
             Switch back to Guest Mode (Keep Local Session)
           </button>
         </div>
@@ -1381,43 +1471,43 @@
   <!-- =========================================================================
        1-TIME-PER-USER COOKIE DISCLAIMER & GRANULAR CONSENT POPUP
        ========================================================================= -->
-  <div id="cookie-consent-backdrop" class="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-5 bg-black/40 backdrop-blur-[2px] hidden items-end justify-center">
+  <div id="cookie-consent-backdrop" class="fixed inset-x-0 bottom-0 z-50 p-3 sm:p-5 bg-black/50 backdrop-blur-[2px] hidden items-end justify-center">
     <div class="bg-white max-w-4xl w-full border-2 border-[#18181B] shadow-2xl overflow-hidden">
-      <div class="color-scheme-pink px-5 py-2.5 border-b border-[#E6E1DA] flex flex-wrap items-center justify-between gap-2">
-        <span class="text-[11.5px] font-bold uppercase tracking-[0.18em] text-[#9E4758]">🍪 Visitor Cookie &amp; Privacy Disclaimer (Asked Once Per User)</span>
-        <span class="mono-font text-[11px] text-[#52525B]">GDPR • CCPA/CPRA • Canada PIPEDA</span>
+      <div class="color-scheme-pink px-5 py-3 border-b border-[#E6E1DA] flex flex-wrap items-center justify-between gap-2">
+        <span class="text-[13px] font-bold uppercase tracking-[0.16em] text-[#883647]">Visitor Cookie &amp; Privacy Disclaimer (Asked Once Per User)</span>
+        <span class="mono-font text-[12.5px] font-semibold text-[#3F3F46]">GDPR • CCPA/CPRA • Canada PIPEDA</span>
       </div>
-      <div class="p-5 space-y-4">
+      <div class="p-5 sm:p-6 space-y-4">
         <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4">
-          <div class="space-y-1 flex-1">
-            <h3 class="heading-font text-[24px] font-semibold text-[#18181B] leading-tight">We Value Your Privacy &amp; Cookie Choice</h3>
-            <p class="text-[13px] text-[#52525B]">
+          <div class="space-y-1.5 flex-1">
+            <h3 class="heading-font text-[26px] sm:text-[28px] font-semibold text-[#18181B] leading-tight">We Value Your Privacy &amp; Cookie Choice</h3>
+            <p class="text-[14.5px] text-[#3F3F46] leading-relaxed">
               We ask only once: please let us know whether we may collect optional Analytics &amp; VIP Offer cookies, or restrict storage strictly to Necessary Bag/Wishlist/Currency cookies.
             </p>
           </div>
-          <div class="flex flex-wrap gap-2 flex-shrink-0">
-            <button onclick="saveCookieConsent('ALL')" class="pl-btn !py-2.5 !px-4 !text-[13px]">accept all cookies</button>
-            <button onclick="saveCookieConsent('NECESSARY_ONLY')" class="pl-btn pl-btn-outline !py-2.5 !px-4 !text-[13px]">decline non-essential</button>
-            <button onclick="toggleCookieCustomizer()" class="px-3.5 py-2 border border-[#D4CDC3] text-[12px] font-bold uppercase tracking-wider text-[#52525B]">customize</button>
+          <div class="flex flex-wrap gap-2.5 flex-shrink-0">
+            <button onclick="saveCookieConsent('ALL')" class="pl-btn !py-2.5 !px-5 !text-[14.5px]">accept all cookies</button>
+            <button onclick="saveCookieConsent('NECESSARY_ONLY')" class="pl-btn pl-btn-outline !py-2.5 !px-5 !text-[14.5px]">decline non-essential</button>
+            <button onclick="toggleCookieCustomizer()" class="px-4 py-2.5 border border-[#C8C0B4] text-[13.5px] font-bold uppercase tracking-wider text-[#3F3F46]">customize</button>
           </div>
         </div>
-        <div id="cookie-customizer-panel" class="hidden pt-3 border-t border-[#E6E1DA] text-[12px] space-y-3">
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-2.5">
-            <div class="p-3 bg-[#FAF8F5] border border-[#E6E1DA]">
-              <span class="font-bold text-[#18181B] block">1. Strictly Necessary (Always Active)</span>
-              <span class="text-[#52525B]">Saves your Bag, Wishlist, USD/CAD currency, and this 1-time cookie choice.</span>
+        <div id="cookie-customizer-panel" class="hidden pt-4 border-t border-[#E6E1DA] text-[14px] space-y-3">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+            <div class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA]">
+              <span class="font-bold text-[#18181B] block mb-1">1. Strictly Necessary (Always Active)</span>
+              <span class="text-[#3F3F46]">Saves your Bag, Wishlist, USD/CAD currency, and this 1-time cookie choice.</span>
             </div>
-            <label class="p-3 bg-[#FAF8F5] border border-[#E6E1DA] cursor-pointer block">
-              <div class="flex justify-between font-bold text-[#18181B]"><span>2. Analytics &amp; Speed</span><input id="chk-cookie-analytics" type="checkbox" checked class="accent-[#9E4758]" /></div>
-              <span class="text-[#52525B]">Measures Core Web Vitals &amp; scroll heatmaps.</span>
+            <label class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA] cursor-pointer block">
+              <div class="flex justify-between font-bold text-[#18181B] mb-1"><span>2. Analytics &amp; Speed</span><input id="chk-cookie-analytics" type="checkbox" checked class="w-4 h-4 accent-[#9E4758]" /></div>
+              <span class="text-[#3F3F46]">Measures Core Web Vitals &amp; scroll heatmaps.</span>
             </label>
-            <label class="p-3 bg-[#FAF8F5] border border-[#E6E1DA] cursor-pointer block">
-              <div class="flex justify-between font-bold text-[#18181B]"><span>3. Boutique VIP Perks</span><input id="chk-cookie-marketing" type="checkbox" checked class="accent-[#9E4758]" /></div>
-              <span class="text-[#52525B]">Remembers your 25% OFF code &amp; custom monogram drafts.</span>
+            <label class="p-3.5 bg-[#FAF8F5] border border-[#E6E1DA] cursor-pointer block">
+              <div class="flex justify-between font-bold text-[#18181B] mb-1"><span>3. Boutique VIP Perks</span><input id="chk-cookie-marketing" type="checkbox" checked class="w-4 h-4 accent-[#9E4758]" /></div>
+              <span class="text-[#3F3F46]">Remembers your 25% OFF code &amp; custom monogram drafts.</span>
             </label>
           </div>
           <div class="flex justify-end">
-            <button onclick="saveCookieConsent('CUSTOM')" class="pl-btn !py-2 !px-4 !text-[12px]">save preferences</button>
+            <button onclick="saveCookieConsent('CUSTOM')" class="pl-btn !py-2.5 !px-5 !text-[14px]">save preferences</button>
           </div>
         </div>
       </div>
@@ -1428,22 +1518,22 @@
        1-TIME BRIDAL CONCIERGE MODAL, SHOPPING BAG DRAWER, SIZE & ORDER MODALS
        ========================================================================= -->
   <div id="bridal-modal-backdrop" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
-    <div class="bg-white max-w-lg w-full overflow-hidden border border-[#D4CDC3] shadow-2xl relative">
-      <button onclick="dismissBridalModalForToday()" class="absolute top-3 right-3 w-8 h-8 bg-white border border-[#D4CDC3] flex items-center justify-center font-bold">✕</button>
+    <div class="bg-white max-w-lg w-full overflow-hidden border border-[#C8C0B4] shadow-2xl relative">
+      <button onclick="dismissBridalModalForToday()" aria-label="Close Bridal Modal" class="absolute top-3.5 right-3.5 w-8 h-8 bg-white border border-[#C8C0B4] flex items-center justify-center font-bold text-[#18181B]">✕</button>
       <div class="color-scheme-pink px-6 py-5 text-center border-b border-[#E6E1DA]">
-        <span class="text-[11px] font-bold uppercase tracking-[0.2em] text-[#9E4758] block mb-1">💍 LOULOU &amp; LUXE BRIDAL CONCIERGE</span>
-        <h3 class="heading-font text-[30px] font-semibold text-[#18181B] leading-tight">Newly Engaged or Planning a Bach?</h3>
-        <p class="text-[13.5px] text-[#52525B] mt-1">Unlock <strong>10% OFF</strong> (<span class="mono-font">BRIDAL10</span>) + free custom embroidery!</p>
+        <span class="text-[12.5px] font-bold uppercase tracking-[0.2em] text-[#883647] block mb-1">LOULOU &amp; LUXE BRIDAL CONCIERGE</span>
+        <h3 class="heading-font text-[32px] font-semibold text-[#18181B] leading-tight">Newly Engaged or Planning a Bach?</h3>
+        <p class="text-[15px] text-[#3F3F46] mt-1">Unlock <strong>10% OFF</strong> (<span class="mono-font font-bold">BRIDAL10</span>) + free custom embroidery!</p>
       </div>
-      <form onsubmit="submitBridalConcierge(event)" class="p-6 space-y-4 text-[13.5px]">
-        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-          <button type="button" onclick="selectBridalRole(this, 'Bride')" class="bridal-role-btn py-2 px-3 border border-[#9E4758] bg-[#9E4758] text-white font-semibold">👰‍♀️ Bride</button>
-          <button type="button" onclick="selectBridalRole(this, 'Bridesmaid')" class="bridal-role-btn py-2 px-3 border border-[#D4CDC3] bg-white text-[#18181B] font-medium">💐 Bridesmaid</button>
-          <button type="button" onclick="selectBridalRole(this, 'Maid of Honor')" class="bridal-role-btn py-2 px-3 border border-[#D4CDC3] bg-white text-[#18181B] font-medium">🥂 Maid of Honor</button>
+      <form onsubmit="submitBridalConcierge(event)" class="p-6 space-y-4 text-[15px]">
+        <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+          <button type="button" onclick="selectBridalRole(this, 'Bride')" class="bridal-role-btn py-2.5 px-3 border border-[#9E4758] bg-[#9E4758] text-white font-semibold">Bride</button>
+          <button type="button" onclick="selectBridalRole(this, 'Bridesmaid')" class="bridal-role-btn py-2.5 px-3 border border-[#C8C0B4] bg-white text-[#18181B] font-medium">Bridesmaid</button>
+          <button type="button" onclick="selectBridalRole(this, 'Maid of Honor')" class="bridal-role-btn py-2.5 px-3 border border-[#C8C0B4] bg-white text-[#18181B] font-medium">Maid of Honor</button>
         </div>
         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          <input id="bridal-date" type="date" class="w-full px-3 py-2 border border-[#D4CDC3]" />
-          <input id="bridal-email" type="email" required placeholder="bride@example.com" class="w-full px-3 py-2 border border-[#D4CDC3]" />
+          <input id="bridal-date" type="date" aria-label="Wedding Date" class="w-full px-3.5 py-2.5 border border-[#C8C0B4] bg-[#FAF8F5] text-[#18181B]" />
+          <input id="bridal-email" type="email" required aria-label="Bride or Bridesmaid Email" placeholder="bride@example.com" class="w-full px-3.5 py-2.5 border border-[#C8C0B4] bg-[#FAF8F5] text-[#18181B]" />
         </div>
         <button type="submit" class="pl-btn w-full !py-3.5">unlock my 10% off bridal code (BRIDAL10)</button>
       </form>
@@ -1455,64 +1545,64 @@
     <div class="bg-white w-full max-w-md h-full flex flex-col justify-between shadow-2xl">
       <div class="p-5 border-b border-[#E6E1DA]">
         <div class="flex items-center justify-between mb-3">
-          <h3 class="heading-font text-[26px] font-semibold text-[#18181B]">Your Shopping Bag (<span id="drawer-count">2</span>)</h3>
-          <button onclick="toggleCartDrawer(false)" class="p-1 text-[#18181B] hover:text-[#9E4758] font-bold">✕</button>
+          <h3 class="heading-font text-[28px] font-semibold text-[#18181B]">Your Shopping Bag (<span id="drawer-count">2</span>)</h3>
+          <button onclick="toggleCartDrawer(false)" aria-label="Close Shopping Bag" class="p-1.5 text-[#18181B] hover:text-[#883647] font-bold">✕</button>
         </div>
-        <div class="bg-[#F9EFF1] p-3 border border-[#9E4758]/20">
-          <p id="shipping-meter-text" class="text-[12.5px] font-bold text-[#18181B] mb-1.5">🎉 You unlocked FREE Express Shipping!</p>
+        <div class="bg-[#F9EFF1] p-3.5 border border-[#9E4758]/30">
+          <p id="shipping-meter-text" class="text-[14px] font-bold text-[#18181B] mb-1.5">You unlocked FREE Express Shipping!</p>
           <div class="w-full h-2 bg-white overflow-hidden">
             <div id="shipping-meter-bar" class="h-full bg-[#9E4758] transition-all duration-300" style="width: 100%"></div>
           </div>
         </div>
       </div>
       <div class="flex-1 overflow-y-auto p-5 space-y-4">
-        <div id="cart-items-list" class="space-y-3"></div>
+        <div id="cart-items-list" class="space-y-4"></div>
       </div>
       <div class="p-5 border-t border-[#E6E1DA] bg-white space-y-3">
-        <div class="flex justify-between text-[14px]">
-          <span class="text-[#52525B]">Subtotal</span>
-          <span id="cart-subtotal" class="font-bold text-[17px] text-[#18181B]">$106.00</span>
+        <div class="flex justify-between text-[15.5px]">
+          <span class="text-[#3F3F46] font-medium">Subtotal</span>
+          <span id="cart-subtotal" class="font-bold text-[18px] text-[#18181B]">$106.00</span>
         </div>
-        <button onclick="completeCheckout()" class="pl-btn w-full !py-4 !text-[15.5px]">proceed to express checkout</button>
+        <button onclick="completeCheckout()" class="pl-btn w-full !py-4 !text-[16px]">proceed to express checkout</button>
       </div>
     </div>
   </div>
 
   <!-- Order Tracker & Size Guide Modals -->
   <div id="tracker-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
-    <div class="bg-white max-w-md w-full p-6 border border-[#D4CDC3] relative">
-      <button onclick="document.getElementById('tracker-modal').classList.add('hidden')" class="absolute top-3 right-3 font-bold">✕</button>
-      <h3 class="heading-font text-[28px] font-semibold mb-1">Track Order or Start Exchange</h3>
-      <input type="text" value="LL-90482" class="mono-font w-full px-3 py-2.5 border border-[#D4CDC3] my-3 text-sm" />
-      <button onclick="showToast('📦 Order #LL-90482: Custom Embroidery Complete — In Transit via USPS Priority!'); document.getElementById('tracker-modal').classList.add('hidden');" class="pl-btn w-full">look up order status</button>
+    <div class="bg-white max-w-md w-full p-6 border border-[#C8C0B4] relative">
+      <button onclick="document.getElementById('tracker-modal').classList.add('hidden')" aria-label="Close Order Tracker" class="absolute top-3.5 right-3.5 font-bold text-[#18181B]">✕</button>
+      <h3 class="heading-font text-[30px] font-semibold mb-1 text-[#18181B]">Track Order or Start Exchange</h3>
+      <input type="text" value="LL-90482" aria-label="Order Number" class="mono-font w-full px-3.5 py-2.5 border border-[#C8C0B4] bg-[#FAF8F5] text-[#18181B] my-3 text-[15px]" />
+      <button onclick="showToast('Order #LL-90482: Custom Embroidery Complete — In Transit via USPS Priority!'); document.getElementById('tracker-modal').classList.add('hidden');" class="pl-btn w-full">look up order status</button>
     </div>
   </div>
 
   <div id="size-modal" class="fixed inset-0 z-50 bg-black/60 hidden items-center justify-center p-4">
-    <div class="bg-white max-w-lg w-full p-6 border border-[#D4CDC3] relative">
-      <button onclick="document.getElementById('size-modal').classList.add('hidden')" class="absolute top-3 right-3 font-bold">✕</button>
-      <h3 class="heading-font text-[28px] font-semibold mb-2">LouLou &amp; Luxe Inclusive Size Chart (XS–2XL)</h3>
-      <p class="text-[13px] text-[#52525B] mb-4">94% of North American customers say our pieces fit true to size.</p>
-      <table class="w-full text-left text-[13px] border border-[#E6E1DA]">
+    <div class="bg-white max-w-lg w-full p-6 border border-[#C8C0B4] relative">
+      <button onclick="document.getElementById('size-modal').classList.add('hidden')" aria-label="Close Size Guide" class="absolute top-3.5 right-3.5 font-bold text-[#18181B]">✕</button>
+      <h3 class="heading-font text-[30px] font-semibold mb-2 text-[#18181B]">LouLou &amp; Luxe Inclusive Size Chart (XS–2XL)</h3>
+      <p class="text-[14.5px] text-[#3F3F46] mb-4">94% of North American customers say our pieces fit true to size.</p>
+      <table class="w-full text-left text-[14.5px] border border-[#E6E1DA] text-[#18181B]">
         <thead class="bg-[#F9EFF1] font-bold">
-          <tr><th class="p-2 border-b">Size</th><th class="p-2 border-b">US Size</th><th class="p-2 border-b">Bust (in)</th><th class="p-2 border-b">Waist (in)</th></tr>
+          <tr><th class="p-2.5 border-b">Size</th><th class="p-2.5 border-b">US Size</th><th class="p-2.5 border-b">Bust (in)</th><th class="p-2.5 border-b">Waist (in)</th></tr>
         </thead>
         <tbody class="divide-y divide-[#E6E1DA]">
-          <tr><td class="p-2 font-bold">XS</td><td class="p-2">0–2</td><td class="p-2">31–32.5"</td><td class="p-2">24–25.5"</td></tr>
-          <tr><td class="p-2 font-bold">S</td><td class="p-2">4–6</td><td class="p-2">33–35"</td><td class="p-2">26–28"</td></tr>
-          <tr><td class="p-2 font-bold">M</td><td class="p-2">8–10</td><td class="p-2">35.5–37.5"</td><td class="p-2">28.5–30.5"</td></tr>
-          <tr><td class="p-2 font-bold">L</td><td class="p-2">12–14</td><td class="p-2">38–40.5"</td><td class="p-2">31–33.5"</td></tr>
-          <tr><td class="p-2 font-bold">XL</td><td class="p-2">16</td><td class="p-2">41–43.5"</td><td class="p-2">34–36.5"</td></tr>
-          <tr><td class="p-2 font-bold">2XL</td><td class="p-2">18–20</td><td class="p-2">44–47"</td><td class="p-2">37–40"</td></tr>
+          <tr><td class="p-2.5 font-bold">XS</td><td class="p-2.5">0–2</td><td class="p-2.5">31–32.5"</td><td class="p-2.5">24–25.5"</td></tr>
+          <tr><td class="p-2.5 font-bold">S</td><td class="p-2.5">4–6</td><td class="p-2.5">33–35"</td><td class="p-2.5">26–28"</td></tr>
+          <tr><td class="p-2.5 font-bold">M</td><td class="p-2.5">8–10</td><td class="p-2.5">35.5–37.5"</td><td class="p-2.5">28.5–30.5"</td></tr>
+          <tr><td class="p-2.5 font-bold">L</td><td class="p-2.5">12–14</td><td class="p-2.5">38–40.5"</td><td class="p-2.5">31–33.5"</td></tr>
+          <tr><td class="p-2.5 font-bold">XL</td><td class="p-2.5">16</td><td class="p-2.5">41–43.5"</td><td class="p-2.5">34–36.5"</td></tr>
+          <tr><td class="p-2.5 font-bold">2XL</td><td class="p-2.5">18–20</td><td class="p-2.5">44–47"</td><td class="p-2.5">37–40"</td></tr>
         </tbody>
       </table>
     </div>
   </div>
 
-  <div id="toast-box" class="fixed bottom-5 right-5 z-50 hidden bg-[#18181B] text-white px-5 py-3.5 shadow-xl border border-white/20 text-[13.5px] font-semibold"></div>
+  <div id="toast-box" role="status" aria-live="polite" class="fixed bottom-5 right-5 z-50 hidden bg-[#18181B] text-[#FAF8F5] px-5 py-3.5 shadow-xl border border-white/25 text-[15px] font-semibold"></div>
 
   <!-- =========================================================================
-       INTERACTIVE STOREFRONT, CAROUSEL, WISHLIST PAGE & CLOUD SYNC ENGINE
+       INTERACTIVE STOREFRONT, DARK/LIGHT THEME, CAROUSEL, WISHLIST & CLOUD SYNC
        ========================================================================= -->
   <script>
     const CURRENCY_RATES = {
@@ -1722,6 +1812,7 @@
 
     let state = {
       currentPageView: 'home', // 'home' | 'wishlist' | 'pdp'
+      theme: 'light',          // 'light' | 'dark'
       currency: 'USD',
       activeTab: 'new',
       category: 'ALL',
@@ -1743,6 +1834,53 @@
         { productId: 'p4', size: 'ONE SIZE', color: 'Natural & Botanical Rose', monogram: 'S L B', qty: 1 }
       ]
     };
+
+    /* =========================================================================
+       0. ACCESSIBLE LIGHT / DARK THEME CONTROLLER
+       ========================================================================= */
+    function initThemeMode() {
+      let saved = null;
+      try {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('theme') === 'dark' || params.get('theme') === 'light') {
+          saved = params.get('theme');
+        } else {
+          saved = localStorage.getItem('loulou_theme_mode_v1');
+        }
+      } catch (e) {}
+      if (!saved) {
+        saved = 'light';
+      }
+      applyThemeMode(saved);
+    }
+
+    function applyThemeMode(mode) {
+      state.theme = mode === 'dark' ? 'dark' : 'light';
+      document.documentElement.classList.toggle('dark', state.theme === 'dark');
+      try {
+        localStorage.setItem('loulou_theme_mode_v1', state.theme);
+      } catch (e) {}
+      const moon = document.getElementById('theme-icon-moon');
+      const sun = document.getElementById('theme-icon-sun');
+      const hdrLabel = document.getElementById('header-theme-label');
+      const devBtn = document.getElementById('dev-bar-theme-btn');
+      if (state.theme === 'dark') {
+        if (moon) moon.classList.add('hidden');
+        if (sun) sun.classList.remove('hidden');
+        if (hdrLabel) hdrLabel.textContent = 'Light';
+        if (devBtn) devBtn.textContent = 'Theme: Dark';
+      } else {
+        if (moon) moon.classList.remove('hidden');
+        if (sun) sun.classList.add('hidden');
+        if (hdrLabel) hdrLabel.textContent = 'Dark';
+        if (devBtn) devBtn.textContent = 'Theme: Light';
+      }
+    }
+
+    function toggleThemeMode() {
+      applyThemeMode(state.theme === 'dark' ? 'light' : 'dark');
+      showToast(`Switched to ${state.theme === 'dark' ? 'Dark' : 'Light'} Theme (WCAG AA High Contrast)`);
+    }
 
     /* =========================================================================
        1. GPU-ACCELERATED 3-QUOTE ANNOUNCEMENT BAR TICKER
@@ -1785,11 +1923,11 @@
         if (i === heroIdx) {
           slide.classList.remove('hidden', 'opacity-0');
           slide.classList.add('grid', 'opacity-100');
-          dot.className = 'w-6 h-2 bg-[#9E4758] transition-all';
+          dot.className = 'w-7 h-2.5 bg-[#9E4758] transition-all';
         } else {
           slide.classList.add('hidden', 'opacity-0');
           slide.classList.remove('grid', 'opacity-100');
-          dot.className = 'w-2.5 h-2 bg-[#D4CDC3] transition-all';
+          dot.className = 'w-3 h-2.5 bg-[#C8C0B4] transition-all';
         }
       }
     }
@@ -1836,8 +1974,8 @@
       Object.keys(pills).forEach(k => {
         if (!pills[k]) return;
         pills[k].className = k === viewName
-          ? 'px-2.5 py-1 font-bold bg-[#9E4758] text-white text-[10.5px] uppercase tracking-wider'
-          : 'px-2.5 py-1 font-semibold bg-white/10 text-white hover:bg-white/20 text-[10.5px] uppercase tracking-wider';
+          ? 'px-3 py-1 font-bold bg-[#9E4758] text-white text-[12.5px] uppercase tracking-wider'
+          : 'px-3 py-1 font-semibold bg-white/15 text-white hover:bg-white/25 text-[12.5px] uppercase tracking-wider';
       });
 
       if (viewName === 'wishlist') renderWishlistPage();
@@ -1885,21 +2023,21 @@
 
       if (state.isSignedIn) {
         if (dot) dot.className = 'absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-[#2D5A43] border border-white';
-        if (lbl) lbl.textContent = 'Sophia (Synced ✓)';
+        if (lbl) lbl.textContent = 'Sophia (Synced)';
         if (modalBadge) {
-          modalBadge.textContent = `Signed In (${state.customerEmail}) • Cloud Synced ✓`;
-          modalBadge.className = 'text-[11px] font-bold px-2 py-0.5 bg-[#ECFDF3] text-[#2D5A43]';
+          modalBadge.textContent = `Signed In (${state.customerEmail}) • Cloud Synced`;
+          modalBadge.className = 'text-[12.5px] font-bold px-2.5 py-0.5 bg-[#ECFDF3] text-[#234734]';
         }
         if (signoutBox) signoutBox.classList.remove('hidden');
-        if (syncTitle) syncTitle.textContent = `✓ Cloud Synced to ${state.customerEmail}`;
+        if (syncTitle) syncTitle.textContent = `Cloud Synced to ${state.customerEmail}`;
         if (syncSub) syncSub.textContent = 'Your Saved Wishlist and Shopping Bag are synced across your phone, tablet, and laptop.';
         if (syncBtn) syncBtn.textContent = 'account settings';
       } else {
-        if (dot) dot.className = 'absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-400 border border-white';
+        if (dot) dot.className = 'absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-500 border border-white';
         if (lbl) lbl.textContent = 'Sign In';
         if (modalBadge) {
           modalBadge.textContent = 'Guest Session (Saved on This Device)';
-          modalBadge.className = 'text-[11px] font-bold px-2 py-0.5 bg-amber-100 text-amber-900';
+          modalBadge.className = 'text-[12.5px] font-bold px-2.5 py-0.5 bg-amber-100 text-amber-900';
         }
         if (signoutBox) signoutBox.classList.add('hidden');
         if (syncTitle) syncTitle.textContent = 'Browsing as a Guest — Your saved wishlist is stored on this device.';
@@ -1923,7 +2061,6 @@
       const email = document.getElementById('auth-email-input').value.trim();
       state.isSignedIn = true;
       state.customerEmail = email;
-      // Additive Union Merge: Merge any previously saved cloud items (e.g. 'p5' Sherpa Blanket) with Guest Wishlist
       if (!state.wishlist.includes('p5')) state.wishlist.push('p5');
       try {
         localStorage.setItem('loulou_customer_auth_v1', JSON.stringify({ isSignedIn: true, email }));
@@ -1933,7 +2070,7 @@
       renderCatalog();
       if (state.currentPageView === 'wishlist') renderWishlistPage();
       closeAccountModal();
-      showToast(`☁️ Signed in as ${email}! Guest Wishlist & Bag merged with your cloud account.`);
+      showToast(`Signed in as ${email}! Guest Wishlist & Bag merged with your cloud account.`);
     }
     function handleCustomerSignOut() {
       state.isSignedIn = false;
@@ -1947,7 +2084,7 @@
     }
 
     /* =========================================================================
-       6. DEDICATED WISHLIST PAGE RENDERER & ACTIONS (Req 2.1)
+       6. DEDICATED WISHLIST PAGE RENDERER & ACTIONS
        ========================================================================= */
     function renderWishlistPage() {
       const grid = document.getElementById('wishlist-page-grid');
@@ -1957,9 +2094,9 @@
 
       if (items.length === 0) {
         grid.innerHTML = `
-          <div class="col-span-4 py-14 text-center bg-white border border-[#E6E1DA] p-8 space-y-3">
-            <p class="heading-font text-[30px] font-semibold text-[#18181B]">Your Saved Wishlist is Empty</p>
-            <p class="text-[13.5px] text-[#52525B]">Tap the heart icon (♡) on any crewneck, dress, or monogram gift to save it here.</p>
+          <div class="col-span-4 py-14 text-center bg-white border border-[#C8C0B4] p-8 space-y-4">
+            <p class="heading-font text-[34px] font-semibold text-[#18181B]">Your Saved Wishlist is Empty</p>
+            <p class="text-[15.5px] text-[#3F3F46]">Tap the heart icon on any crewneck, dress, or monogram gift to save it here.</p>
             <button onclick="switchMainPageView('home')" class="pl-btn">explore new arrivals</button>
           </div>
         `;
@@ -1967,29 +2104,30 @@
       }
 
       grid.innerHTML = items.map(p => `
-        <div class="bg-white border border-[#E6E1DA] flex flex-col justify-between">
+        <div class="bg-white border border-[#C8C0B4] flex flex-col justify-between">
           <div>
             <div class="relative aspect-[2/3] bg-[#F3EFEA] overflow-hidden cursor-pointer" onclick="selectProductForPdp('${p.id}', 0)">
               <img src="${p.image}" alt="${p.title.replace(/"/g, '&quot;')}" class="w-full h-full object-cover" />
               <button
                 onclick="event.stopPropagation(); toggleWishlistItem('${p.id}')"
-                class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-white/95 border border-[#D4CDC3] text-[#9E4758] font-bold flex items-center justify-center"
+                aria-label="Remove from Wishlist"
+                class="absolute top-2.5 right-2.5 w-9 h-9 rounded-full bg-white/95 border border-[#C8C0B4] text-[#883647] font-bold flex items-center justify-center"
                 title="Remove from Wishlist"
               >✕</button>
-              <div class="absolute bottom-2 left-2 bg-white/90 px-2 py-0.5 text-[10.5px] font-semibold text-[#18181B]">
+              <div class="absolute bottom-2.5 left-2.5 bg-white/95 border border-[#C8C0B4] px-2.5 py-1 text-[12.5px] font-semibold text-[#18181B]">
                 ${p.modelStat}
               </div>
             </div>
-            <div class="p-3.5">
-              <div onclick="selectProductForPdp('${p.id}', 0)" class="font-semibold text-[13.5px] text-[#18181B] hover:text-[#9E4758] cursor-pointer mb-1">${p.title}</div>
+            <div class="p-4">
+              <div onclick="selectProductForPdp('${p.id}', 0)" class="font-semibold text-[15.5px] text-[#18181B] hover:text-[#883647] cursor-pointer mb-1.5 leading-snug">${p.title}</div>
               <div class="pl-price mb-2">
                 <span class="offer">${formatMoney(p.basePrice)}</span>
                 <span class="compare">${formatRawMoney(p.compareAt)}</span>
               </div>
             </div>
           </div>
-          <div class="p-3.5 pt-0 space-y-2">
-            <button onclick="quickAddById('${p.id}')" class="pl-btn w-full !py-2.5 !text-[12.5px]">
+          <div class="p-4 pt-0">
+            <button onclick="quickAddById('${p.id}')" class="pl-btn w-full !py-3 !text-[14.5px]">
               move to bag — ${formatMoney(p.basePrice)}
             </button>
           </div>
@@ -2008,11 +2146,11 @@
       });
       renderCart();
       toggleCartDrawer(true);
-      showToast(`🛍️ Moved all ${items.length} saved wishlist items into your Shopping Bag!`);
+      showToast(`Moved all ${items.length} saved wishlist items into your Shopping Bag!`);
     }
 
     function shareWishlistLink() {
-      showToast('🔗 Shareable Wishlist & Bridal Hint Link copied to clipboard!');
+      showToast('Shareable Wishlist & Bridal Hint Link copied to clipboard!');
     }
 
     /* =========================================================================
@@ -2035,7 +2173,8 @@
       const swatchesHtml = p.colors.map((c, idx) => `
         <button
           onclick="event.stopPropagation(); selectProductForPdp('${p.id}', ${idx})"
-          class="w-[16px] h-[16px] rounded-full border ${idx === 0 ? 'ring-1 ring-offset-1 ring-[#18181B] border-[#18181B]' : 'border-[#D4CDC3]'}"
+          aria-label="Select Color ${c.name}"
+          class="w-[18px] h-[18px] rounded-full border ${idx === 0 ? 'ring-1 ring-offset-1 ring-[#18181B] border-[#18181B]' : 'border-[#C8C0B4]'}"
           style="background-color: ${c.hex}"
           title="${c.name}"
         ></button>
@@ -2044,7 +2183,8 @@
       const quickSizesHtml = p.sizes.slice(0, 5).map(sz => `
         <button
           onclick="event.stopPropagation(); quickAddWithSize('${p.id}', '${sz}')"
-          class="bg-white/95 hover:bg-[#9E4758] hover:text-white text-[#18181B] border border-[#D4CDC3] text-[10.5px] font-bold px-2 py-1 transition"
+          aria-label="Quick Add Size ${sz}"
+          class="bg-white/95 hover:bg-[#9E4758] hover:text-white text-[#18181B] border border-[#C8C0B4] text-[12.5px] font-bold px-2.5 py-1 transition"
         >${sz}</button>
       `).join('');
 
@@ -2053,22 +2193,22 @@
           <div class="image-container" onclick="selectProductForPdp('${p.id}', 0)">
             <img class="main-img" src="${p.image}" alt="${p.title.replace(/"/g, '&quot;')}" loading="lazy" />
 
-            <!-- Top-Left Wishlist Heart (Saves item & updates header badge) -->
+            <!-- Top-Left Wishlist Heart -->
             <button
               onclick="event.stopPropagation(); toggleWishlistItem('${p.id}')"
-              class="absolute top-2 left-2 z-10 w-7 h-7 rounded-full bg-white/90 flex items-center justify-center text-[#18181B] hover:text-[#9E4758] font-bold"
+              class="absolute top-2.5 left-2.5 z-10 w-8 h-8 rounded-full bg-white/95 border border-[#C8C0B4] flex items-center justify-center text-[#18181B] hover:text-[#883647] font-bold text-[15px]"
               aria-label="Save to Wishlist"
             >
-              ${wished ? '<span class="text-[#9E4758]">♥</span>' : '♡'}
+              ${wished ? '<span class="text-[#883647]">♥</span>' : '♡'}
             </button>
 
             <!-- Top-Right Badge -->
-            <div class="absolute top-2 right-2 z-10">
+            <div class="absolute top-2.5 right-2.5 z-10">
               <span class="pl-badge ${state.saleOnly ? 'pl-badge-sale' : ''}">${state.saleOnly ? 'Sale -25%' : p.badge}</span>
             </div>
 
-            <!-- Model Height/Size Fit Micro-Badge -->
-            <div class="absolute bottom-11 left-2 z-10 bg-white/90 px-2 py-0.5 text-[10px] font-semibold text-[#18181B] border border-[#E6E1DA]">
+            <!-- Model Height/Size Fit Badge (Upgraded to 12.5px for legibility) -->
+            <div class="absolute bottom-12 left-2.5 z-10 bg-white/95 px-2.5 py-1 text-[12.5px] font-semibold text-[#18181B] border border-[#C8C0B4]">
               ${p.modelStat}
             </div>
 
@@ -2082,7 +2222,7 @@
               class="pl-floating-bag"
               aria-label="Quick Add to Bag"
             >
-              <svg aria-hidden="true" class="w-[15px] h-[15px]" viewBox="0 0 32 32">
+              <svg aria-hidden="true" class="w-[17px] h-[17px]" viewBox="0 0 32 32">
                 <path fill="currentColor" d="M29.47,32H2.53c-.24,0-.46-.1-.62-.27-.16-.17-.24-.41-.22-.64l1.68-20.21c.04-.44.4-.77.84-.77h4.21v-2.53c0-4.18,3.4-7.58,7.58-7.58s7.58,3.4,7.58,7.58v2.53h4.21c.44,0,.8.34.84.77l1.68,20.21c.02.24-.06.47-.22.64-.16.17-.38.27-.62.27ZM3.44,30.32h25.12l-1.54-18.53h-3.44v2.53c0,.47-.38.84-.84.84s-.84-.38-.84-.84v-2.53h-11.79v2.53c0,.47-.38.84-.84.84s-.84-.38-.84-.84v-2.53h-3.44l-1.54,18.53ZM10.11,10.11h11.79v-2.53c0-3.25-2.64-5.89-5.89-5.89s-5.89,2.64-5.89,5.89v2.53Z"/>
               </svg>
             </button>
@@ -2090,17 +2230,17 @@
 
           <div class="pl-card-info">
             <div onclick="selectProductForPdp('${p.id}', 0)" class="pl-card-title">${p.title}</div>
-            <div class="text-[11.5px] text-[#71717A] mb-0.5">
-              <span class="text-[#B4833E]">★★★★★</span> (${p.reviews})
+            <div class="text-[13.5px] text-[#52525B] font-medium mb-1">
+              <span class="text-[#8A5F22]">★★★★★</span> (${p.reviews} reviews)
             </div>
             <div class="pl-price">
               <span class="offer">${formatMoney(p.basePrice)}</span>
               <span class="compare">${formatRawMoney(p.compareAt)}</span>
             </div>
             <div class="pl-product-promos">
-              ${state.promoActive ? '✓ 25% off code LULLUXE25 applied' : '25% off w/ code LULLUXE25'}
+              ${state.promoActive ? '25% off code LULLUXE25 applied' : '25% off w/ code LULLUXE25'}
             </div>
-            <div class="flex items-center gap-1.5 mt-1.5">${swatchesHtml}</div>
+            <div class="flex items-center gap-2 mt-2">${swatchesHtml}</div>
           </div>
         </div>
       `;
@@ -2157,7 +2297,7 @@
       document.getElementById('pdp-title').textContent = p.title;
       document.getElementById('pdp-badge').textContent = p.badge;
       document.getElementById('pdp-rating-text').textContent = `${p.rating} (${p.reviews} Reviews)`;
-      document.getElementById('pdp-model-stat').innerHTML = `👗 ${p.modelStat}`;
+      document.getElementById('pdp-model-stat').textContent = p.modelStat;
 
       const priceFormatted = formatMoney(p.basePrice);
       document.getElementById('pdp-price').textContent = priceFormatted;
@@ -2167,7 +2307,7 @@
 
       document.getElementById('pdp-main-img').src = p.gallery[0] || p.image;
       document.getElementById('pdp-thumbs').innerHTML = (p.gallery || [p.image]).map(imgUrl => `
-        <button onclick="document.getElementById('pdp-main-img').src='${imgUrl}'" class="w-16 sm:w-20 aspect-[2/3] border border-[#D4CDC3] overflow-hidden flex-shrink-0">
+        <button onclick="document.getElementById('pdp-main-img').src='${imgUrl}'" class="w-16 sm:w-20 aspect-[2/3] border border-[#C8C0B4] overflow-hidden flex-shrink-0">
           <img src="${imgUrl}" alt="Thumbnail" class="w-full h-full object-cover" />
         </button>
       `).join('');
@@ -2177,7 +2317,8 @@
       document.getElementById('pdp-color-swatches').innerHTML = p.colors.map((c, idx) => `
         <button
           onclick="state.selectedColorIdx=${idx}; renderPdp();"
-          class="w-7 h-7 rounded-full border ${idx === state.selectedColorIdx ? 'ring-2 ring-offset-2 ring-[#18181B] border-[#18181B]' : 'border-[#D4CDC3]'}"
+          aria-label="Color ${c.name}"
+          class="w-8 h-8 rounded-full border ${idx === state.selectedColorIdx ? 'ring-2 ring-offset-2 ring-[#18181B] border-[#18181B]' : 'border-[#C8C0B4]'}"
           style="background-color: ${c.hex}"
           title="${c.name}"
         ></button>
@@ -2187,7 +2328,7 @@
       document.getElementById('pdp-size-buttons').innerHTML = p.sizes.map(sz => `
         <button
           onclick="state.selectedSize='${sz}'; renderPdp();"
-          class="py-2.5 text-[13px] font-bold border ${state.selectedSize === sz ? 'bg-[#9E4758] text-white border-[#9E4758]' : 'bg-white text-[#18181B] border-[#D4CDC3] hover:border-[#18181B]'}"
+          class="py-3 text-[14.5px] font-bold border ${state.selectedSize === sz ? 'bg-[#9E4758] text-white border-[#9E4758]' : 'bg-white text-[#18181B] border-[#C8C0B4] hover:border-[#18181B]'}"
         >${sz}</button>
       `).join('');
 
@@ -2207,10 +2348,10 @@
       span.textContent = txt;
       span.style.color = state.selectedThreadColor === '#FFFFFF' ? '#18181B' : state.selectedThreadColor;
       span.className = font === 'script'
-        ? 'font-mono-script text-2xl'
+        ? 'font-mono-script text-[26px]'
         : font === 'block'
-          ? 'font-mono-block text-lg'
-          : 'font-mono-serif text-xl font-bold';
+          ? 'font-mono-block text-[20px]'
+          : 'font-mono-serif text-[22px] font-bold';
     }
 
     function selectThreadColor(hex, name) {
@@ -2239,8 +2380,8 @@
       document.querySelectorAll('.cat-pill').forEach(btn => {
         const active = btn.getAttribute('data-pill') === cat;
         btn.className = active
-          ? 'cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#18181B] bg-[#18181B] text-white'
-          : 'cat-pill px-3.5 py-1.5 text-[12.5px] font-semibold border border-[#D4CDC3] bg-white text-[#18181B] hover:border-[#18181B]';
+          ? 'cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#18181B] bg-[#18181B] text-white'
+          : 'cat-pill px-4 py-2 text-[14.5px] font-semibold border border-[#C8C0B4] bg-white text-[#18181B] hover:border-[#18181B]';
       });
     }
 
@@ -2276,9 +2417,9 @@
     }
     function selectBridalRole(btn) {
       document.querySelectorAll('.bridal-role-btn').forEach(b => {
-        b.className = 'bridal-role-btn py-2 px-3 border border-[#D4CDC3] bg-white text-[#18181B] font-medium';
+        b.className = 'bridal-role-btn py-2.5 px-3 border border-[#C8C0B4] bg-white text-[#18181B] font-medium';
       });
-      btn.className = 'bridal-role-btn py-2 px-3 border border-[#9E4758] bg-[#9E4758] text-white font-semibold';
+      btn.className = 'bridal-role-btn py-2.5 px-3 border border-[#9E4758] bg-[#9E4758] text-white font-semibold';
     }
     async function submitBridalConcierge(e) {
       e.preventDefault();
@@ -2301,7 +2442,7 @@
       dismissBridalModalForToday();
       renderCatalog();
       renderCart();
-      showToast('💍 Code BRIDAL10 (10% OFF) unlocked & applied!');
+      showToast('Code BRIDAL10 (10% OFF) unlocked & applied!');
     }
 
     function togglePromoCode() {
@@ -2310,7 +2451,7 @@
       renderCatalog();
       renderPdp();
       renderCart();
-      showToast(state.promoActive ? '🏷️ Code LULLUXE25 (-25% OFF) applied to all styles!' : 'Promo code removed.');
+      showToast(state.promoActive ? 'Code LULLUXE25 (-25% OFF) applied to all styles!' : 'Promo code removed.');
     }
 
     function toggleSaleFilter() {
@@ -2341,7 +2482,7 @@
       else state.cart.push({ productId, size, color, monogram, qty: 1 });
       renderCart();
       toggleCartDrawer(true);
-      showToast('🛍️ Added to your LouLou & Luxe bag!');
+      showToast('Added to your LouLou & Luxe bag!');
     }
     function removeCartItem(idx) {
       state.cart.splice(idx, 1);
@@ -2362,33 +2503,33 @@
         const p = PRODUCTS.find(x => x.id === item.productId) || PRODUCTS[0];
         subtotalUsd += p.basePrice * item.qty;
         return `
-          <div class="flex gap-3 pb-3 border-b border-[#E6E1DA]">
-            <img src="${p.image}" alt="${p.title.replace(/"/g, '&quot;')}" class="w-16 h-24 object-cover flex-shrink-0" />
-            <div class="flex-1 text-[13px]">
+          <div class="flex gap-3.5 pb-3.5 border-b border-[#E6E1DA]">
+            <img src="${p.image}" alt="${p.title.replace(/"/g, '&quot;')}" class="w-16 h-24 object-cover flex-shrink-0 border border-[#C8C0B4]" />
+            <div class="flex-1 text-[14.5px]">
               <div class="flex justify-between items-start gap-2">
-                <span class="font-bold text-[#18181B] leading-tight">${p.title}</span>
-                <button onclick="removeCartItem(${idx})" class="text-[#71717A] hover:text-[#9E4758] font-bold">✕</button>
+                <span class="font-bold text-[#18181B] leading-snug">${p.title}</span>
+                <button onclick="removeCartItem(${idx})" aria-label="Remove Item" class="text-[#52525B] hover:text-[#883647] font-bold">✕</button>
               </div>
-              <p class="text-[12px] text-[#52525B] mt-0.5">${item.color} • Size ${item.size}</p>
-              ${item.monogram && item.monogram !== 'NONE' ? `<p class="text-[11.5px] font-semibold text-[#9E4758]">✨ Monogram: "${item.monogram}"</p>` : ''}
+              <p class="text-[13.5px] text-[#3F3F46] mt-0.5">${item.color} • Size ${item.size}</p>
+              ${item.monogram && item.monogram !== 'NONE' ? `<p class="text-[13px] font-bold text-[#883647]">Monogram: "${item.monogram}"</p>` : ''}
               <div class="flex items-center justify-between mt-2">
-                <div class="flex items-center border border-[#D4CDC3]">
-                  <button onclick="updateQty(${idx}, -1)" class="px-2 py-0.5 font-bold">-</button>
-                  <span class="px-2 text-[12px] font-bold">${item.qty}</span>
-                  <button onclick="updateQty(${idx}, 1)" class="px-2 py-0.5 font-bold">+</button>
+                <div class="flex items-center border border-[#C8C0B4]">
+                  <button onclick="updateQty(${idx}, -1)" aria-label="Decrease Quantity" class="px-2.5 py-0.5 font-bold text-[#18181B]">-</button>
+                  <span class="px-2.5 text-[13.5px] font-bold text-[#18181B]">${item.qty}</span>
+                  <button onclick="updateQty(${idx}, 1)" aria-label="Increase Quantity" class="px-2.5 py-0.5 font-bold text-[#18181B]">+</button>
                 </div>
-                <span class="font-bold text-[#9E4758]">${formatMoney(p.basePrice * item.qty)}</span>
+                <span class="font-bold text-[#883647]">${formatMoney(p.basePrice * item.qty)}</span>
               </div>
             </div>
           </div>
         `;
       }).join('');
-      document.getElementById('cart-items-list').innerHTML = listHtml || '<p class="text-center py-6 text-[#71717A]">Your shopping bag is currently empty.</p>';
+      document.getElementById('cart-items-list').innerHTML = listHtml || '<p class="text-center py-6 text-[#52525B]">Your shopping bag is currently empty.</p>';
       document.getElementById('cart-subtotal').textContent = formatMoney(subtotalUsd);
     }
 
     function completeCheckout() {
-      showToast('🎉 Order Confirmed! Queued for 48-hour North American dispatch.');
+      showToast('Order Confirmed! Queued for 48-hour North American dispatch.');
       toggleCartDrawer(false);
     }
     function toggleCartDrawer(open) {
@@ -2403,7 +2544,7 @@
         showToast('Removed from your Saved Wishlist.');
       } else {
         state.wishlist.push(productId);
-        showToast('♥ Saved to your Wishlist! Click the heart icon (♡) in the header to view your Wishlist page.');
+        showToast('Saved to your Wishlist! Click the heart icon in the header to view your Wishlist page.');
       }
       persistWishlistState();
       renderCatalog();
@@ -2477,7 +2618,7 @@
         });
       } catch (err) {}
       if (emailEl) emailEl.value = '';
-      showToast(`🎉 Welcome (${email})! Code LULLUXE25 (25% OFF) has been sent & alerted!`);
+      showToast(`Welcome (${email})! Code LULLUXE25 (25% OFF) has been sent & alerted!`);
     }
 
     /* 1-Time-Per-User Cookie Consent Check */
@@ -2557,10 +2698,11 @@
           body: JSON.stringify(payload)
         }).catch(() => {});
       } catch (e) {}
-      showToast(`🍪 Cookie Preferences Saved (${level})`);
+      showToast(`Cookie Preferences Saved (${level})`);
     }
 
     // Boot Storefront
+    initThemeMode();
     loadSavedShopperState();
     persistWishlistState();
     renderCatalog();
