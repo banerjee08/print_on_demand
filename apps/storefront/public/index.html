@@ -7,8 +7,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- ORIGINAL LOULOU & LUXE TYPOGRAPHY (Cormorant Garamond + Plus Jakarta Sans + Dancing Script + JetBrains Mono) -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@600;700&family=JetBrains+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <!-- ORIGINAL LOULOU & LUXE BRAND TYPOGRAPHY (Cormorant Garamond + Plus Jakarta Sans + Dancing Script + Nunito + Fredoka + JetBrains Mono) -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@600;700&family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Nunito:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
       /* ORIGINAL LOULOU & LUXE COLOR PALETTE — WCAG 2.1 AA/AAA CONTRAST CALIBRATED (LIGHT THEME) */
@@ -31,10 +31,12 @@
       --border-hairline: #E6E1DA;    /* Warm Sand Hairline */
       --border-strong: #C8C0B4;      /* Defined Warm Stone Border */
 
-      /* ORIGINAL LOULOU & LUXE FONTS (100% Preserved) */
+      /* ORIGINAL LOULOU & LUXE BRAND FONTS (100% Preserved: Storefront UI + Garment/Customizer Fonts) */
       --font-heading: 'Cormorant Garamond', Georgia, serif;
-      --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-body: 'Plus Jakarta Sans', 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
       --font-script: 'Dancing Script', cursive;
+      --font-nunito: 'Nunito', sans-serif;
+      --font-fredoka: 'Fredoka', sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
     }
 
@@ -460,6 +462,8 @@
 
     .font-mono-serif { font-family: var(--font-heading); letter-spacing: 0.12em; }
     .font-mono-script { font-family: var(--font-script); }
+    .font-mono-fredoka { font-family: var(--font-fredoka); letter-spacing: 0.08em; font-weight: 600; }
+    .font-mono-nunito { font-family: var(--font-nunito); letter-spacing: 0.14em; font-weight: 800; }
     .font-mono-block { font-family: var(--font-body); letter-spacing: 0.18em; font-weight: 700; }
   </style>
 </head>
@@ -655,7 +659,7 @@
                 <span>Custom Embroidered Canvas Weekender Totes</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="pl-dropdown-link">
-                <span>40oz Laser-Engraved Quencher Tumblers</span>
+                <span>40oz Laser-Engraved Insulated Handle Tumblers</span>
               </button>
               <button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="pl-dropdown-link">
                 <span>Plush Monogrammed Sherpa Blankets</span>
@@ -890,7 +894,7 @@
               the custom monogram<br/><span class="italic font-normal text-[#234734]">holiday gift shop</span>
             </h2>
             <p class="text-[16px] sm:text-[17px] text-[#3F3F46] leading-relaxed mb-6 max-w-md">
-              Embroidered canvas weekender totes, plush sherpa blankets &amp; 40oz laser-engraved quenchers under $50.
+              Embroidered canvas weekender totes, plush sherpa blankets &amp; 40oz laser-engraved insulated tumblers under $50.
             </p>
             <div class="flex flex-wrap items-center justify-center gap-3.5">
               <button onclick="filterCategory('MONOGRAM_GIFTS')" class="pl-btn !bg-[#2D5A43] !border-[#2D5A43]">
@@ -1125,7 +1129,7 @@
             <div class="text-[15px] leading-relaxed">
               <div class="text-[#8A5F22] font-bold text-[14px] mb-1">★★★★★ <span class="text-[#52525B] font-medium">• Nashville, TN</span></div>
               <p class="font-bold text-[#18181B] text-[16px] mb-1">"Best engagement gift ever"</p>
-              <p class="text-[#3F3F46] mb-2.5">The Future Mrs. pearl chenille stitch looks like a $140 Revolve sweater.</p>
+              <p class="text-[#3F3F46] mb-2.5">The Future Mrs. pearl chenille stitch looks like a $140 designer boutique sweater.</p>
               <span class="inline-block bg-white border border-[#C8C0B4] px-2.5 py-1 text-[13px] font-bold text-[#883647]">Buyer: 5'7" • Size S (True to Size)</span>
             </div>
           </div>
@@ -1323,9 +1327,11 @@
               <div>
                 <label for="monogram-font" class="block text-[13.5px] font-bold mb-1 text-[#18181B]">Embroidery Font Style</label>
                 <select id="monogram-font" onchange="updateMonogramPreview()" class="w-full px-3.5 py-2.5 text-[15px] bg-white border border-[#C8C0B4] text-[#18181B]">
-                  <option value="serif">Cormorant Editorial Serif</option>
-                  <option value="script">Dancing Script Cursive</option>
-                  <option value="block">Jakarta Varsity Block</option>
+                  <option value="serif">Cormorant Garamond (Editorial Serif)</option>
+                  <option value="script">Dancing Script (Signature Cursive)</option>
+                  <option value="fredoka">Fredoka (Playful Slogan Accent)</option>
+                  <option value="nunito">Nunito (Rounded Friendly Sans)</option>
+                  <option value="block">Plus Jakarta Sans (Varsity Block)</option>
                 </select>
               </div>
             </div>
@@ -1394,7 +1400,7 @@
             <li><button onclick="switchMainPageView('home'); filterCategory('CLUB_FLEECE')" class="hover:underline">Heavyweight Crewnecks (380GSM)</button></li>
             <li><button onclick="switchMainPageView('home'); filterCategory('OUTERWEAR')" class="hover:underline">Quarter-Zips &amp; Sherpa Blankets</button></li>
             <li><button onclick="switchMainPageView('home'); enterBridalSection()" class="hover:underline">Newly Engaged &amp; Bridal Suite</button></li>
-            <li><button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="hover:underline">Custom Totes &amp; 40oz Quenchers</button></li>
+            <li><button onclick="switchMainPageView('home'); filterCategory('MONOGRAM_GIFTS')" class="hover:underline">Custom Totes &amp; 40oz Insulated Tumblers</button></li>
           </ul>
         </div>
         <div>
@@ -1764,7 +1770,7 @@
       {
         id: 'p7',
         sku: 'LL-TUMB-07',
-        title: '40oz Laser-Engraved Ombré Insulated Holiday Quencher Tumbler',
+        title: '40oz Laser-Engraved Ombré Insulated Holiday Handle Tumbler',
         category: 'MONOGRAM_GIFTS',
         tab: ['bestsellers'],
         basePrice: 42,
@@ -2349,9 +2355,13 @@
       span.style.color = state.selectedThreadColor === '#FFFFFF' ? '#18181B' : state.selectedThreadColor;
       span.className = font === 'script'
         ? 'font-mono-script text-[26px]'
-        : font === 'block'
-          ? 'font-mono-block text-[20px]'
-          : 'font-mono-serif text-[22px] font-bold';
+        : font === 'fredoka'
+          ? 'font-mono-fredoka text-[21px]'
+          : font === 'nunito'
+            ? 'font-mono-nunito text-[20px]'
+            : font === 'block'
+              ? 'font-mono-block text-[20px]'
+              : 'font-mono-serif text-[22px] font-bold';
     }
 
     function selectThreadColor(hex, name) {
