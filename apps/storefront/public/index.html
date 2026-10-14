@@ -870,7 +870,7 @@
                 unlock bridal 10% off
               </button>
               <button onclick="switchMainPageView('pdp')" class="pl-btn pl-btn-outline">
-                preview your monogram
+                test your custom monogram free
               </button>
             </div>
           </div>
@@ -2041,6 +2041,7 @@
       activeTab: 'new',
       category: 'ALL',
       saleOnly: false,
+      showAllProducts: false,
       searchQuery: '',
       sortMode: 'FEATURED',
       promoActive: false,
@@ -2485,11 +2486,44 @@
       if (state.sortMode === 'PRICE_DESC') list.sort((a, b) => b.basePrice - a.basePrice);
       if (state.sortMode === 'RATING') list.sort((a, b) => b.rating - a.rating);
 
-      document.getElementById('showing-count-text').textContent = `${list.length} styles`;
-      document.getElementById('product-grid').innerHTML = list.map(renderPinkLilyCard).join('');
+      const totalMatched = list.length;
+      const isDefaultHomeGrid = (state.category === 'ALL' && state.searchQuery.trim() === '');
+      const displayList = (isDefaultHomeGrid && !state.showAllProducts) ? list.slice(0, 8) : list;
+
+      document.getElementById('showing-count-text').textContent =
+        (isDefaultHomeGrid && !state.showAllProducts && totalMatched > 8)
+          ? `Showing 8 of ${totalMatched} curated styles`
+          : `${displayList.length} styles`;
+      document.getElementById('product-grid').innerHTML = displayList.map(renderPinkLilyCard).join('');
+
+      const toggleWrap = document.getElementById('view-all-toggle-wrap');
+      const toggleBtn = document.getElementById('view-all-toggle-btn');
+      const helperTxt = document.getElementById('view-all-helper-text');
+      if (toggleWrap && toggleBtn && helperTxt) {
+        if (isDefaultHomeGrid && totalMatched > 8) {
+          toggleWrap.classList.remove('hidden');
+          if (state.showAllProducts) {
+            toggleBtn.textContent = 'show top 8 featured styles only ↑';
+            helperTxt.textContent = `Viewing all ${totalMatched} launch styles across 5 categories`;
+          } else {
+            toggleBtn.textContent = `explore all ${totalMatched} launch styles (+${totalMatched - 8} more) →`;
+            helperTxt.textContent = 'Showing top 8 curated styles (2 rows of 4) for effortless browsing • Tap to view full 16-SKU collection';
+          }
+        } else {
+          toggleWrap.classList.add('hidden');
+        }
+      }
 
       const bridalCards = PRODUCTS.filter(p => p.id === 'p2' || p.id === 'p4' || p.id === 'p5');
       document.getElementById('featured-bridal-cards').innerHTML = bridalCards.map(renderPinkLilyCard).join('');
+    }
+
+    function toggleShowAllProducts() {
+      state.showAllProducts = !state.showAllProducts;
+      renderCatalog();
+      if (!state.showAllProducts) {
+        scrollToElement('tabs-nosto-section');
+      }
     }
 
     function setHomeMonoColor(hex) {
