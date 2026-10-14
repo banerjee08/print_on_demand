@@ -1034,8 +1034,36 @@
           </div>
         </div>
 
-        <!-- 4-Across Product Grid -->
+        <!-- Self-Learning AI Search & Synonym Expansion Feedback Banner (Hidden until search active) -->
+        <div id="ai-search-learning-banner" class="hidden mb-5 p-3.5 bg-[#F9EFF1] border border-[#9E4758]/40 flex flex-wrap items-center justify-between gap-3 text-[13.5px]">
+          <div class="flex flex-wrap items-center gap-2">
+            <span class="mono-font font-bold uppercase text-[11.5px] px-2 py-0.5 bg-[#9E4758] text-white">Adaptive AI Search</span>
+            <span id="ai-search-expansion-text" class="text-[#18181B] font-medium">Learned synonym expansion active</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="text-[#52525B] text-[12.5px]">Did these results match your style?</span>
+            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_UP')" class="px-2.5 py-1 border border-[#2D5A43] text-[#234734] font-bold text-[12px] hover:bg-[#2D5A43] hover:text-white transition">👍 Helpful (+Reward)</button>
+            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_DOWN')" class="px-2.5 py-1 border border-[#883647] text-[#883647] font-bold text-[12px] hover:bg-[#883647] hover:text-white transition">👎 Miss (-Adjust)</button>
+          </div>
+        </div>
+
+        <!-- 4-Across Product Grid (Defaults to 8 Curated Styles = 2 Rows of 4 on Desktop) -->
         <div id="product-grid" class="pl-grid-4"></div>
+
+        <!-- Progressive Disclosure Toggle: 8 Featured by Default -> Expand to All 16 Launch SKUs -->
+        <div id="view-all-toggle-wrap" class="mt-9 text-center">
+          <button
+            id="view-all-toggle-btn"
+            type="button"
+            onclick="toggleShowAllProducts()"
+            class="pl-btn pl-btn-outline !px-9 !py-3.5"
+          >
+            explore all 16 launch styles (+8 more) →
+          </button>
+          <p id="view-all-helper-text" class="text-[13.5px] text-[#52525B] mt-2">
+            Showing top 8 curated styles (2 rows of 4) for effortless browsing • Tap to view full 16-SKU collection
+          </p>
+        </div>
       </div>
     </section>
 
@@ -2478,9 +2506,36 @@
       } else if (state.activeTab === 'bestsellers') {
         list = list.filter(p => p.tab.includes('bestsellers'));
       }
+      const searchBanner = document.getElementById('ai-search-learning-banner');
+      const searchBannerTxt = document.getElementById('ai-search-expansion-text');
       if (state.searchQuery.trim() !== '') {
-        const q = state.searchQuery.toLowerCase();
-        list = list.filter(p => p.title.toLowerCase().includes(q) || p.category.toLowerCase().includes(q));
+        const q = state.searchQuery.toLowerCase().trim();
+        const expandedTerms = [q];
+        Object.keys(LEARNED_SYNONYM_CACHE).forEach(k => {
+          if (q.includes(k)) {
+            LEARNED_SYNONYM_CACHE[k].forEach(syn => {
+              if (!expandedTerms.includes(syn)) expandedTerms.push(syn);
+            });
+          }
+        });
+        list = list.filter(p => {
+          const hay = `${p.title} ${p.category} ${p.badge} ${p.sku}`.toLowerCase();
+          return expandedTerms.some(term => hay.includes(term));
+        });
+        list.sort((a, b) => {
+          const boostA = (typeof learnedProductBoosts !== 'undefined' && learnedProductBoosts[a.sku]) ? learnedProductBoosts[a.sku] : 0;
+          const boostB = (typeof learnedProductBoosts !== 'undefined' && learnedProductBoosts[b.sku]) ? learnedProductBoosts[b.sku] : 0;
+          return boostB - boostA;
+        });
+        if (searchBanner && searchBannerTxt) {
+          searchBanner.classList.remove('hidden');
+          const synList = expandedTerms.slice(1, 5);
+          searchBannerTxt.textContent = synList.length > 0
+            ? `AI Intent Expansion for "${state.searchQuery}": matched [${synList.join(', ')}] + learned conversion boosts`
+            : `Self-learning ranking active for "${state.searchQuery}" (${list.length} matches)`;
+        }
+      } else if (searchBanner) {
+        searchBanner.classList.add('hidden');
       }
       if (state.sortMode === 'PRICE_ASC') list.sort((a, b) => a.basePrice - b.basePrice);
       if (state.sortMode === 'PRICE_DESC') list.sort((a, b) => b.basePrice - a.basePrice);
@@ -2544,6 +2599,9 @@
       const p = PRODUCTS.find(x => x.id === productId) || PRODUCTS[0];
       state.selectedSize = p.sizes.includes('M') ? 'M' : p.sizes[0];
       document.getElementById('monogram-input').value = p.defaultMonogram === 'NONE' ? '' : p.defaultMonogram;
+      if (state.searchQuery && state.searchQuery.trim() && window.LouLouBackendClient) {
+        window.LouLouBackendClient.sendLearningFeedback('SEARCH_CLICK', p.sku, state.searchQuery.trim());
+      }
       switchMainPageView('pdp');
     }
 
@@ -2739,9 +2797,13 @@
       addItemToCart(p.id, size, p.colors[0].name, p.defaultMonogram);
     }
     function addItemToCart(productId, size, color, monogram) {
+      const p = PRODUCTS.find(x => x.id === productId) || PRODUCTS[0];
       const existing = state.cart.find(i => i.productId === productId && i.size === size && i.color === color && i.monogram === monogram);
       if (existing) existing.qty += 1;
       else state.cart.push({ productId, size, color, monogram, qty: 1 });
+      if (window.LouLouBackendClient) {
+        window.LouLouBackendClient.sendLearningFeedback('ADD_TO_CART', p.sku, state.searchQuery || p.category);
+      }
       renderCart();
       toggleCartDrawer(true);
       showToast('Added to your LouLou & Luxe bag!');
@@ -2816,6 +2878,119 @@
       toggleWishlistItem(state.selectedPdpId);
     }
 
+    /* =========================================================================
+       DECOUPLED HEADLESS BACKEND SDK, GIT-TRACE ERROR BOUNDARY & SELF-LEARNING AI SEARCH
+       (Frontend UI can be replaced anytime while keeping Backend API intact)
+       ========================================================================= */
+    const PAGE_LOAD_TS = Date.now();
+    const LEARNED_SYNONYM_CACHE = {
+      'bach': ['bachelorette', 'bridal', 'bride', 'future mrs', 'champagne'],
+      'bachelorette': ['bridal', 'bride', 'future mrs', 'social club', 'tote'],
+      'engaged': ['future mrs', 'bridal', 'pearl', 'chenille', 'monogram'],
+      'gift': ['monogram', 'tote', 'sherpa', 'blanket', 'tumbler', '40oz'],
+      'stocking': ['tumbler', '40oz', 'tote', 'monogram', 'candle'],
+      'cozy': ['fleece', 'sherpa', 'crewneck', 'quarter-zip', 'blanket', '380gsm'],
+      'warm': ['fleece', 'sherpa', 'heavyweight', '380gsm', 'hoodie'],
+      'matcha': ['social club', 'sage', 'crewneck', 'embroidered'],
+      'cup': ['tumbler', '40oz', 'insulated', 'mug']
+    };
+    const learnedProductBoosts = {};
+
+    function reportErrorWithGitTrace(err, serviceModule, filePath, fallbackLine) {
+      const msg = (err && err.message) ? err.message : String(err || 'Unknown runtime error');
+      const stack = (err && err.stack) ? String(err.stack) : '';
+      let line = fallbackLine || 1;
+      const m = stack.match(/:(\d+):(\d+)/);
+      if (m) line = parseInt(m[1], 10) || line;
+      const cleanFile = filePath || 'apps/storefront/public/index.html';
+      const gitTrace = {
+        gitRepo: 'banerjee08/print_on_demand',
+        gitBranch: 'development',
+        filePath: cleanFile,
+        lineNumber: line,
+        githubBlameUrl: `https://github.com/banerjee08/print_on_demand/blob/development/${cleanFile}#L${line}`,
+        gitCliFixCommand: `git checkout development && git blame -L ${line},${line} ${cleanFile}`,
+        serviceModule: serviceModule || 'storefront.ui.runtime',
+        errorCode: (err && err.code) || 'LOULOU_RUNTIME_ERR',
+        message: msg
+      };
+      console.error('[LouLou & Luxe Git-Trace Error]', gitTrace);
+      try {
+        fetch('/webhook/loulou-api-error-trace', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(gitTrace)
+        }).catch(() => {});
+      } catch (_) {}
+      return gitTrace;
+    }
+
+    window.addEventListener('error', function(ev) {
+      if (ev && ev.error) {
+        reportErrorWithGitTrace(ev.error, 'storefront.window.onerror', 'apps/storefront/public/index.html', ev.lineno || 1);
+      }
+    });
+
+    window.LouLouBackendClient = {
+      apiVersion: '2026-10-14.v1',
+      endpoints: {
+        search: '/webhook/loulou-api-search',
+        feedback: '/webhook/loulou-api-feedback',
+        errorTrace: '/webhook/loulou-api-error-trace',
+        newsletter: '/webhook/loulou-newsletter-signup',
+        cookieConsent: '/webhook/loulou-cookie-consent'
+      },
+      async querySmartSearch(rawQuery) {
+        try {
+          const res = await fetch(this.endpoints.search, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              query: rawQuery,
+              region: state.currency === 'CAD' ? 'CA' : 'US',
+              _hp_website_url: '',
+              formRenderedAtMs: PAGE_LOAD_TS
+            })
+          });
+          if (!res.ok) return null;
+          return await res.json();
+        } catch (err) {
+          reportErrorWithGitTrace(err, 'headless.search.client', 'apps/backend/src/modules/search/adaptive-llm-search.ts', 112);
+          return null;
+        }
+      },
+      async sendLearningFeedback(signalType, productSku, rawQuery, notes) {
+        try {
+          await fetch(this.endpoints.feedback, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              query: rawQuery || state.searchQuery || 'catalog_browse',
+              productSku: productSku || 'ALL',
+              signalType,
+              userFeedbackNotes: notes || '',
+              _hp_website_url: '',
+              formRenderedAtMs: PAGE_LOAD_TS
+            })
+          });
+        } catch (err) {
+          reportErrorWithGitTrace(err, 'headless.feedback.client', 'apps/backend/src/modules/search/adaptive-llm-search.ts', 194);
+        }
+      }
+    };
+
+    function submitSearchFeedbackSignal(signalType) {
+      const q = (state.searchQuery || '').trim();
+      if (!q) return;
+      const topCardSku = PRODUCTS[0] ? PRODUCTS[0].sku : 'LL-Q4-001';
+      window.LouLouBackendClient.sendLearningFeedback(signalType, topCardSku, q, `User rated search results for "${q}" as ${signalType}`);
+      showToast(
+        signalType === 'THUMBS_UP'
+          ? `AI Search Engine rewarded (+3.0 affinity) for "${q}"!`
+          : `AI Search Engine logged feedback for "${q}" & queued synonym refinement.`
+      );
+    }
+
     function switchRegion(curr) {
       state.currency = curr;
       const cfg = CURRENCY_RATES[curr] || CURRENCY_RATES.USD;
@@ -2826,10 +3001,23 @@
       renderCart();
       if (state.currentPageView === 'wishlist') renderWishlistPage();
     }
+    let __searchDebounceTimer = null;
     function handleSearch(val) {
       state.searchQuery = val;
       if (state.currentPageView !== 'home') switchMainPageView('home');
       renderCatalog();
+      clearTimeout(__searchDebounceTimer);
+      const trimmed = (val || '').trim();
+      if (trimmed.length >= 2) {
+        __searchDebounceTimer = setTimeout(async () => {
+          const data = await window.LouLouBackendClient.querySmartSearch(trimmed);
+          const payload = Array.isArray(data) ? data[0] : data;
+          if (payload && payload.boostMap) {
+            Object.assign(learnedProductBoosts, payload.boostMap);
+            renderCatalog();
+          }
+        }, 260);
+      }
     }
     function setSortMode(mode) {
       state.sortMode = mode;
