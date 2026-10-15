@@ -3174,6 +3174,19 @@
         modal.classList.add('flex');
       }
       launchBrandConfetti();
+
+      // Sync with Decoupled Backend Coupon Precedence Engine
+      if (window.LouLouBackendClient && window.LouLouBackendClient.evaluateCouponQuote) {
+        const cartSummary = evaluateCartDiscounts();
+        window.LouLouBackendClient.evaluateCouponQuote({
+          actionType: 'CATEGORY_COUPON_UNLOCKED',
+          clickedCouponCode: cleanCode,
+          categoryKey: catKey,
+          categoryLabel,
+          candidateCoupons: resolution.candidates,
+          grossSubtotalCents: Math.round(cartSummary.grossSubtotalUsd * 100)
+        });
+      }
     }
 
     function closeDiscountUnlockedModal() {
@@ -3630,13 +3643,32 @@
     });
 
     window.LouLouBackendClient = {
-      apiVersion: '2026-10-14.v1',
+      apiVersion: '2026-10-15.v1',
       endpoints: {
         search: '/webhook/loulou-api-search',
         feedback: '/webhook/loulou-api-feedback',
+        couponQuote: '/webhook/loulou-api-coupon-quote',
         errorTrace: '/webhook/loulou-api-error-trace',
         newsletter: '/webhook/loulou-newsletter-signup',
         cookieConsent: '/webhook/loulou-cookie-consent'
+      },
+      async evaluateCouponQuote(payload) {
+        try {
+          const res = await fetch(this.endpoints.couponQuote, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              ...payload,
+              _hp_website_url: '',
+              formRenderedAtMs: PAGE_LOAD_TS
+            })
+          });
+          if (!res.ok) return null;
+          return await res.json();
+        } catch (err) {
+          reportErrorWithGitTrace(err, 'headless.couponQuote.client', 'apps/backend/src/modules/discounts/coupon-precedence-engine.ts', 98);
+          return null;
+        }
       },
       async querySmartSearch(rawQuery) {
         try {
