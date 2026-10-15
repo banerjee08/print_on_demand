@@ -135,4 +135,51 @@ CREATE TABLE IF NOT EXISTS loulou_security_waf_events (
 CREATE INDEX IF NOT EXISTS idx_waf_events_ip_time
     ON loulou_security_waf_events(visitor_ip, created_at DESC);
 
+-- -----------------------------------------------------------------------------
+-- 6. Production Non-Stacking Discount Coupons & Checkout Levy Audit Ledger
+--    Enforces at the Database + Backend level:
+--      • Category-associated coupon unlocking (e.g., 25% LULLUXE25, 10% BRIDAL10)
+--      • Strict Non-Stacking Rule (stackable = FALSE; max_coupons_per_order = 1)
+--      • Highest-Discount Precedence (25% LULLUXE25 always supersedes 10% BRIDAL10)
+-- -----------------------------------------------------------------------------
+CREATE TABLE IF NOT EXISTS loulou_discount_coupons (
+    coupon_code VARCHAR(32) PRIMARY KEY,
+    discount_percent INTEGER NOT NULL CHECK (discount_percent > 0 AND discount_percent <= 90),
+    title VARCHAR(160) NOT NULL,
+    associated_category_key VARCHAR(64) NOT NULL DEFAULT 'ALL',
+    associated_category_label VARCHAR(160) NOT NULL,
+    stackable BOOLEAN NOT NULL DEFAULT FALSE CHECK (stackable = FALSE),
+    active BOOLEAN NOT NULL DEFAULT TRUE,
+    confetti_palette_hex TEXT[] NOT NULL DEFAULT ARRAY['#9E4758', '#883647', '#C8A97E', '#B4833E', '#2D5A43', '#F9EFF1', '#FAF8F5'],
+    updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
+INSERT INTO loulou_discount_coupons (
+    coupon_code, discount_percent, title, associated_category_key, associated_category_label, stackable, active
+) VALUES
+    ('LULLUXE25', 25, '25% OFF Autumn & Holiday Launch Edit', 'ALL', 'Autumn & Holiday Sitewide Collection', FALSE, TRUE),
+    ('BRIDAL10', 10, '10% OFF Bridal & Engagement Concierge', 'BRIDAL', 'Bridal & Engagement Suite', FALSE, TRUE)
+ON CONFLICT (coupon_code) DO UPDATE SET
+    discount_percent = EXCLUDED.discount_percent,
+    title = EXCLUDED.title,
+    associated_category_label = EXCLUDED.associated_category_label,
+    stackable = FALSE,
+    updated_at = NOW();
+
+CREATE TABLE IF NOT EXISTS loulou_checkout_coupon_audit (
+    audit_id BIGSERIAL PRIMARY KEY,
+    action_type VARCHAR(32) NOT NULL, -- 'CATEGORY_COUPON_UNLOCKED', 'CHECKOUT_LEVY_EVALUATED'
+    associated_category_key VARCHAR(64) NOT NULL DEFAULT 'ALL',
+    associated_category_label VARCHAR(160) NOT NULL,
+    candidate_coupons TEXT[] NOT NULL DEFAULT '{}',
+    winning_coupon VARCHAR(32),
+    winning_discount_percent INTEGER NOT NULL DEFAULT 0,
+    superseded_coupons TEXT[] NOT NULL DEFAULT '{}',
+    gross_subtotal_cents INTEGER NOT NULL DEFAULT 0,
+    discount_levy_cents INTEGER NOT NULL DEFAULT 0,
+    net_checkout_cents INTEGER NOT NULL DEFAULT 0,
+    visitor_key VARCHAR(320),
+    created_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
+);
+
 COMMIT;
