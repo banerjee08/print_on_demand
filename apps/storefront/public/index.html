@@ -521,8 +521,8 @@
       <!-- Center: Sliding 3-Quote Viewport (Zero Decorative Icons) -->
       <div class="flex-1 text-center overflow-hidden h-[26px] relative flex items-center justify-center">
         <div id="ann-quote-0" class="announcement-slide absolute inset-0 flex items-center justify-center opacity-100 translate-y-0">
-          <a href="#tabs-nosto-section" onclick="togglePromoCode(); return false;" class="hover:underline font-bold truncate">
-            AUTUMN &amp; HOLIDAY EDIT: <strong class="text-[#883647] underline mono-font">25% OFF</strong> SITEWIDE WITH CODE <strong class="mono-font text-[#883647]">LULLUXE25</strong> — <span class="lowercase text-[#883647] underline">apply now</span>
+          <a href="#tabs-nosto-section" onclick="unlockCategoryDiscount('LULLUXE25', 'ALL'); return false;" class="hover:underline font-bold truncate">
+            AUTUMN &amp; HOLIDAY EDIT: <strong class="text-[#883647] underline mono-font">25% OFF</strong> SITEWIDE WITH CODE <strong class="mono-font text-[#883647]">LULLUXE25</strong> — <span class="lowercase text-[#883647] underline">unlock 25% off now</span>
           </a>
         </div>
         <div id="ann-quote-1" class="announcement-slide absolute inset-0 flex items-center justify-center opacity-0 translate-y-4 pointer-events-none">
@@ -531,8 +531,8 @@
           </a>
         </div>
         <div id="ann-quote-2" class="announcement-slide absolute inset-0 flex items-center justify-center opacity-0 translate-y-4 pointer-events-none">
-          <a href="#" onclick="openBridalModal(true); return false;" class="hover:underline font-bold truncate">
-            NEWLY ENGAGED OR PLANNING A BACH? UNLOCK <strong class="text-[#883647] underline">10% OFF</strong> + FREE 48H CUSTOM EMBROIDERY
+          <a href="#" onclick="unlockCategoryDiscount('BRIDAL10', 'BRIDAL'); return false;" class="hover:underline font-bold truncate">
+            NEWLY ENGAGED OR PLANNING A BACH? UNLOCK <strong class="text-[#883647] underline">10% OFF</strong> (<strong class="mono-font text-[#883647]">BRIDAL10</strong>) + FREE 48H CUSTOM EMBROIDERY
           </a>
         </div>
       </div>
@@ -642,7 +642,7 @@
               <button onclick="switchMainPageView('home'); filterCategory('BRIDAL')" class="pl-dropdown-link">
                 <span>Bachelorette Weekend Crewnecks &amp; Totes</span>
               </button>
-              <button onclick="openBridalModal(true)" class="pl-dropdown-link font-bold text-[#883647] border-t border-[#E6E1DA] mt-1 pt-2.5">
+              <button onclick="unlockCategoryDiscount('BRIDAL10', 'BRIDAL')" class="pl-dropdown-link font-bold text-[#883647] border-t border-[#E6E1DA] mt-1 pt-2.5">
                 <span>Unlock 10% Off Bridal Party Code (BRIDAL10) →</span>
               </button>
             </div>
@@ -672,7 +672,7 @@
           </div>
 
           <!-- 5. Sale -->
-          <button onclick="switchMainPageView('home'); toggleSaleFilter()" class="pl-nav-link !text-[#883647] !font-bold">
+          <button onclick="switchMainPageView('home'); unlockCategoryDiscount('LULLUXE25', 'ALL')" class="pl-nav-link !text-[#883647] !font-bold">
             Sale (-25%)
           </button>
         </nav>
@@ -832,10 +832,10 @@
               the autumn &amp; social<br/><span class="italic font-normal text-[#883647]">club edit</span>
             </h1>
             <p class="text-[16px] sm:text-[17px] text-[#3F3F46] leading-relaxed mb-6 max-w-md">
-              Heavyweight embroidered crewnecks, cozy quarter-zips &amp; pocket midi dresses — <strong>25% OFF</strong> with code <span class="mono-font font-bold text-[#883647] underline">LULLUXE25</span>.
+              Heavyweight embroidered crewnecks, cozy quarter-zips &amp; pocket midi dresses — <button type="button" onclick="unlockCategoryDiscount('LULLUXE25', 'CLUB_FLEECE')" class="font-bold text-[#883647] underline hover:opacity-80"><strong>25% OFF</strong> with code <span class="mono-font font-bold text-[#883647] underline">LULLUXE25</span></button>.
             </p>
             <div class="flex flex-wrap items-center justify-center gap-3.5">
-              <button onclick="togglePromoCode(); setTabAndScroll('new');" class="pl-btn">
+              <button onclick="unlockCategoryDiscount('LULLUXE25', 'CLUB_FLEECE')" class="pl-btn">
                 shop new arrivals (-25% off)
               </button>
               <button onclick="filterCategory('CLUB_FLEECE')" class="pl-btn pl-btn-outline">
@@ -866,7 +866,7 @@
               Custom "Future Mrs." pearl chenille sweatshirts, bridesmaid proposal boxes &amp; free 48h monogramming.
             </p>
             <div class="flex flex-wrap items-center justify-center gap-3.5">
-              <button onclick="enterBridalSection()" class="pl-btn">
+              <button onclick="unlockCategoryDiscount('BRIDAL10', 'BRIDAL')" class="pl-btn">
                 unlock bridal 10% off
               </button>
               <button onclick="switchMainPageView('pdp')" class="pl-btn pl-btn-outline">
@@ -949,14 +949,14 @@
           </div>
 
           <!-- Category Tile 3: Bridal & Engagement Suite -->
-          <div onclick="enterBridalSection()" class="pl-info-card">
+          <div onclick="unlockCategoryDiscount('BRIDAL10', 'BRIDAL')" class="pl-info-card">
             <div class="img-box">
               <img src="https://images.unsplash.com/photo-1522673607200-164d1b6ce486?auto=format&fit=crop&w=800&q=85" alt="Bridal & Engagement Suite" />
               <span class="absolute top-3 left-3 bg-[#9E4758] text-white px-3 py-1 text-[12.5px] font-bold uppercase tracking-wider">10% Off Bride Crew</span>
             </div>
             <div class="card-caption bg-white border-t border-[#E6E1DA]">
               <div class="title text-[#18181B]">bridal &amp; engagement</div>
-              <div class="small-label text-[#883647]">Future Mrs. &amp; Bach • Shop →</div>
+              <div class="small-label text-[#883647]">Future Mrs. &amp; Bach (10% Off) • Unlock →</div>
             </div>
           </div>
 
@@ -990,9 +990,12 @@
               most-loved best sellers
             </button>
           </div>
-          <div class="flex flex-wrap items-center gap-3">
-            <button onclick="togglePromoCode()" id="grid-promo-pill" class="text-[14.5px] font-bold px-4 py-2.5 border border-[#9E4758] bg-white text-[#883647] hover:bg-[#9E4758] hover:text-white transition">
-              Code <span class="mono-font">LULLUXE25</span> (-25%): <span id="promo-status-label">OFF</span>
+          <div class="flex flex-wrap items-center gap-2.5">
+            <button onclick="unlockCategoryDiscount('LULLUXE25', state.category || 'ALL')" id="grid-promo-pill" class="text-[14px] font-bold px-4 py-2.5 border border-[#9E4758] bg-white text-[#883647] hover:bg-[#9E4758] hover:text-white transition">
+              Unlock 25% OFF (<span class="mono-font">LULLUXE25</span>): <span id="promo-status-label">CLICK TO UNLOCK</span>
+            </button>
+            <button onclick="unlockCategoryDiscount('BRIDAL10', 'BRIDAL')" id="grid-bridal-pill" class="text-[14px] font-bold px-4 py-2.5 border border-[#B4833E] bg-white text-[#8A5F22] hover:bg-[#B4833E] hover:text-white transition">
+              Unlock 10% OFF Bridal (<span class="mono-font">BRIDAL10</span>): <span id="bridal-status-label">CLICK TO UNLOCK</span>
             </button>
             <button onclick="filterCategory('ALL')" id="tab-cta-link" class="pl-btn">
               view all styles
@@ -1316,10 +1319,15 @@
             <h2 id="pdp-title" class="heading-font text-[32px] sm:text-[38px] font-semibold text-[#18181B] leading-[1.15] mb-3">
               "Matcha &amp; Pilates Social Club" Heavyweight Crewneck
             </h2>
-            <div class="flex flex-wrap items-baseline gap-3 mb-1.5">
+            <div class="flex flex-wrap items-baseline gap-2.5 mb-2">
               <span id="pdp-price" class="text-[26px] font-bold text-[#883647]">$58.00</span>
               <span id="pdp-compare-price" class="text-[17px] text-[#52525B] line-through">$74.00</span>
-              <span class="pl-badge !border-[#9E4758] !text-[#883647] !font-bold">25% OFF W/ CODE LULLUXE25</span>
+              <button type="button" onclick="unlockCategoryDiscount('LULLUXE25', (PRODUCTS.find(x => x.id === state.selectedPdpId) || PRODUCTS[0]).category, state.selectedPdpId)" class="pl-badge !border-[#9E4758] !text-[#883647] !font-bold hover:!bg-[#9E4758] hover:!text-white cursor-pointer transition">
+                Unlock 25% OFF (LULLUXE25)
+              </button>
+              <button type="button" onclick="unlockCategoryDiscount('BRIDAL10', (PRODUCTS.find(x => x.id === state.selectedPdpId) || PRODUCTS[0]).category, state.selectedPdpId)" class="pl-badge !border-[#B4833E] !text-[#8A5F22] !font-bold hover:!bg-[#B4833E] hover:!text-white cursor-pointer transition">
+                Unlock 10% OFF (BRIDAL10)
+              </button>
             </div>
             <p class="text-[14.5px] text-[#3F3F46]">
               or 4 interest-free payments of <strong id="pdp-bnpl-price" class="text-[#18181B]">$14.50</strong> with <strong>Afterpay</strong> or <strong>Shop Pay</strong>
@@ -1592,12 +1600,133 @@
       <div class="flex-1 overflow-y-auto p-5 space-y-4">
         <div id="cart-items-list" class="space-y-4"></div>
       </div>
-      <div class="p-5 border-t border-[#E6E1DA] bg-white space-y-3">
-        <div class="flex justify-between text-[15.5px]">
-          <span class="text-[#3F3F46] font-medium">Subtotal</span>
-          <span id="cart-subtotal" class="font-bold text-[18px] text-[#18181B]">$106.00</span>
+      <div class="p-5 border-t border-[#E6E1DA] bg-white space-y-2.5">
+        <div id="cart-coupon-precedence-banner" class="hidden p-3 bg-[#F9EFF1] border border-[#9E4758]/40 text-[13px] space-y-1">
+          <div class="flex items-center justify-between font-bold text-[#883647]">
+            <span id="cart-winning-coupon-title">Winning Coupon Levied: LULLUXE25 (-25%)</span>
+            <span id="cart-winning-coupon-badge" class="mono-font px-2 py-0.5 bg-[#9E4758] text-white text-[11.5px]">HIGHEST WINS</span>
+          </div>
+          <p id="cart-coupon-precedence-note" class="text-[12.5px] text-[#3F3F46] leading-snug"></p>
+        </div>
+        <div class="flex justify-between text-[14.5px]">
+          <span class="text-[#52525B] font-medium">Gross Subtotal (Before Coupon)</span>
+          <span id="cart-gross-subtotal" class="font-semibold text-[#52525B] line-through">$112.00</span>
+        </div>
+        <div id="cart-discount-row" class="flex justify-between text-[14.5px] text-[#234734] font-bold">
+          <span id="cart-discount-label">Coupon Levied at Checkout (None)</span>
+          <span id="cart-discount-amount">-$0.00</span>
+        </div>
+        <div class="flex justify-between text-[16px] pt-2 border-t border-[#E6E1DA]">
+          <span class="text-[#18181B] font-bold">Checkout Total (Levied)</span>
+          <span id="cart-subtotal" class="font-bold text-[20px] text-[#883647]">$112.00</span>
         </div>
         <button onclick="completeCheckout()" class="pl-btn w-full !py-4 !text-[16px]">proceed to express checkout</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       BRAND-COLORED CONFETTI CANVAS OVERLAY
+       Colors: Botanical Rose (#9E4758), Deep Rose (#883647), Blush (#F9EFF1),
+               Champagne Gold (#C8A97E), Forest Sage (#2D5A43), Alabaster (#FAF8F5)
+       ========================================================================= -->
+  <canvas id="brand-confetti-canvas" class="fixed inset-0 pointer-events-none z-[70] hidden"></canvas>
+
+  <!-- =========================================================================
+       CONGRATULATIONS DISCOUNT UNLOCKED MODAL (Category-Aware + Confetti + Non-Stacking Rule)
+       ========================================================================= -->
+  <div id="discount-unlocked-modal-backdrop" class="fixed inset-0 z-[65] bg-black/65 hidden items-center justify-center p-4">
+    <div class="bg-white max-w-lg w-full border-2 border-[#9E4758] shadow-2xl relative overflow-hidden">
+      <button onclick="closeDiscountUnlockedModal()" aria-label="Close Discount Modal" class="absolute top-3.5 right-3.5 w-8 h-8 bg-white border border-[#C8C0B4] flex items-center justify-center font-bold text-[#18181B] hover:text-[#883647]">✕</button>
+      <div class="color-scheme-pink px-6 py-6 text-center border-b border-[#E6E1DA]">
+        <span id="unlocked-modal-kicker" class="mono-font text-[12.5px] font-bold uppercase tracking-[0.2em] px-3 py-1 bg-[#9E4758] text-white inline-block mb-2.5">
+          VIP CATEGORY OFFER UNLOCKED
+        </span>
+        <h3 id="unlocked-modal-heading" class="heading-font text-[34px] sm:text-[38px] font-semibold text-[#18181B] leading-[1.12]">
+          Congratulations! You Unlocked 25% OFF
+        </h3>
+        <p id="unlocked-modal-category" class="text-[15.5px] font-bold text-[#883647] mt-2">
+          Category Associated: Heavyweight Crewnecks &amp; Social Club Fleece
+        </p>
+      </div>
+
+      <div class="p-6 space-y-4 text-[14.5px]">
+        <!-- Coupon Ticket Box -->
+        <div class="p-4 bg-[#FAF8F5] border-2 border-dashed border-[#9E4758] flex flex-wrap items-center justify-between gap-3">
+          <div>
+            <span class="text-[12px] font-bold uppercase tracking-widest text-[#52525B] block">ATTACHED CHECKOUT COUPON CODE</span>
+            <span id="unlocked-modal-code" class="mono-font text-[24px] font-bold text-[#883647]">LULLUXE25</span>
+          </div>
+          <div class="text-right">
+            <span id="unlocked-modal-pct-badge" class="px-3.5 py-1.5 bg-[#2D5A43] text-white font-bold text-[14px] inline-block">
+              25% OFF LEVIED AT CHECKOUT
+            </span>
+          </div>
+        </div>
+
+        <!-- Product Context (if clicked on a specific product card/PDP) -->
+        <div id="unlocked-modal-product-box" class="hidden p-3.5 bg-white border border-[#E6E1DA] flex items-center justify-between gap-3">
+          <div>
+            <span class="text-[12px] font-bold uppercase tracking-wider text-[#52525B] block">Coupon Attached To Product:</span>
+            <span id="unlocked-modal-product-title" class="font-bold text-[#18181B] text-[14.5px]"></span>
+          </div>
+          <span class="text-[12.5px] font-bold text-[#234734] whitespace-nowrap">✓ Attached</span>
+        </div>
+
+        <!-- Non-Stacking Highest-Coupon Rule Notice -->
+        <div class="p-3.5 bg-[#F9EFF1] border border-[#9E4758]/35 text-[13.5px] text-[#18181B] space-y-1">
+          <div class="font-bold text-[#883647]">Checkout Coupon Precedence Rule (No Two Coupons Combine):</div>
+          <p id="unlocked-modal-rule-text" class="text-[#3F3F46] leading-relaxed">
+            Whenever you add a product with this coupon attached, the discount is automatically levied on checkout. No two discount coupons can be applied together — if a product has both <strong>25% (LULLUXE25)</strong> and <strong>10% (BRIDAL10)</strong> coupon codes, the higher <strong>25% coupon (LULLUXE25)</strong> will automatically be levied!
+          </p>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-2.5 pt-1">
+          <button id="unlocked-modal-primary-btn" type="button" onclick="applyUnlockedModalPrimaryAction()" class="pl-btn flex-1 !py-3.5">
+            shop category with discount →
+          </button>
+          <button type="button" onclick="testBothCouponsPrecedenceDemo()" class="pl-btn pl-btn-outline !py-3.5 !px-4 !text-[13px]" title="Attaches both 25% and 10% to a product in your bag to verify that 25% wins at checkout">
+            test 25% + 10% rule in bag
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       EXPRESS CHECKOUT & SINGLE-WINNER COUPON LEVY SUMMARY MODAL
+       ========================================================================= -->
+  <div id="checkout-summary-modal-backdrop" class="fixed inset-0 z-[65] bg-black/65 hidden items-center justify-center p-4">
+    <div class="bg-white max-w-xl w-full border-2 border-[#18181B] shadow-2xl relative overflow-hidden">
+      <button onclick="closeCheckoutSummaryModal()" aria-label="Close Checkout Modal" class="absolute top-3.5 right-3.5 w-8 h-8 bg-white border border-[#C8C0B4] flex items-center justify-center font-bold text-[#18181B]">✕</button>
+      <div class="color-scheme-pink px-6 py-5 border-b border-[#E6E1DA]">
+        <span class="mono-font text-[12px] font-bold uppercase tracking-[0.18em] text-[#883647] block">LOULOU &amp; LUXE EXPRESS CHECKOUT</span>
+        <h3 class="heading-font text-[32px] font-semibold text-[#18181B] leading-tight">Checkout Discount Levy &amp; Order Summary</h3>
+      </div>
+      <div class="p-6 space-y-4 text-[14.5px] max-h-[80vh] overflow-y-auto">
+        <div id="checkout-modal-items" class="space-y-2.5 divide-y divide-[#E6E1DA]"></div>
+        <div id="checkout-modal-precedence-box" class="p-3.5 bg-[#ECFDF3] border border-[#2D5A43]/40 text-[#18181B] text-[13.5px]"></div>
+        <div class="p-4 bg-[#FAF8F5] border border-[#C8C0B4] space-y-2">
+          <div class="flex justify-between text-[#52525B]">
+            <span>Gross Merchandise Subtotal</span>
+            <span id="checkout-modal-gross" class="font-semibold line-through">$0.00</span>
+          </div>
+          <div class="flex justify-between text-[#234734] font-bold">
+            <span id="checkout-modal-discount-label">Winning Coupon Levied</span>
+            <span id="checkout-modal-discount-amt">-$0.00</span>
+          </div>
+          <div class="flex justify-between text-[#3F3F46]">
+            <span>US &amp; Canada Express Shipping</span>
+            <span id="checkout-modal-shipping" class="font-semibold">FREE</span>
+          </div>
+          <div class="flex justify-between text-[18px] font-bold text-[#18181B] pt-2 border-t border-[#C8C0B4]">
+            <span>Final Total Charged</span>
+            <span id="checkout-modal-net" class="text-[#883647]">$0.00</span>
+          </div>
+        </div>
+        <button type="button" onclick="confirmFinalCheckoutOrder()" class="pl-btn w-full !py-4 !text-[16px]">
+          confirm &amp; place order (48h dispatch)
+        </button>
       </div>
     </div>
   </div>
@@ -2062,6 +2191,31 @@
       }
     ];
 
+    const COUPON_DEFINITIONS = {
+      LULLUXE25: {
+        code: 'LULLUXE25',
+        percent: 25,
+        title: '25% OFF Autumn & Holiday Launch Edit',
+        defaultCategory: 'ALL'
+      },
+      BRIDAL10: {
+        code: 'BRIDAL10',
+        percent: 10,
+        title: '10% OFF Bridal & Engagement Concierge',
+        defaultCategory: 'BRIDAL'
+      }
+    };
+
+    const CATEGORY_LABELS = {
+      ALL: 'Autumn & Holiday Sitewide Collection',
+      CLUB_FLEECE: 'Heavyweight Crewnecks & Social Club Fleece',
+      OUTERWEAR: 'Quarter-Zips, Sherpa & Cozy Outerwear',
+      DRESSES: 'Autumn, Holiday & Wedding Guest Dresses',
+      BRIDAL: 'Bridal & Engagement Suite',
+      MONOGRAM_GIFTS: 'Custom Monogram Holiday Gifts',
+      GRAPHICS: 'Game Day & Everyday Graphic Tees'
+    };
+
     let state = {
       currentPageView: 'home', // 'home' | 'wishlist' | 'pdp'
       theme: 'light',          // 'light' | 'dark'
@@ -2074,6 +2228,9 @@
       sortMode: 'FEATURED',
       promoActive: false,
       bridalDiscountActive: false,
+      unlockedCoupons: [],     // ['LULLUXE25', 'BRIDAL10']
+      productCoupons: {},      // { [productId]: ['LULLUXE25', 'BRIDAL10'] }
+      lastUnlockedContext: null,
       selectedPdpId: 'p1',
       selectedColorIdx: 0,
       selectedSize: 'M',
@@ -2083,8 +2240,8 @@
       customerEmail: '',
       wishlist: ['p1', 'p2'],
       cart: [
-        { productId: 'p1', size: 'M', color: 'Oatmeal Heather', monogram: 'L & L', qty: 1 },
-        { productId: 'p4', size: 'ONE SIZE', color: 'Natural & Botanical Rose', monogram: 'S L B', qty: 1 }
+        { productId: 'p1', size: 'M', color: 'Oatmeal Heather', monogram: 'L & L', qty: 1, attachedCoupons: [] },
+        { productId: 'p4', size: 'ONE SIZE', color: 'Natural & Botanical Rose', monogram: 'S L B', qty: 1, attachedCoupons: [] }
       ]
     };
 
@@ -2407,13 +2564,43 @@
     }
 
     /* =========================================================================
-       7. CATALOG, CARDS & MONOGRAM STUDIO ENGINE
+       7. CATALOG, CARDS, MONOGRAM STUDIO & SINGLE-WINNER COUPON ENGINE
        ========================================================================= */
-    function formatMoney(usdAmount) {
+    function getProductCandidateCoupons(productId) {
+      const set = new Set(state.unlockedCoupons || []);
+      const pList = (state.productCoupons && state.productCoupons[productId]) || [];
+      pList.forEach(c => set.add(c));
+      if (state.promoActive) set.add('LULLUXE25');
+      if (state.bridalDiscountActive) set.add('BRIDAL10');
+      return Array.from(set).filter(c => COUPON_DEFINITIONS[c]).sort((a, b) => COUPON_DEFINITIONS[b].percent - COUPON_DEFINITIONS[a].percent);
+    }
+
+    function resolveWinningCouponFromList(codes) {
+      const valid = (codes || [])
+        .map(c => String(c || '').toUpperCase())
+        .filter((c, idx, arr) => COUPON_DEFINITIONS[c] && arr.indexOf(c) === idx)
+        .sort((a, b) => COUPON_DEFINITIONS[b].percent - COUPON_DEFINITIONS[a].percent);
+      const winner = valid.length > 0 ? valid[0] : null;
+      const winnerPercent = winner ? COUPON_DEFINITIONS[winner].percent : 0;
+      const superseded = valid.slice(1);
+      return {
+        candidates: valid,
+        winner,
+        winnerPercent,
+        superseded
+      };
+    }
+
+    function formatMoney(usdAmount, customDiscountPct) {
       const cfg = CURRENCY_RATES[state.currency] || CURRENCY_RATES.USD;
-      let mult = 1.0;
-      if (state.promoActive) mult = 0.75;
-      else if (state.bridalDiscountActive) mult = 0.90;
+      let pct = 0;
+      if (typeof customDiscountPct === 'number') {
+        pct = customDiscountPct;
+      } else {
+        const res = resolveWinningCouponFromList(state.unlockedCoupons);
+        pct = res.winnerPercent;
+      }
+      const mult = (100 - pct) / 100;
       return `${cfg.symbol}${(usdAmount * cfg.rate * mult).toFixed(2)}`;
     }
     function formatRawMoney(usdAmount) {
@@ -2423,6 +2610,11 @@
 
     function renderPinkLilyCard(p) {
       const wished = state.wishlist.includes(p.id);
+      const itemCoupons = getProductCandidateCoupons(p.id);
+      const res = resolveWinningCouponFromList(itemCoupons);
+      const has25 = res.candidates.includes('LULLUXE25');
+      const has10 = res.candidates.includes('BRIDAL10');
+
       const swatchesHtml = p.colors.map((c, idx) => `
         <button
           onclick="event.stopPropagation(); selectProductForPdp('${p.id}', ${idx})"
@@ -2441,6 +2633,13 @@
         >${sz}</button>
       `).join('');
 
+      let promoStatusLine = '';
+      if (has25 && has10) {
+        promoStatusLine = `<div class="text-[11.5px] font-bold text-[#234734] mt-1">✓ LULLUXE25 (-25%) Levied • BRIDAL10 (-10%) Superseded</div>`;
+      } else if (res.winner) {
+        promoStatusLine = `<div class="text-[11.5px] font-bold text-[#234734] mt-1">✓ ${res.winner} (-${res.winnerPercent}% OFF) Attached for Checkout</div>`;
+      }
+
       return `
         <div class="pl-product-card group">
           <div class="image-container" onclick="selectProductForPdp('${p.id}', 0)">
@@ -2457,7 +2656,11 @@
 
             <!-- Top-Right Badge -->
             <div class="absolute top-2.5 right-2.5 z-10">
-              <span class="pl-badge ${state.saleOnly ? 'pl-badge-sale' : ''}">${state.saleOnly ? 'Sale -25%' : p.badge}</span>
+              <span
+                onclick="event.stopPropagation(); unlockCategoryDiscount('LULLUXE25', '${p.category}', '${p.id}')"
+                class="pl-badge cursor-pointer ${has25 ? 'pl-badge-sale' : ''}"
+                title="Click to unlock discount for this category"
+              >${has25 ? '25% OFF Unlocked' : p.badge}</span>
             </div>
 
             <!-- Model Height/Size Fit Badge (Upgraded to 12.5px for legibility) -->
@@ -2487,12 +2690,26 @@
               <span class="text-[#8A5F22]">★★★★★</span> (${p.reviews} reviews)
             </div>
             <div class="pl-price">
-              <span class="offer">${formatMoney(p.basePrice)}</span>
+              <span class="offer">${formatMoney(p.basePrice, res.winnerPercent)}</span>
               <span class="compare">${formatRawMoney(p.compareAt)}</span>
             </div>
-            <div class="pl-product-promos">
-              ${state.promoActive ? '25% off code LULLUXE25 applied' : '25% off w/ code LULLUXE25'}
+            <div class="pl-product-promos flex flex-wrap items-center gap-1.5 mt-1">
+              <button
+                type="button"
+                onclick="event.stopPropagation(); unlockCategoryDiscount('LULLUXE25', '${p.category}', '${p.id}')"
+                class="px-2 py-0.5 text-[11.5px] font-bold border transition ${has25 ? 'bg-[#9E4758] text-white border-[#9E4758]' : 'bg-[#F9EFF1] text-[#883647] border-[#9E4758]/40 hover:bg-[#9E4758] hover:text-white'}"
+              >
+                ${has25 ? '✓ 25% LULLUXE25' : 'Unlock 25% OFF'}
+              </button>
+              <button
+                type="button"
+                onclick="event.stopPropagation(); unlockCategoryDiscount('BRIDAL10', '${p.category}', '${p.id}')"
+                class="px-2 py-0.5 text-[11.5px] font-bold border transition ${has10 ? 'bg-[#B4833E] text-white border-[#B4833E]' : 'bg-[#FAF8F5] text-[#8A5F22] border-[#B4833E]/50 hover:bg-[#B4833E] hover:text-white'}"
+              >
+                ${has10 ? '✓ 10% BRIDAL10' : 'Unlock 10% OFF'}
+              </button>
             </div>
+            ${promoStatusLine}
             <div class="flex items-center gap-2 mt-2">${swatchesHtml}</div>
           </div>
         </div>
@@ -2741,9 +2958,260 @@
       });
       btn.className = 'bridal-role-btn py-2.5 px-3 border border-[#9E4758] bg-[#9E4758] text-white font-semibold';
     }
+    /* =========================================================================
+       BRAND-COLORED CONFETTI ENGINE & CATEGORY-AWARE DISCOUNT UNLOCK MODAL
+       Brand Palette: Botanical Rose (#9E4758, #883647), Soft Blush (#F9EFF1),
+                      Champagne Gold (#C8A97E, #B4833E), Forest Sage (#2D5A43),
+                      Warm Alabaster (#FAF8F5)
+       ========================================================================= */
+    let __confettiAnimId = null;
+    function launchBrandConfetti() {
+      const canvas = document.getElementById('brand-confetti-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      canvas.classList.remove('hidden');
+
+      const brandColors = [
+        '#9E4758', // Botanical Rose
+        '#883647', // Deep Botanical Rose
+        '#C8A97E', // Champagne Gold
+        '#B4833E', // Warm Heritage Gold
+        '#2D5A43', // Forest Sage
+        '#F9EFF1', // Soft Blush Rose
+        '#FAF8F5'  // Warm Alabaster
+      ];
+
+      const particles = Array.from({ length: 145 }, (_, i) => {
+        const fromLeft = i % 2 === 0;
+        return {
+          x: fromLeft ? canvas.width * (0.15 + Math.random() * 0.25) : canvas.width * (0.60 + Math.random() * 0.25),
+          y: canvas.height * 0.35 + (Math.random() - 0.5) * 80,
+          vx: (Math.random() - 0.5) * 16,
+          vy: -(Math.random() * 14 + 6),
+          gravity: 0.34 + Math.random() * 0.12,
+          drag: 0.985,
+          w: 7 + Math.random() * 7,
+          h: 4 + Math.random() * 6,
+          shape: i % 4 === 0 ? 'circle' : 'ribbon',
+          color: brandColors[i % brandColors.length],
+          rotation: Math.random() * Math.PI * 2,
+          vRot: (Math.random() - 0.5) * 0.24,
+          opacity: 1
+        };
+      });
+
+      if (__confettiAnimId) cancelAnimationFrame(__confettiAnimId);
+      const startTs = performance.now();
+
+      function frame(now) {
+        const elapsed = now - startTs;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        let activeCount = 0;
+
+        for (const pt of particles) {
+          pt.vx *= pt.drag;
+          pt.vy = pt.vy * pt.drag + pt.gravity;
+          pt.x += pt.vx;
+          pt.y += pt.vy;
+          pt.rotation += pt.vRot;
+          if (elapsed > 2300) {
+            pt.opacity = Math.max(0, 1 - (elapsed - 2300) / 1100);
+          }
+          if (pt.y < canvas.height + 40 && pt.opacity > 0.02) {
+            activeCount++;
+            ctx.save();
+            ctx.globalAlpha = pt.opacity;
+            ctx.translate(pt.x, pt.y);
+            ctx.rotate(pt.rotation);
+            ctx.fillStyle = pt.color;
+            if (pt.shape === 'circle') {
+              ctx.beginPath();
+              ctx.arc(0, 0, pt.w * 0.45, 0, Math.PI * 2);
+              ctx.fill();
+            } else {
+              ctx.fillRect(-pt.w / 2, -pt.h / 2, pt.w, pt.h);
+            }
+            ctx.restore();
+          }
+        }
+
+        if (activeCount > 0 && elapsed < 3500) {
+          __confettiAnimId = requestAnimationFrame(frame);
+        } else {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          canvas.classList.add('hidden');
+        }
+      }
+      __confettiAnimId = requestAnimationFrame(frame);
+    }
+
+    function updateDiscountPillsToolbarUI() {
+      const has25 = (state.unlockedCoupons || []).includes('LULLUXE25') || state.promoActive;
+      const has10 = (state.unlockedCoupons || []).includes('BRIDAL10') || state.bridalDiscountActive;
+      const lbl25 = document.getElementById('promo-status-label');
+      const lbl10 = document.getElementById('bridal-status-label');
+      if (lbl25) {
+        lbl25.textContent = has25 ? 'UNLOCKED (-25% LEVIED)' : 'CLICK TO UNLOCK';
+      }
+      if (lbl10) {
+        lbl10.textContent = has10 ? (has25 ? 'UNLOCKED (SUPERSEDED BY 25%)' : 'UNLOCKED (-10% LEVIED)') : 'CLICK TO UNLOCK';
+      }
+    }
+
+    function unlockCategoryDiscount(couponCode, categoryKey, productId) {
+      const cleanCode = COUPON_DEFINITIONS[couponCode] ? couponCode : 'LULLUXE25';
+      const def = COUPON_DEFINITIONS[cleanCode];
+      const catKey = (categoryKey && CATEGORY_LABELS[categoryKey]) ? categoryKey : def.defaultCategory;
+      const categoryLabel = CATEGORY_LABELS[catKey] || CATEGORY_LABELS.ALL;
+      const matchedProduct = productId ? PRODUCTS.find(x => x.id === productId) : null;
+
+      if (!state.unlockedCoupons.includes(cleanCode)) {
+        state.unlockedCoupons.push(cleanCode);
+      }
+      if (cleanCode === 'LULLUXE25') state.promoActive = true;
+      if (cleanCode === 'BRIDAL10') state.bridalDiscountActive = true;
+
+      if (matchedProduct) {
+        if (!state.productCoupons[matchedProduct.id]) {
+          state.productCoupons[matchedProduct.id] = [];
+        }
+        if (!state.productCoupons[matchedProduct.id].includes(cleanCode)) {
+          state.productCoupons[matchedProduct.id].push(cleanCode);
+        }
+      }
+
+      // Attach to matching items already in the cart
+      state.cart.forEach(item => {
+        const itemProd = PRODUCTS.find(x => x.id === item.productId);
+        if (!item.attachedCoupons) item.attachedCoupons = [];
+        if (
+          (!matchedProduct && (catKey === 'ALL' || (itemProd && itemProd.category === catKey))) ||
+          (matchedProduct && item.productId === matchedProduct.id)
+        ) {
+          if (!item.attachedCoupons.includes(cleanCode)) {
+            item.attachedCoupons.push(cleanCode);
+          }
+        }
+      });
+
+      state.lastUnlockedContext = {
+        code: cleanCode,
+        percent: def.percent,
+        categoryKey: catKey,
+        categoryLabel,
+        productId: matchedProduct ? matchedProduct.id : null
+      };
+
+      // Update Congratulations Modal Content
+      const headingEl = document.getElementById('unlocked-modal-heading');
+      const catEl = document.getElementById('unlocked-modal-category');
+      const codeEl = document.getElementById('unlocked-modal-code');
+      const pctBadgeEl = document.getElementById('unlocked-modal-pct-badge');
+      const prodBox = document.getElementById('unlocked-modal-product-box');
+      const prodTitle = document.getElementById('unlocked-modal-product-title');
+      const ruleText = document.getElementById('unlocked-modal-rule-text');
+      const primaryBtn = document.getElementById('unlocked-modal-primary-btn');
+
+      if (headingEl) {
+        headingEl.textContent = `Congratulations! You Unlocked ${def.percent}% OFF`;
+      }
+      if (catEl) {
+        catEl.textContent = `Category Associated: ${categoryLabel}`;
+      }
+      if (codeEl) {
+        codeEl.textContent = cleanCode;
+      }
+
+      const candidateCodes = matchedProduct
+        ? getProductCandidateCoupons(matchedProduct.id)
+        : state.unlockedCoupons;
+      const resolution = resolveWinningCouponFromList(candidateCodes);
+
+      if (pctBadgeEl) {
+        if (resolution.candidates.length > 1) {
+          pctBadgeEl.textContent = `${resolution.winner} (-${resolution.winnerPercent}% OFF) WINS AT CHECKOUT`;
+        } else {
+          pctBadgeEl.textContent = `${def.percent}% OFF LEVIED AT CHECKOUT`;
+        }
+      }
+
+      if (prodBox && prodTitle) {
+        if (matchedProduct) {
+          prodBox.classList.remove('hidden');
+          prodTitle.textContent = `${matchedProduct.title} (Attached: ${resolution.candidates.join(' + ')} → ${resolution.winner} -${resolution.winnerPercent}% Levied)`;
+        } else {
+          prodBox.classList.add('hidden');
+        }
+      }
+
+      if (ruleText) {
+        if (resolution.candidates.includes('LULLUXE25') && resolution.candidates.includes('BRIDAL10')) {
+          ruleText.innerHTML = `You have unlocked both <strong>25% OFF (LULLUXE25)</strong> and <strong>10% OFF (BRIDAL10)</strong>. Because no two discount coupons can be applied together, the higher <strong>25% OFF (LULLUXE25)</strong> coupon is automatically levied at checkout!`;
+        } else {
+          ruleText.innerHTML = `Whenever you add a product from <strong>${categoryLabel}</strong> with coupon <strong>${cleanCode} (-${def.percent}% OFF)</strong> attached, the discount is automatically levied at checkout. No two discount coupons can be combined — if a product has both 25% and 10% coupons, the higher <strong>25% OFF</strong> coupon is always levied!`;
+        }
+      }
+
+      if (primaryBtn) {
+        if (matchedProduct) {
+          primaryBtn.textContent = `add "${matchedProduct.title.slice(0, 26)}..." with ${resolution.winner} (-${resolution.winnerPercent}%) to bag →`;
+        } else {
+          primaryBtn.textContent = `shop ${categoryLabel.toLowerCase()} (-${resolution.winnerPercent}% off) →`;
+        }
+      }
+
+      updateDiscountPillsToolbarUI();
+      renderCatalog();
+      renderPdp();
+      renderCart();
+
+      // Open Modal & Throw Brand-Colored Confetti!
+      const modal = document.getElementById('discount-unlocked-modal-backdrop');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      launchBrandConfetti();
+    }
+
+    function closeDiscountUnlockedModal() {
+      const modal = document.getElementById('discount-unlocked-modal-backdrop');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function applyUnlockedModalPrimaryAction() {
+      const ctx = state.lastUnlockedContext;
+      closeDiscountUnlockedModal();
+      if (ctx && ctx.productId) {
+        quickAddById(ctx.productId);
+      } else if (ctx && ctx.categoryKey) {
+        filterCategory(ctx.categoryKey);
+      }
+    }
+
+    function testBothCouponsPrecedenceDemo() {
+      const ctx = state.lastUnlockedContext;
+      const targetProdId = (ctx && ctx.productId) || 'p2';
+      state.productCoupons[targetProdId] = ['LULLUXE25', 'BRIDAL10'];
+      if (!state.unlockedCoupons.includes('LULLUXE25')) state.unlockedCoupons.push('LULLUXE25');
+      if (!state.unlockedCoupons.includes('BRIDAL10')) state.unlockedCoupons.push('BRIDAL10');
+      state.promoActive = true;
+      state.bridalDiscountActive = true;
+
+      closeDiscountUnlockedModal();
+      const p = PRODUCTS.find(x => x.id === targetProdId) || PRODUCTS[1];
+      addItemToCart(p.id, p.sizes.includes('M') ? 'M' : p.sizes[0], p.colors[0].name, p.defaultMonogram, ['LULLUXE25', 'BRIDAL10']);
+      launchBrandConfetti();
+      showToast('Attached BOTH 25% (LULLUXE25) & 10% (BRIDAL10) — Higher 25% Coupon Levied at Checkout!');
+    }
+
     async function submitBridalConcierge(e) {
       e.preventDefault();
-      state.bridalDiscountActive = true;
       const email = document.getElementById('bridal-email').value.trim();
       try {
         localStorage.setItem('loulou_bridal_concierge_v1', JSON.stringify({ expiresAt: Date.now() + 30 * 86400000 }));
@@ -2760,26 +3228,16 @@
         }).catch(() => {});
       } catch (err) {}
       dismissBridalModalForToday();
-      renderCatalog();
-      renderCart();
-      showToast('Code BRIDAL10 (10% OFF) unlocked & applied!');
+      unlockCategoryDiscount('BRIDAL10', 'BRIDAL');
     }
 
     function togglePromoCode() {
-      state.promoActive = !state.promoActive;
-      document.getElementById('promo-status-label').textContent = state.promoActive ? 'ON (-25%)' : 'OFF';
-      renderCatalog();
-      renderPdp();
-      renderCart();
-      showToast(state.promoActive ? 'Code LULLUXE25 (-25% OFF) applied to all styles!' : 'Promo code removed.');
+      unlockCategoryDiscount('LULLUXE25', state.category || 'ALL');
     }
 
     function toggleSaleFilter() {
       state.saleOnly = !state.saleOnly;
-      state.promoActive = state.saleOnly;
-      document.getElementById('promo-status-label').textContent = state.promoActive ? 'ON (-25%)' : 'OFF';
-      renderCatalog();
-      scrollToElement('tabs-nosto-section');
+      unlockCategoryDiscount('LULLUXE25', 'ALL');
     }
 
     function addSelectedPdpToCart() {
@@ -2796,18 +3254,58 @@
       const p = PRODUCTS.find(x => x.id === productId) || PRODUCTS[0];
       addItemToCart(p.id, size, p.colors[0].name, p.defaultMonogram);
     }
-    function addItemToCart(productId, size, color, monogram) {
+    function addItemToCart(productId, size, color, monogram, explicitCoupons) {
       const p = PRODUCTS.find(x => x.id === productId) || PRODUCTS[0];
+      const candidateCoupons = Array.from(new Set([
+        ...(explicitCoupons || []),
+        ...getProductCandidateCoupons(productId)
+      ]));
       const existing = state.cart.find(i => i.productId === productId && i.size === size && i.color === color && i.monogram === monogram);
-      if (existing) existing.qty += 1;
-      else state.cart.push({ productId, size, color, monogram, qty: 1 });
+      if (existing) {
+        existing.qty += 1;
+        existing.attachedCoupons = Array.from(new Set([...(existing.attachedCoupons || []), ...candidateCoupons]));
+      } else {
+        state.cart.push({
+          productId,
+          size,
+          color,
+          monogram,
+          qty: 1,
+          attachedCoupons: candidateCoupons
+        });
+      }
       if (window.LouLouBackendClient) {
         window.LouLouBackendClient.sendLearningFeedback('ADD_TO_CART', p.sku, state.searchQuery || p.category);
       }
+      updateDiscountPillsToolbarUI();
+      renderCatalog();
       renderCart();
       toggleCartDrawer(true);
-      showToast('Added to your LouLou & Luxe bag!');
+      const res = resolveWinningCouponFromList(candidateCoupons);
+      if (res.winner && res.superseded.length > 0) {
+        showToast(`Added to Bag! Winning coupon ${res.winner} (-${res.winnerPercent}%) levied over ${res.superseded.join(', ')}.`);
+      } else if (res.winner) {
+        showToast(`Added to Bag with coupon ${res.winner} (-${res.winnerPercent}% OFF) levied at checkout!`);
+      } else {
+        showToast('Added to your LouLou & Luxe bag!');
+      }
     }
+
+    function toggleCartItemCoupon(idx, couponCode) {
+      const item = state.cart[idx];
+      if (!item) return;
+      if (!item.attachedCoupons) item.attachedCoupons = [];
+      if (item.attachedCoupons.includes(couponCode)) {
+        item.attachedCoupons = item.attachedCoupons.filter(c => c !== couponCode);
+      } else {
+        item.attachedCoupons.push(couponCode);
+        const p = PRODUCTS.find(x => x.id === item.productId) || PRODUCTS[0];
+        unlockCategoryDiscount(couponCode, p.category, p.id);
+        return;
+      }
+      renderCart();
+    }
+
     function removeCartItem(idx) {
       state.cart.splice(idx, 1);
       renderCart();
@@ -2817,44 +3315,244 @@
       if (state.cart[idx].qty <= 0) removeCartItem(idx);
       else renderCart();
     }
+
+    function evaluateCartDiscounts() {
+      const allCodesSet = new Set(state.unlockedCoupons || []);
+      state.cart.forEach(item => {
+        (item.attachedCoupons || []).forEach(c => allCodesSet.add(c));
+        getProductCandidateCoupons(item.productId).forEach(c => allCodesSet.add(c));
+      });
+      const globalResolution = resolveWinningCouponFromList(Array.from(allCodesSet));
+
+      let grossSubtotalUsd = 0;
+      let totalDiscountUsd = 0;
+
+      const evaluatedItems = state.cart.map((item, idx) => {
+        const p = PRODUCTS.find(x => x.id === item.productId) || PRODUCTS[0];
+        const grossLineUsd = p.basePrice * item.qty;
+        grossSubtotalUsd += grossLineUsd;
+
+        const itemCandidateSet = new Set([
+          ...(item.attachedCoupons || []),
+          ...getProductCandidateCoupons(item.productId)
+        ]);
+        const itemRes = resolveWinningCouponFromList(Array.from(itemCandidateSet));
+
+        // Enforce single highest coupon across item & checkout (no two coupons ever combine)
+        const winningCoupon = itemRes.winner;
+        const winningPercent = itemRes.winnerPercent;
+        const supersededCoupons = itemRes.superseded;
+
+        const lineDiscountUsd = winningPercent > 0 ? (grossLineUsd * winningPercent) / 100 : 0;
+        const netLineUsd = grossLineUsd - lineDiscountUsd;
+        totalDiscountUsd += lineDiscountUsd;
+
+        return {
+          idx,
+          item,
+          product: p,
+          grossLineUsd,
+          lineDiscountUsd,
+          netLineUsd,
+          candidates: itemRes.candidates,
+          winningCoupon,
+          winningPercent,
+          supersededCoupons
+        };
+      });
+
+      const netSubtotalUsd = grossSubtotalUsd - totalDiscountUsd;
+      return {
+        evaluatedItems,
+        grossSubtotalUsd,
+        totalDiscountUsd,
+        netSubtotalUsd,
+        globalWinner: globalResolution.winner,
+        globalWinnerPercent: globalResolution.winnerPercent,
+        globalSuperseded: globalResolution.superseded,
+        globalCandidates: globalResolution.candidates
+      };
+    }
+
     function renderCart() {
       const totalCount = state.cart.reduce((sum, i) => sum + i.qty, 0);
       document.getElementById('cart-count-badge').textContent = totalCount;
       document.getElementById('drawer-count').textContent = totalCount;
 
-      let subtotalUsd = 0;
-      const listHtml = state.cart.map((item, idx) => {
-        const p = PRODUCTS.find(x => x.id === item.productId) || PRODUCTS[0];
-        subtotalUsd += p.basePrice * item.qty;
+      const summary = evaluateCartDiscounts();
+
+      const listHtml = summary.evaluatedItems.map(entry => {
+        const { idx, item, product: p, grossLineUsd, netLineUsd, candidates, winningCoupon, winningPercent, supersededCoupons } = entry;
+        const has25 = candidates.includes('LULLUXE25');
+        const has10 = candidates.includes('BRIDAL10');
+
+        let couponBadgeHtml = '';
+        if (winningCoupon && supersededCoupons.length > 0) {
+          couponBadgeHtml = `
+            <div class="mt-1.5 p-2 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[11.5px] leading-snug">
+              <div class="font-bold text-[#234734]">✓ Winning Coupon Levied: ${winningCoupon} (-${winningPercent}% OFF)</div>
+              <div class="text-[#52525B]">Superseded: <span class="line-through">${supersededCoupons.join(', ')} (-10%)</span> (Highest discount wins)</div>
+            </div>
+          `;
+        } else if (winningCoupon) {
+          couponBadgeHtml = `
+            <div class="mt-1.5 px-2 py-1 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[11.5px] font-bold text-[#234734]">
+              ✓ Coupon Attached: ${winningCoupon} (-${winningPercent}% OFF Levied at Checkout)
+            </div>
+          `;
+        }
+
         return `
-          <div class="flex gap-3.5 pb-3.5 border-b border-[#E6E1DA]">
+          <div class="flex gap-3.5 pb-4 border-b border-[#E6E1DA]">
             <img src="${p.image}" alt="${p.title.replace(/"/g, '&quot;')}" class="w-16 h-24 object-cover flex-shrink-0 border border-[#C8C0B4]" />
             <div class="flex-1 text-[14.5px]">
               <div class="flex justify-between items-start gap-2">
                 <span class="font-bold text-[#18181B] leading-snug">${p.title}</span>
                 <button onclick="removeCartItem(${idx})" aria-label="Remove Item" class="text-[#52525B] hover:text-[#883647] font-bold">✕</button>
               </div>
-              <p class="text-[13.5px] text-[#3F3F46] mt-0.5">${item.color} • Size ${item.size}</p>
-              ${item.monogram && item.monogram !== 'NONE' ? `<p class="text-[13px] font-bold text-[#883647]">Monogram: "${item.monogram}"</p>` : ''}
+              <p class="text-[13px] text-[#3F3F46] mt-0.5">${item.color} • Size ${item.size}</p>
+              ${item.monogram && item.monogram !== 'NONE' ? `<p class="text-[12.5px] font-bold text-[#883647]">Monogram: "${item.monogram}"</p>` : ''}
+
+              <!-- Interactive Per-Item Coupon Toggles (Test 25% vs 10% Non-Stacking Rule) -->
+              <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
+                <button
+                  type="button"
+                  onclick="toggleCartItemCoupon(${idx}, 'LULLUXE25')"
+                  class="px-2 py-0.5 text-[11px] font-bold border transition ${has25 ? 'bg-[#9E4758] text-white border-[#9E4758]' : 'bg-white text-[#883647] border-[#9E4758]/40'}"
+                >${has25 ? '✓ 25% LULLUXE25' : '+ Attach 25% (LULLUXE25)'}</button>
+                <button
+                  type="button"
+                  onclick="toggleCartItemCoupon(${idx}, 'BRIDAL10')"
+                  class="px-2 py-0.5 text-[11px] font-bold border transition ${has10 ? 'bg-[#B4833E] text-white border-[#B4833E]' : 'bg-white text-[#8A5F22] border-[#B4833E]/50'}"
+                >${has10 ? '✓ 10% BRIDAL10' : '+ Attach 10% (BRIDAL10)'}</button>
+              </div>
+
+              ${couponBadgeHtml}
+
               <div class="flex items-center justify-between mt-2">
                 <div class="flex items-center border border-[#C8C0B4]">
                   <button onclick="updateQty(${idx}, -1)" aria-label="Decrease Quantity" class="px-2.5 py-0.5 font-bold text-[#18181B]">-</button>
                   <span class="px-2.5 text-[13.5px] font-bold text-[#18181B]">${item.qty}</span>
                   <button onclick="updateQty(${idx}, 1)" aria-label="Increase Quantity" class="px-2.5 py-0.5 font-bold text-[#18181B]">+</button>
                 </div>
-                <span class="font-bold text-[#883647]">${formatMoney(p.basePrice * item.qty)}</span>
+                <div class="text-right">
+                  ${winningPercent > 0 ? `<span class="text-[12.5px] text-[#52525B] line-through mr-1.5">${formatRawMoney(grossLineUsd)}</span>` : ''}
+                  <span class="font-bold text-[#883647]">${formatRawMoney(netLineUsd)}</span>
+                </div>
               </div>
             </div>
           </div>
         `;
       }).join('');
+
       document.getElementById('cart-items-list').innerHTML = listHtml || '<p class="text-center py-6 text-[#52525B]">Your shopping bag is currently empty.</p>';
-      document.getElementById('cart-subtotal').textContent = formatMoney(subtotalUsd);
+
+      const grossEl = document.getElementById('cart-gross-subtotal');
+      const discRow = document.getElementById('cart-discount-row');
+      const discLbl = document.getElementById('cart-discount-label');
+      const discAmt = document.getElementById('cart-discount-amount');
+      const subEl = document.getElementById('cart-subtotal');
+      const precBanner = document.getElementById('cart-coupon-precedence-banner');
+      const precTitle = document.getElementById('cart-winning-coupon-title');
+      const precNote = document.getElementById('cart-coupon-precedence-note');
+
+      if (grossEl) grossEl.textContent = formatRawMoney(summary.grossSubtotalUsd);
+      if (subEl) subEl.textContent = formatRawMoney(summary.netSubtotalUsd);
+
+      if (summary.globalWinner && summary.totalDiscountUsd > 0) {
+        if (discLbl) {
+          discLbl.textContent = summary.globalSuperseded.length > 0
+            ? `Winning Coupon Levied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`
+            : `Coupon Levied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`;
+        }
+        if (discAmt) discAmt.textContent = `-${formatRawMoney(summary.totalDiscountUsd)}`;
+        if (precBanner && precTitle && precNote) {
+          precBanner.classList.remove('hidden');
+          precTitle.textContent = `Active Checkout Coupon: ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)`;
+          precNote.textContent = summary.globalSuperseded.length > 0
+            ? `Both 25% (LULLUXE25) and 10% (BRIDAL10) were selected. Per our Single-Coupon Rule, no two coupons combine — the higher ${summary.globalWinnerPercent}% discount (${summary.globalWinner}) is automatically levied!`
+            : `Coupon ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF) is attached to your bag and levied on checkout.`;
+        }
+      } else {
+        if (discLbl) discLbl.textContent = 'Coupon Levied at Checkout (Click 25% or 10% to attach)';
+        if (discAmt) discAmt.textContent = '-$0.00';
+        if (precBanner) precBanner.classList.add('hidden');
+      }
     }
 
     function completeCheckout() {
-      showToast('Order Confirmed! Queued for 48-hour North American dispatch.');
+      const summary = evaluateCartDiscounts();
+      const itemsBox = document.getElementById('checkout-modal-items');
+      const precBox = document.getElementById('checkout-modal-precedence-box');
+      const grossEl = document.getElementById('checkout-modal-gross');
+      const discLbl = document.getElementById('checkout-modal-discount-label');
+      const discAmt = document.getElementById('checkout-modal-discount-amt');
+      const netEl = document.getElementById('checkout-modal-net');
+
+      if (itemsBox) {
+        itemsBox.innerHTML = summary.evaluatedItems.map(entry => `
+          <div class="py-2.5 flex items-center justify-between gap-3">
+            <div>
+              <div class="font-bold text-[#18181B]">${entry.product.title} (×${entry.item.qty})</div>
+              <div class="text-[12.5px] text-[#3F3F46]">
+                Category: ${CATEGORY_LABELS[entry.product.category] || entry.product.category}
+                ${entry.winningCoupon ? ` • <strong class="text-[#234734]">Coupon Levied: ${entry.winningCoupon} (-${entry.winningPercent}%)</strong>` : ''}
+                ${entry.supersededCoupons.length > 0 ? ` • <span class="text-[#883647]">Superseded: ${entry.supersededCoupons.join(', ')}</span>` : ''}
+              </div>
+            </div>
+            <div class="text-right whitespace-nowrap">
+              ${entry.winningPercent > 0 ? `<span class="text-[12.5px] text-[#52525B] line-through block">${formatRawMoney(entry.grossLineUsd)}</span>` : ''}
+              <span class="font-bold text-[#883647]">${formatRawMoney(entry.netLineUsd)}</span>
+            </div>
+          </div>
+        `).join('');
+      }
+
+      if (precBox) {
+        if (summary.globalWinner && summary.globalSuperseded.length > 0) {
+          precBox.innerHTML = `<strong>Single-Coupon Highest Precedence Enforced:</strong> Your selection included both <strong>25% OFF (LULLUXE25)</strong> and <strong>10% OFF (BRIDAL10)</strong>. Because two discount coupons cannot be applied together, the higher <strong>25% OFF (LULLUXE25)</strong> coupon was automatically levied on your checkout total.`;
+        } else if (summary.globalWinner) {
+          precBox.innerHTML = `<strong>Coupon Levied at Checkout:</strong> Code <strong>${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)</strong> has been applied to your order.`;
+        } else {
+          precBox.innerHTML = `No discount coupon attached yet. Tip: Click any <strong>25% OFF</strong> or <strong>10% OFF</strong> badge on the storefront to unlock and attach a category discount!`;
+        }
+      }
+
+      if (grossEl) grossEl.textContent = formatRawMoney(summary.grossSubtotalUsd);
+      if (discLbl) {
+        discLbl.textContent = summary.globalWinner
+          ? `Winning Coupon Levied (${summary.globalWinner} -${summary.globalWinnerPercent}%)`
+          : 'Discount Coupon Levied';
+      }
+      if (discAmt) discAmt.textContent = `-${formatRawMoney(summary.totalDiscountUsd)}`;
+      if (netEl) netEl.textContent = formatRawMoney(summary.netSubtotalUsd);
+
       toggleCartDrawer(false);
+      const modal = document.getElementById('checkout-summary-modal-backdrop');
+      if (modal) {
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+      }
+      launchBrandConfetti();
+    }
+
+    function closeCheckoutSummaryModal() {
+      const modal = document.getElementById('checkout-summary-modal-backdrop');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+      }
+    }
+
+    function confirmFinalCheckoutOrder() {
+      const summary = evaluateCartDiscounts();
+      closeCheckoutSummaryModal();
+      launchBrandConfetti();
+      showToast(
+        summary.globalWinner
+          ? `Order Confirmed with ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)! Total Charged: ${formatRawMoney(summary.netSubtotalUsd)}.`
+          : `Order Confirmed! Queued for 48-hour North American dispatch.`
+      );
     }
     function toggleCartDrawer(open) {
       const el = document.getElementById('cart-drawer-backdrop');
