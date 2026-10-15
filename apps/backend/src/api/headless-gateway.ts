@@ -27,6 +27,13 @@ import {
   normalizeSearchQuery,
   rankCatalogWithLearnedFeedback,
 } from '../modules/search/adaptive-llm-search';
+import {
+  type CategoryCouponUnlockResponse,
+  type CheckoutDiscountResolution,
+  type CheckoutLineItemInput,
+  evaluateCheckoutWithHighestCouponRule,
+  unlockCategoryCouponInBackend,
+} from '../modules/discounts/coupon-precedence-engine';
 
 const THIS_FILE = 'apps/backend/src/api/headless-gateway.ts';
 
@@ -127,4 +134,31 @@ export function prepareSearchFeedbackUpsert(params: {
       ? sanitizeAndGuardAiInput(params.userComment, 'SEARCH_QUERY')
       : '',
   };
+}
+
+/**
+ * Endpoint 3: `POST /api/v1/discounts/unlock`
+ * Backend-owned Category Discount Unlock & Brand Confetti trigger.
+ */
+export function executeHeadlessCouponUnlock(params: {
+  clickedCouponCode: string;
+  categoryKey?: string;
+  existingUnlockedCoupons?: readonly string[];
+}): CategoryCouponUnlockResponse {
+  return unlockCategoryCouponInBackend(params);
+}
+
+/**
+ * Endpoint 4: `POST /api/v1/checkout/coupon-quote`
+ * Authoritative Backend Checkout Discount Levy calculation enforcing the
+ * Single-Winner Non-Stacking Precedence Rule (e.g., 25% `LULLUXE25` wins over 10% `BRIDAL10`).
+ */
+export function executeHeadlessCheckoutCouponQuote(params: {
+  items: CheckoutLineItemInput[];
+  sessionUnlockedCoupons?: string[];
+}): CheckoutDiscountResolution {
+  return evaluateCheckoutWithHighestCouponRule(
+    params.items,
+    params.sessionUnlockedCoupons || []
+  );
 }
