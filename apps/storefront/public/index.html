@@ -1038,15 +1038,15 @@
         </div>
 
         <!-- Self-Learning AI Search & Synonym Expansion Feedback Banner (Hidden until search active) -->
-        <div id="ai-search-learning-banner" class="hidden mb-5 p-3.5 bg-[#F9EFF1] border border-[#9E4758]/40 flex flex-wrap items-center justify-between gap-3 text-[13.5px]">
+        <div id="ai-search-learning-banner" class="hidden mb-5 p-3.5 bg-[#F9EFF1] border-2 border-[#FF0000] flex flex-wrap items-center justify-between gap-3 text-[13.5px]">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="mono-font font-bold uppercase text-[11.5px] px-2 py-0.5 bg-[#9E4758] text-white">Smart Boutique Search</span>
-            <span id="ai-search-expansion-text" class="text-[#18181B] font-medium">Showing curated matches for your search</span>
+            <span class="mono-font font-bold uppercase text-[11.5px] px-2 py-0.5 bg-[#FF0000] text-white">Test: Adaptive AI Search</span>
+            <span id="ai-search-expansion-text" class="text-[#18181B] font-medium">Learned synonym expansion active</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-[#52525B] text-[12.5px]">Did these results match what you were looking for?</span>
-            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_UP')" class="px-2.5 py-1 border border-[#2D5A43] text-[#234734] font-bold text-[12px] hover:bg-[#2D5A43] hover:text-white transition">Yes</button>
-            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_DOWN')" class="px-2.5 py-1 border border-[#883647] text-[#883647] font-bold text-[12px] hover:bg-[#883647] hover:text-white transition">Not quite</button>
+            <span class="text-[#FF0000] font-bold text-[12.5px]">Test LLM Feedback:</span>
+            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_UP')" class="px-2.5 py-1 border-2 border-[#FF0000] bg-white text-[#18181B] font-bold text-[12px] hover:bg-[#FF0000] hover:text-white transition">Test: 👍 Helpful (+Reward)</button>
+            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_DOWN')" class="px-2.5 py-1 border-2 border-[#FF0000] bg-white text-[#18181B] font-bold text-[12px] hover:bg-[#FF0000] hover:text-white transition">Test: 👎 Miss (-Adjust)</button>
           </div>
         </div>
 
@@ -1673,11 +1673,11 @@
           <span class="text-[12.5px] font-bold text-[#234734] whitespace-nowrap">✓ Attached</span>
         </div>
 
-        <!-- Customer-Friendly Boutique Offer Note -->
-        <div class="p-3.5 bg-[#F9EFF1] border border-[#9E4758]/35 text-[13.5px] text-[#18181B] space-y-1">
-          <div class="font-bold text-[#883647]">Automatic Checkout Savings:</div>
+        <!-- Test & Edge-Case Non-Stacking Precedence Rule Callout (Bright Red Border) -->
+        <div class="p-3.5 bg-[#FFF5F5] border-2 border-[#FF0000] text-[13.5px] text-[#18181B] space-y-1">
+          <div class="font-bold text-[#FF0000]">Test — Single-Coupon Highest Precedence Rule:</div>
           <p id="unlocked-modal-rule-text" class="text-[#3F3F46] leading-relaxed">
-            Your discount is automatically applied at checkout when you add items from this collection to your bag. Limit one promotional code per order — if multiple offers are unlocked, we automatically apply whichever gives you the highest savings!
+            Whenever you add a product with this discount coupon attached, the discount is automatically levied at checkout. <strong>No two discount coupons can be applied together</strong> — if a product has both 25% and 10% coupons, the higher <strong>25% OFF</strong> coupon will be levied!
           </p>
         </div>
 
@@ -1685,8 +1685,13 @@
           <button id="unlocked-modal-primary-btn" type="button" onclick="applyUnlockedModalPrimaryAction()" class="pl-btn flex-1 !py-3.5">
             shop collection with discount →
           </button>
-          <button type="button" onclick="closeDiscountUnlockedModal()" class="pl-btn pl-btn-outline !py-3.5 !px-5 !text-[13.5px]">
-            continue browsing
+          <button
+            type="button"
+            onclick="testBothCouponsPrecedenceDemo()"
+            class="px-4 py-3.5 text-[13px] font-bold uppercase tracking-wider bg-white text-[#FF0000] border-2 border-[#FF0000] hover:bg-[#FF0000] hover:text-white transition"
+            title="Test Edge Case: Attach both 25% (LULLUXE25) and 10% (BRIDAL10) to verify 25% wins at checkout"
+          >
+            Test: 25% + 10% Rule in Bag
           </button>
         </div>
       </div>
@@ -2701,6 +2706,21 @@
               >
                 ${promoLabelText}
               </button>
+              <!-- Bright Red Border Edge-Case Test Controls -->
+              <div class="mt-2 p-1.5 bg-[#FFF5F5] border-2 border-[#FF0000] flex flex-wrap items-center gap-1.5">
+                <span class="mono-font text-[10.5px] font-bold uppercase px-1.5 py-0.5 bg-[#FF0000] text-white">Test</span>
+                <button
+                  type="button"
+                  onclick="event.stopPropagation(); unlockCategoryDiscount('LULLUXE25', '${p.category}', '${p.id}')"
+                  class="px-1.5 py-0.5 text-[11px] font-bold border border-[#FF0000] bg-white text-[#18181B] hover:bg-[#FF0000] hover:text-white transition"
+                >Test +25% (LULLUXE25)</button>
+                <button
+                  type="button"
+                  onclick="event.stopPropagation(); unlockCategoryDiscount('BRIDAL10', '${p.category}', '${p.id}')"
+                  class="px-1.5 py-0.5 text-[11px] font-bold border border-[#FF0000] bg-white text-[#18181B] hover:bg-[#FF0000] hover:text-white transition"
+                >Test +10% (BRIDAL10)</button>
+                ${res.superseded.length > 0 ? `<span class="text-[10.5px] font-bold text-[#FF0000]">Test: 25% Wins over 10%!</span>` : ''}
+              </div>
             </div>
             <div class="flex items-center gap-2 mt-2">${swatchesHtml}</div>
           </div>
@@ -3140,9 +3160,9 @@
 
       if (ruleText) {
         if (resolution.candidates.includes('LULLUXE25') && resolution.candidates.includes('BRIDAL10')) {
-          ruleText.innerHTML = `Your <strong>${categoryLabel}</strong> offer is unlocked! Since offers cannot be combined, we automatically apply your highest discount (<strong>${resolution.winner} — ${resolution.winnerPercent}% OFF</strong>) at checkout so you get the best savings.`;
+          ruleText.innerHTML = `<strong>Test Edge Case Active:</strong> You unlocked both <strong>25% OFF (LULLUXE25)</strong> and <strong>10% OFF (BRIDAL10)</strong>. Because no two discount coupons can be applied together, the higher <strong>25% OFF (LULLUXE25)</strong> coupon is automatically levied at checkout!`;
         } else {
-          ruleText.innerHTML = `Your <strong>${def.percent}% OFF</strong> discount on <strong>${categoryLabel}</strong> is now active and will be automatically applied at checkout when you add items to your bag.`;
+          ruleText.innerHTML = `<strong>Test Rule:</strong> Whenever you add a product from <strong>${categoryLabel}</strong> with coupon <strong>${cleanCode} (-${def.percent}% OFF)</strong> attached, the discount is automatically levied at checkout. No two discount coupons can be combined — if a product has both 25% and 10% coupons, the higher <strong>25% OFF</strong> coupon is always levied!`;
         }
       }
 
@@ -3197,6 +3217,22 @@
       } else if (ctx && ctx.categoryKey) {
         filterCategory(ctx.categoryKey);
       }
+    }
+
+    function testBothCouponsPrecedenceDemo() {
+      const ctx = state.lastUnlockedContext;
+      const targetProdId = (ctx && ctx.productId) || 'p2';
+      state.productCoupons[targetProdId] = ['LULLUXE25', 'BRIDAL10'];
+      if (!state.unlockedCoupons.includes('LULLUXE25')) state.unlockedCoupons.push('LULLUXE25');
+      if (!state.unlockedCoupons.includes('BRIDAL10')) state.unlockedCoupons.push('BRIDAL10');
+      state.promoActive = true;
+      state.bridalDiscountActive = true;
+
+      closeDiscountUnlockedModal();
+      const p = PRODUCTS.find(x => x.id === targetProdId) || PRODUCTS[1];
+      addItemToCart(p.id, p.sizes.includes('M') ? 'M' : p.sizes[0], p.colors[0].name, p.defaultMonogram, ['LULLUXE25', 'BRIDAL10']);
+      launchBrandConfetti();
+      showToast('Test: Attached BOTH 25% (LULLUXE25) & 10% (BRIDAL10) — Higher 25% Coupon Levied at Checkout!');
     }
 
     async function submitBridalConcierge(e) {
@@ -3271,11 +3307,28 @@
       renderCart();
       toggleCartDrawer(true);
       const res = resolveWinningCouponFromList(candidateCoupons);
-      if (res.winner) {
+      if (res.winner && res.superseded.length > 0) {
+        showToast(`Test Edge Case: Winning coupon ${res.winner} (-${res.winnerPercent}%) levied over ${res.superseded.join(', ')}.`);
+      } else if (res.winner) {
         showToast(`Added to Bag with ${res.winner} (${res.winnerPercent}% OFF) applied at checkout!`);
       } else {
         showToast('Added to your LouLou & Luxe bag!');
       }
+    }
+
+    function toggleCartItemCoupon(idx, couponCode) {
+      const item = state.cart[idx];
+      if (!item) return;
+      if (!item.attachedCoupons) item.attachedCoupons = [];
+      if (item.attachedCoupons.includes(couponCode)) {
+        item.attachedCoupons = item.attachedCoupons.filter(c => c !== couponCode);
+      } else {
+        item.attachedCoupons.push(couponCode);
+        const p = PRODUCTS.find(x => x.id === item.productId) || PRODUCTS[0];
+        unlockCategoryDiscount(couponCode, p.category, p.id);
+        return;
+      }
+      renderCart();
     }
 
     function removeCartItem(idx) {
@@ -3354,14 +3407,16 @@
       const summary = evaluateCartDiscounts();
 
       const listHtml = summary.evaluatedItems.map(entry => {
-        const { idx, item, product: p, grossLineUsd, netLineUsd, winningCoupon, winningPercent, supersededCoupons } = entry;
+        const { idx, item, product: p, grossLineUsd, netLineUsd, candidates, winningCoupon, winningPercent, supersededCoupons } = entry;
+        const has25 = candidates.includes('LULLUXE25');
+        const has10 = candidates.includes('BRIDAL10');
 
         let couponBadgeHtml = '';
         if (winningCoupon && supersededCoupons.length > 0) {
           couponBadgeHtml = `
-            <div class="mt-1.5 px-2.5 py-1.5 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[11.5px] leading-snug">
-              <div class="font-bold text-[#234734]">✓ Best Offer Applied: ${winningCoupon} (-${winningPercent}% OFF)</div>
-              <div class="text-[#52525B]">Highest discount automatically applied (cannot combine with ${supersededCoupons.join(', ')})</div>
+            <div class="mt-1.5 px-2.5 py-1.5 bg-[#FFF5F5] border-2 border-[#FF0000] text-[11.5px] leading-snug">
+              <div class="font-bold text-[#FF0000]">Test Edge Case — Winning Coupon Levied: ${winningCoupon} (-${winningPercent}% OFF)</div>
+              <div class="text-[#18181B]">Test Superseded: <span class="line-through">${supersededCoupons.join(', ')} (-10%)</span> (Highest discount wins)</div>
             </div>
           `;
         } else if (winningCoupon) {
@@ -3382,6 +3437,21 @@
               </div>
               <p class="text-[13px] text-[#3F3F46] mt-0.5">${item.color} • Size ${item.size}</p>
               ${item.monogram && item.monogram !== 'NONE' ? `<p class="text-[12.5px] font-bold text-[#883647]">Monogram: "${item.monogram}"</p>` : ''}
+
+              <!-- Bright Red Border Test Controls for Per-Item 25% vs 10% Non-Stacking Rule -->
+              <div class="p-1.5 mt-1.5 bg-[#FFF5F5] border-2 border-[#FF0000] flex flex-wrap items-center gap-1.5">
+                <span class="mono-font text-[10px] font-bold uppercase px-1.5 py-0.5 bg-[#FF0000] text-white">Test</span>
+                <button
+                  type="button"
+                  onclick="toggleCartItemCoupon(${idx}, 'LULLUXE25')"
+                  class="px-2 py-0.5 text-[11px] font-bold border border-[#FF0000] transition ${has25 ? 'bg-[#FF0000] text-white' : 'bg-white text-[#18181B]'}"
+                >${has25 ? 'Test: ✓ 25% LULLUXE25' : 'Test: + Attach 25% (LULLUXE25)'}</button>
+                <button
+                  type="button"
+                  onclick="toggleCartItemCoupon(${idx}, 'BRIDAL10')"
+                  class="px-2 py-0.5 text-[11px] font-bold border border-[#FF0000] transition ${has10 ? 'bg-[#FF0000] text-white' : 'bg-white text-[#18181B]'}"
+                >${has10 ? 'Test: ✓ 10% BRIDAL10' : 'Test: + Attach 10% (BRIDAL10)'}</button>
+              </div>
 
               ${couponBadgeHtml}
 
@@ -3417,15 +3487,16 @@
       if (summary.globalWinner && summary.totalDiscountUsd > 0) {
         if (discLbl) {
           discLbl.textContent = summary.globalSuperseded.length > 0
-            ? `Best Offer Applied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`
+            ? `Test Winning Coupon: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`
             : `Promo Applied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`;
         }
         if (discAmt) discAmt.textContent = `-${formatRawMoney(summary.totalDiscountUsd)}`;
         if (precBanner && precTitle && precNote) {
           precBanner.classList.remove('hidden');
-          precTitle.textContent = `Promo Applied: ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)`;
+          precBanner.className = 'p-3 bg-[#FFF5F5] border-2 border-[#FF0000] text-[13px] space-y-1';
+          precTitle.textContent = `Test Rule — Active Coupon: ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)`;
           precNote.textContent = summary.globalSuperseded.length > 0
-            ? `Your highest unlocked discount (${summary.globalWinner} — ${summary.globalWinnerPercent}% OFF) has been automatically applied to your bag.`
+            ? `Test Edge Case: Both 25% (LULLUXE25) and 10% (BRIDAL10) were selected. No two coupons combine — the higher ${summary.globalWinnerPercent}% discount (${summary.globalWinner}) is automatically levied!`
             : `Code ${summary.globalWinner} (${summary.globalWinnerPercent}% OFF) is applied to your bag for checkout.`;
         }
       } else {
@@ -3451,7 +3522,8 @@
               <div class="font-bold text-[#18181B]">${entry.product.title} (×${entry.item.qty})</div>
               <div class="text-[12.5px] text-[#3F3F46]">
                 ${CATEGORY_LABELS[entry.product.category] || entry.product.category}
-                ${entry.winningCoupon ? ` • <strong class="text-[#234734]">Promo Applied: ${entry.winningCoupon} (-${entry.winningPercent}%)</strong>` : ''}
+                ${entry.winningCoupon ? ` • <strong class="text-[#234734]">Coupon Levied: ${entry.winningCoupon} (-${entry.winningPercent}%)</strong>` : ''}
+                ${entry.supersededCoupons.length > 0 ? ` • <span class="font-bold text-[#FF0000]">Test Superseded: ${entry.supersededCoupons.join(', ')}</span>` : ''}
               </div>
             </div>
             <div class="text-right whitespace-nowrap">
@@ -3463,12 +3535,13 @@
       }
 
       if (precBox) {
+        precBox.className = 'p-3.5 bg-[#FFF5F5] border-2 border-[#FF0000] text-[#18181B] text-[13.5px]';
         if (summary.globalWinner && summary.globalSuperseded.length > 0) {
-          precBox.innerHTML = `<strong>Best Savings Automatically Applied:</strong> Since offers cannot be combined, your highest unlocked discount (<strong>${summary.globalWinner} — ${summary.globalWinnerPercent}% OFF</strong>) has been automatically applied to your order.`;
+          precBox.innerHTML = `<strong class="text-[#FF0000]">Test — Single-Coupon Highest Precedence Enforced:</strong> Your selection included both <strong>25% OFF (LULLUXE25)</strong> and <strong>10% OFF (BRIDAL10)</strong>. Because two discount coupons cannot be applied together, the higher <strong>25% OFF (LULLUXE25)</strong> coupon was automatically levied on your checkout total.`;
         } else if (summary.globalWinner) {
-          precBox.innerHTML = `<strong>Promo Code Applied:</strong> Code <strong>${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)</strong> has been applied to your checkout total.`;
+          precBox.innerHTML = `<strong class="text-[#FF0000]">Test — Coupon Levied at Checkout:</strong> Code <strong>${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)</strong> has been applied to your checkout total.`;
         } else {
-          precBox.innerHTML = `No promo code applied yet. Tip: Click any <strong>25% OFF</strong> or <strong>10% OFF</strong> offer on the storefront to unlock your discount!`;
+          precBox.innerHTML = `<strong class="text-[#FF0000]">Test:</strong> No promo code applied yet. Click any <strong>25% OFF</strong> or <strong>10% OFF</strong> offer on the storefront to unlock your discount!`;
         }
       }
 
