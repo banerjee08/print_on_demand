@@ -1040,13 +1040,13 @@
         <!-- Self-Learning AI Search & Synonym Expansion Feedback Banner (Hidden until search active) -->
         <div id="ai-search-learning-banner" class="hidden mb-5 p-3.5 bg-[#F9EFF1] border border-[#9E4758]/40 flex flex-wrap items-center justify-between gap-3 text-[13.5px]">
           <div class="flex flex-wrap items-center gap-2">
-            <span class="mono-font font-bold uppercase text-[11.5px] px-2 py-0.5 bg-[#9E4758] text-white">Adaptive AI Search</span>
-            <span id="ai-search-expansion-text" class="text-[#18181B] font-medium">Learned synonym expansion active</span>
+            <span class="mono-font font-bold uppercase text-[11.5px] px-2 py-0.5 bg-[#9E4758] text-white">Smart Boutique Search</span>
+            <span id="ai-search-expansion-text" class="text-[#18181B] font-medium">Showing curated matches for your search</span>
           </div>
           <div class="flex items-center gap-2">
-            <span class="text-[#52525B] text-[12.5px]">Did these results match your style?</span>
-            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_UP')" class="px-2.5 py-1 border border-[#2D5A43] text-[#234734] font-bold text-[12px] hover:bg-[#2D5A43] hover:text-white transition">👍 Helpful (+Reward)</button>
-            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_DOWN')" class="px-2.5 py-1 border border-[#883647] text-[#883647] font-bold text-[12px] hover:bg-[#883647] hover:text-white transition">👎 Miss (-Adjust)</button>
+            <span class="text-[#52525B] text-[12.5px]">Did these results match what you were looking for?</span>
+            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_UP')" class="px-2.5 py-1 border border-[#2D5A43] text-[#234734] font-bold text-[12px] hover:bg-[#2D5A43] hover:text-white transition">Yes</button>
+            <button type="button" onclick="submitSearchFeedbackSignal('THUMBS_DOWN')" class="px-2.5 py-1 border border-[#883647] text-[#883647] font-bold text-[12px] hover:bg-[#883647] hover:text-white transition">Not quite</button>
           </div>
         </div>
 
@@ -1603,21 +1603,21 @@
       <div class="p-5 border-t border-[#E6E1DA] bg-white space-y-2.5">
         <div id="cart-coupon-precedence-banner" class="hidden p-3 bg-[#F9EFF1] border border-[#9E4758]/40 text-[13px] space-y-1">
           <div class="flex items-center justify-between font-bold text-[#883647]">
-            <span id="cart-winning-coupon-title">Winning Coupon Levied: LULLUXE25 (-25%)</span>
-            <span id="cart-winning-coupon-badge" class="mono-font px-2 py-0.5 bg-[#9E4758] text-white text-[11.5px]">HIGHEST WINS</span>
+            <span id="cart-winning-coupon-title">Promo Applied: LULLUXE25 (-25%)</span>
+            <span id="cart-winning-coupon-badge" class="mono-font px-2 py-0.5 bg-[#9E4758] text-white text-[11.5px]">BEST OFFER</span>
           </div>
           <p id="cart-coupon-precedence-note" class="text-[12.5px] text-[#3F3F46] leading-snug"></p>
         </div>
         <div class="flex justify-between text-[14.5px]">
-          <span class="text-[#52525B] font-medium">Gross Subtotal (Before Coupon)</span>
+          <span class="text-[#52525B] font-medium">Merchandise Subtotal</span>
           <span id="cart-gross-subtotal" class="font-semibold text-[#52525B] line-through">$112.00</span>
         </div>
         <div id="cart-discount-row" class="flex justify-between text-[14.5px] text-[#234734] font-bold">
-          <span id="cart-discount-label">Coupon Levied at Checkout (None)</span>
+          <span id="cart-discount-label">Promo Discount</span>
           <span id="cart-discount-amount">-$0.00</span>
         </div>
         <div class="flex justify-between text-[16px] pt-2 border-t border-[#E6E1DA]">
-          <span class="text-[#18181B] font-bold">Checkout Total (Levied)</span>
+          <span class="text-[#18181B] font-bold">Estimated Total</span>
           <span id="cart-subtotal" class="font-bold text-[20px] text-[#883647]">$112.00</span>
         </div>
         <button onclick="completeCheckout()" class="pl-btn w-full !py-4 !text-[16px]">proceed to express checkout</button>
@@ -1673,20 +1673,20 @@
           <span class="text-[12.5px] font-bold text-[#234734] whitespace-nowrap">✓ Attached</span>
         </div>
 
-        <!-- Non-Stacking Highest-Coupon Rule Notice -->
+        <!-- Customer-Friendly Boutique Offer Note -->
         <div class="p-3.5 bg-[#F9EFF1] border border-[#9E4758]/35 text-[13.5px] text-[#18181B] space-y-1">
-          <div class="font-bold text-[#883647]">Checkout Coupon Precedence Rule (No Two Coupons Combine):</div>
+          <div class="font-bold text-[#883647]">Automatic Checkout Savings:</div>
           <p id="unlocked-modal-rule-text" class="text-[#3F3F46] leading-relaxed">
-            Whenever you add a product with this coupon attached, the discount is automatically levied on checkout. No two discount coupons can be applied together — if a product has both <strong>25% (LULLUXE25)</strong> and <strong>10% (BRIDAL10)</strong> coupon codes, the higher <strong>25% coupon (LULLUXE25)</strong> will automatically be levied!
+            Your discount is automatically applied at checkout when you add items from this collection to your bag. Limit one promotional code per order — if multiple offers are unlocked, we automatically apply whichever gives you the highest savings!
           </p>
         </div>
 
         <div class="flex flex-col sm:flex-row gap-2.5 pt-1">
           <button id="unlocked-modal-primary-btn" type="button" onclick="applyUnlockedModalPrimaryAction()" class="pl-btn flex-1 !py-3.5">
-            shop category with discount →
+            shop collection with discount →
           </button>
-          <button type="button" onclick="testBothCouponsPrecedenceDemo()" class="pl-btn pl-btn-outline !py-3.5 !px-4 !text-[13px]" title="Attaches both 25% and 10% to a product in your bag to verify that 25% wins at checkout">
-            test 25% + 10% rule in bag
+          <button type="button" onclick="closeDiscountUnlockedModal()" class="pl-btn pl-btn-outline !py-3.5 !px-5 !text-[13.5px]">
+            continue browsing
           </button>
         </div>
       </div>
@@ -1701,18 +1701,18 @@
       <button onclick="closeCheckoutSummaryModal()" aria-label="Close Checkout Modal" class="absolute top-3.5 right-3.5 w-8 h-8 bg-white border border-[#C8C0B4] flex items-center justify-center font-bold text-[#18181B]">✕</button>
       <div class="color-scheme-pink px-6 py-5 border-b border-[#E6E1DA]">
         <span class="mono-font text-[12px] font-bold uppercase tracking-[0.18em] text-[#883647] block">LOULOU &amp; LUXE EXPRESS CHECKOUT</span>
-        <h3 class="heading-font text-[32px] font-semibold text-[#18181B] leading-tight">Checkout Discount Levy &amp; Order Summary</h3>
+        <h3 class="heading-font text-[32px] font-semibold text-[#18181B] leading-tight">Review Your Order &amp; Savings</h3>
       </div>
       <div class="p-6 space-y-4 text-[14.5px] max-h-[80vh] overflow-y-auto">
         <div id="checkout-modal-items" class="space-y-2.5 divide-y divide-[#E6E1DA]"></div>
         <div id="checkout-modal-precedence-box" class="p-3.5 bg-[#ECFDF3] border border-[#2D5A43]/40 text-[#18181B] text-[13.5px]"></div>
         <div class="p-4 bg-[#FAF8F5] border border-[#C8C0B4] space-y-2">
           <div class="flex justify-between text-[#52525B]">
-            <span>Gross Merchandise Subtotal</span>
+            <span>Merchandise Subtotal</span>
             <span id="checkout-modal-gross" class="font-semibold line-through">$0.00</span>
           </div>
           <div class="flex justify-between text-[#234734] font-bold">
-            <span id="checkout-modal-discount-label">Winning Coupon Levied</span>
+            <span id="checkout-modal-discount-label">Promo Discount</span>
             <span id="checkout-modal-discount-amt">-$0.00</span>
           </div>
           <div class="flex justify-between text-[#3F3F46]">
@@ -1720,7 +1720,7 @@
             <span id="checkout-modal-shipping" class="font-semibold">FREE</span>
           </div>
           <div class="flex justify-between text-[18px] font-bold text-[#18181B] pt-2 border-t border-[#C8C0B4]">
-            <span>Final Total Charged</span>
+            <span>Order Total</span>
             <span id="checkout-modal-net" class="text-[#883647]">$0.00</span>
           </div>
         </div>
@@ -2633,11 +2633,11 @@
         >${sz}</button>
       `).join('');
 
-      let promoStatusLine = '';
-      if (has25 && has10) {
-        promoStatusLine = `<div class="text-[11.5px] font-bold text-[#234734] mt-1">✓ LULLUXE25 (-25%) Levied • BRIDAL10 (-10%) Superseded</div>`;
-      } else if (res.winner) {
-        promoStatusLine = `<div class="text-[11.5px] font-bold text-[#234734] mt-1">✓ ${res.winner} (-${res.winnerPercent}% OFF) Attached for Checkout</div>`;
+      const defaultCardCoupon = p.category === 'BRIDAL' ? 'BRIDAL10' : 'LULLUXE25';
+      const defaultCardPct = p.category === 'BRIDAL' ? 10 : 25;
+      let promoLabelText = `${defaultCardPct}% off w/ code ${defaultCardCoupon} — tap to unlock`;
+      if (res.winner) {
+        promoLabelText = `✓ ${res.winnerPercent}% off code ${res.winner} unlocked`;
       }
 
       return `
@@ -2657,10 +2657,10 @@
             <!-- Top-Right Badge -->
             <div class="absolute top-2.5 right-2.5 z-10">
               <span
-                onclick="event.stopPropagation(); unlockCategoryDiscount('LULLUXE25', '${p.category}', '${p.id}')"
-                class="pl-badge cursor-pointer ${has25 ? 'pl-badge-sale' : ''}"
-                title="Click to unlock discount for this category"
-              >${has25 ? '25% OFF Unlocked' : p.badge}</span>
+                onclick="event.stopPropagation(); unlockCategoryDiscount('${defaultCardCoupon}', '${p.category}', '${p.id}')"
+                class="pl-badge cursor-pointer ${res.winner ? 'pl-badge-sale' : ''}"
+                title="Click to unlock offer"
+              >${res.winner ? `${res.winnerPercent}% OFF Unlocked` : p.badge}</span>
             </div>
 
             <!-- Model Height/Size Fit Badge (Upgraded to 12.5px for legibility) -->
@@ -2693,23 +2693,15 @@
               <span class="offer">${formatMoney(p.basePrice, res.winnerPercent)}</span>
               <span class="compare">${formatRawMoney(p.compareAt)}</span>
             </div>
-            <div class="pl-product-promos flex flex-wrap items-center gap-1.5 mt-1">
+            <div class="pl-product-promos">
               <button
                 type="button"
-                onclick="event.stopPropagation(); unlockCategoryDiscount('LULLUXE25', '${p.category}', '${p.id}')"
-                class="px-2 py-0.5 text-[11.5px] font-bold border transition ${has25 ? 'bg-[#9E4758] text-white border-[#9E4758]' : 'bg-[#F9EFF1] text-[#883647] border-[#9E4758]/40 hover:bg-[#9E4758] hover:text-white'}"
+                onclick="event.stopPropagation(); unlockCategoryDiscount('${defaultCardCoupon}', '${p.category}', '${p.id}')"
+                class="text-left underline hover:opacity-80 cursor-pointer font-bold ${res.winner ? 'text-[#234734]' : 'text-[#883647]'}"
               >
-                ${has25 ? '✓ 25% LULLUXE25' : 'Unlock 25% OFF'}
-              </button>
-              <button
-                type="button"
-                onclick="event.stopPropagation(); unlockCategoryDiscount('BRIDAL10', '${p.category}', '${p.id}')"
-                class="px-2 py-0.5 text-[11.5px] font-bold border transition ${has10 ? 'bg-[#B4833E] text-white border-[#B4833E]' : 'bg-[#FAF8F5] text-[#8A5F22] border-[#B4833E]/50 hover:bg-[#B4833E] hover:text-white'}"
-              >
-                ${has10 ? '✓ 10% BRIDAL10' : 'Unlock 10% OFF'}
+                ${promoLabelText}
               </button>
             </div>
-            ${promoStatusLine}
             <div class="flex items-center gap-2 mt-2">${swatchesHtml}</div>
           </div>
         </div>
@@ -3056,7 +3048,7 @@
         lbl25.textContent = has25 ? 'UNLOCKED (-25% LEVIED)' : 'CLICK TO UNLOCK';
       }
       if (lbl10) {
-        lbl10.textContent = has10 ? (has25 ? 'UNLOCKED (SUPERSEDED BY 25%)' : 'UNLOCKED (-10% LEVIED)') : 'CLICK TO UNLOCK';
+        lbl10.textContent = has10 ? (has25 ? 'UNLOCKED (25% APPLIED)' : 'UNLOCKED (-10% APPLIED)') : 'CLICK TO UNLOCK';
       }
     }
 
@@ -3118,7 +3110,7 @@
         headingEl.textContent = `Congratulations! You Unlocked ${def.percent}% OFF`;
       }
       if (catEl) {
-        catEl.textContent = `Category Associated: ${categoryLabel}`;
+        catEl.textContent = `Category Unlocked: ${categoryLabel}`;
       }
       if (codeEl) {
         codeEl.textContent = cleanCode;
@@ -3131,16 +3123,16 @@
 
       if (pctBadgeEl) {
         if (resolution.candidates.length > 1) {
-          pctBadgeEl.textContent = `${resolution.winner} (-${resolution.winnerPercent}% OFF) WINS AT CHECKOUT`;
+          pctBadgeEl.textContent = `${resolution.winnerPercent}% OFF AUTOMATICALLY APPLIED`;
         } else {
-          pctBadgeEl.textContent = `${def.percent}% OFF LEVIED AT CHECKOUT`;
+          pctBadgeEl.textContent = `${def.percent}% OFF APPLIED AT CHECKOUT`;
         }
       }
 
       if (prodBox && prodTitle) {
         if (matchedProduct) {
           prodBox.classList.remove('hidden');
-          prodTitle.textContent = `${matchedProduct.title} (Attached: ${resolution.candidates.join(' + ')} → ${resolution.winner} -${resolution.winnerPercent}% Levied)`;
+          prodTitle.textContent = `${matchedProduct.title} (${resolution.winner} — ${resolution.winnerPercent}% OFF Applied)`;
         } else {
           prodBox.classList.add('hidden');
         }
@@ -3148,17 +3140,17 @@
 
       if (ruleText) {
         if (resolution.candidates.includes('LULLUXE25') && resolution.candidates.includes('BRIDAL10')) {
-          ruleText.innerHTML = `You have unlocked both <strong>25% OFF (LULLUXE25)</strong> and <strong>10% OFF (BRIDAL10)</strong>. Because no two discount coupons can be applied together, the higher <strong>25% OFF (LULLUXE25)</strong> coupon is automatically levied at checkout!`;
+          ruleText.innerHTML = `Your <strong>${categoryLabel}</strong> offer is unlocked! Since offers cannot be combined, we automatically apply your highest discount (<strong>${resolution.winner} — ${resolution.winnerPercent}% OFF</strong>) at checkout so you get the best savings.`;
         } else {
-          ruleText.innerHTML = `Whenever you add a product from <strong>${categoryLabel}</strong> with coupon <strong>${cleanCode} (-${def.percent}% OFF)</strong> attached, the discount is automatically levied at checkout. No two discount coupons can be combined — if a product has both 25% and 10% coupons, the higher <strong>25% OFF</strong> coupon is always levied!`;
+          ruleText.innerHTML = `Your <strong>${def.percent}% OFF</strong> discount on <strong>${categoryLabel}</strong> is now active and will be automatically applied at checkout when you add items to your bag.`;
         }
       }
 
       if (primaryBtn) {
         if (matchedProduct) {
-          primaryBtn.textContent = `add "${matchedProduct.title.slice(0, 26)}..." with ${resolution.winner} (-${resolution.winnerPercent}%) to bag →`;
+          primaryBtn.textContent = `add to bag with ${resolution.winnerPercent}% off →`;
         } else {
-          primaryBtn.textContent = `shop ${categoryLabel.toLowerCase()} (-${resolution.winnerPercent}% off) →`;
+          primaryBtn.textContent = `shop ${categoryLabel.toLowerCase()} (${resolution.winnerPercent}% off) →`;
         }
       }
 
@@ -3205,22 +3197,6 @@
       } else if (ctx && ctx.categoryKey) {
         filterCategory(ctx.categoryKey);
       }
-    }
-
-    function testBothCouponsPrecedenceDemo() {
-      const ctx = state.lastUnlockedContext;
-      const targetProdId = (ctx && ctx.productId) || 'p2';
-      state.productCoupons[targetProdId] = ['LULLUXE25', 'BRIDAL10'];
-      if (!state.unlockedCoupons.includes('LULLUXE25')) state.unlockedCoupons.push('LULLUXE25');
-      if (!state.unlockedCoupons.includes('BRIDAL10')) state.unlockedCoupons.push('BRIDAL10');
-      state.promoActive = true;
-      state.bridalDiscountActive = true;
-
-      closeDiscountUnlockedModal();
-      const p = PRODUCTS.find(x => x.id === targetProdId) || PRODUCTS[1];
-      addItemToCart(p.id, p.sizes.includes('M') ? 'M' : p.sizes[0], p.colors[0].name, p.defaultMonogram, ['LULLUXE25', 'BRIDAL10']);
-      launchBrandConfetti();
-      showToast('Attached BOTH 25% (LULLUXE25) & 10% (BRIDAL10) — Higher 25% Coupon Levied at Checkout!');
     }
 
     async function submitBridalConcierge(e) {
@@ -3295,28 +3271,11 @@
       renderCart();
       toggleCartDrawer(true);
       const res = resolveWinningCouponFromList(candidateCoupons);
-      if (res.winner && res.superseded.length > 0) {
-        showToast(`Added to Bag! Winning coupon ${res.winner} (-${res.winnerPercent}%) levied over ${res.superseded.join(', ')}.`);
-      } else if (res.winner) {
-        showToast(`Added to Bag with coupon ${res.winner} (-${res.winnerPercent}% OFF) levied at checkout!`);
+      if (res.winner) {
+        showToast(`Added to Bag with ${res.winner} (${res.winnerPercent}% OFF) applied at checkout!`);
       } else {
         showToast('Added to your LouLou & Luxe bag!');
       }
-    }
-
-    function toggleCartItemCoupon(idx, couponCode) {
-      const item = state.cart[idx];
-      if (!item) return;
-      if (!item.attachedCoupons) item.attachedCoupons = [];
-      if (item.attachedCoupons.includes(couponCode)) {
-        item.attachedCoupons = item.attachedCoupons.filter(c => c !== couponCode);
-      } else {
-        item.attachedCoupons.push(couponCode);
-        const p = PRODUCTS.find(x => x.id === item.productId) || PRODUCTS[0];
-        unlockCategoryDiscount(couponCode, p.category, p.id);
-        return;
-      }
-      renderCart();
     }
 
     function removeCartItem(idx) {
@@ -3395,22 +3354,20 @@
       const summary = evaluateCartDiscounts();
 
       const listHtml = summary.evaluatedItems.map(entry => {
-        const { idx, item, product: p, grossLineUsd, netLineUsd, candidates, winningCoupon, winningPercent, supersededCoupons } = entry;
-        const has25 = candidates.includes('LULLUXE25');
-        const has10 = candidates.includes('BRIDAL10');
+        const { idx, item, product: p, grossLineUsd, netLineUsd, winningCoupon, winningPercent, supersededCoupons } = entry;
 
         let couponBadgeHtml = '';
         if (winningCoupon && supersededCoupons.length > 0) {
           couponBadgeHtml = `
-            <div class="mt-1.5 p-2 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[11.5px] leading-snug">
-              <div class="font-bold text-[#234734]">✓ Winning Coupon Levied: ${winningCoupon} (-${winningPercent}% OFF)</div>
-              <div class="text-[#52525B]">Superseded: <span class="line-through">${supersededCoupons.join(', ')} (-10%)</span> (Highest discount wins)</div>
+            <div class="mt-1.5 px-2.5 py-1.5 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[11.5px] leading-snug">
+              <div class="font-bold text-[#234734]">✓ Best Offer Applied: ${winningCoupon} (-${winningPercent}% OFF)</div>
+              <div class="text-[#52525B]">Highest discount automatically applied (cannot combine with ${supersededCoupons.join(', ')})</div>
             </div>
           `;
         } else if (winningCoupon) {
           couponBadgeHtml = `
-            <div class="mt-1.5 px-2 py-1 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[11.5px] font-bold text-[#234734]">
-              ✓ Coupon Attached: ${winningCoupon} (-${winningPercent}% OFF Levied at Checkout)
+            <div class="mt-1.5 px-2.5 py-1 bg-[#ECFDF3] border border-[#2D5A43]/35 text-[11.5px] font-bold text-[#234734]">
+              ✓ Promo Applied: ${winningCoupon} (-${winningPercent}% OFF at Checkout)
             </div>
           `;
         }
@@ -3425,20 +3382,6 @@
               </div>
               <p class="text-[13px] text-[#3F3F46] mt-0.5">${item.color} • Size ${item.size}</p>
               ${item.monogram && item.monogram !== 'NONE' ? `<p class="text-[12.5px] font-bold text-[#883647]">Monogram: "${item.monogram}"</p>` : ''}
-
-              <!-- Interactive Per-Item Coupon Toggles (Test 25% vs 10% Non-Stacking Rule) -->
-              <div class="flex flex-wrap items-center gap-1.5 mt-1.5">
-                <button
-                  type="button"
-                  onclick="toggleCartItemCoupon(${idx}, 'LULLUXE25')"
-                  class="px-2 py-0.5 text-[11px] font-bold border transition ${has25 ? 'bg-[#9E4758] text-white border-[#9E4758]' : 'bg-white text-[#883647] border-[#9E4758]/40'}"
-                >${has25 ? '✓ 25% LULLUXE25' : '+ Attach 25% (LULLUXE25)'}</button>
-                <button
-                  type="button"
-                  onclick="toggleCartItemCoupon(${idx}, 'BRIDAL10')"
-                  class="px-2 py-0.5 text-[11px] font-bold border transition ${has10 ? 'bg-[#B4833E] text-white border-[#B4833E]' : 'bg-white text-[#8A5F22] border-[#B4833E]/50'}"
-                >${has10 ? '✓ 10% BRIDAL10' : '+ Attach 10% (BRIDAL10)'}</button>
-              </div>
 
               ${couponBadgeHtml}
 
@@ -3461,7 +3404,6 @@
       document.getElementById('cart-items-list').innerHTML = listHtml || '<p class="text-center py-6 text-[#52525B]">Your shopping bag is currently empty.</p>';
 
       const grossEl = document.getElementById('cart-gross-subtotal');
-      const discRow = document.getElementById('cart-discount-row');
       const discLbl = document.getElementById('cart-discount-label');
       const discAmt = document.getElementById('cart-discount-amount');
       const subEl = document.getElementById('cart-subtotal');
@@ -3475,19 +3417,19 @@
       if (summary.globalWinner && summary.totalDiscountUsd > 0) {
         if (discLbl) {
           discLbl.textContent = summary.globalSuperseded.length > 0
-            ? `Winning Coupon Levied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`
-            : `Coupon Levied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`;
+            ? `Best Offer Applied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`
+            : `Promo Applied: ${summary.globalWinner} (-${summary.globalWinnerPercent}%)`;
         }
         if (discAmt) discAmt.textContent = `-${formatRawMoney(summary.totalDiscountUsd)}`;
         if (precBanner && precTitle && precNote) {
           precBanner.classList.remove('hidden');
-          precTitle.textContent = `Active Checkout Coupon: ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)`;
+          precTitle.textContent = `Promo Applied: ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)`;
           precNote.textContent = summary.globalSuperseded.length > 0
-            ? `Both 25% (LULLUXE25) and 10% (BRIDAL10) were selected. Per our Single-Coupon Rule, no two coupons combine — the higher ${summary.globalWinnerPercent}% discount (${summary.globalWinner}) is automatically levied!`
-            : `Coupon ${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF) is attached to your bag and levied on checkout.`;
+            ? `Your highest unlocked discount (${summary.globalWinner} — ${summary.globalWinnerPercent}% OFF) has been automatically applied to your bag.`
+            : `Code ${summary.globalWinner} (${summary.globalWinnerPercent}% OFF) is applied to your bag for checkout.`;
         }
       } else {
-        if (discLbl) discLbl.textContent = 'Coupon Levied at Checkout (Click 25% or 10% to attach)';
+        if (discLbl) discLbl.textContent = 'Promo Discount (Tap any 25% or 10% offer to unlock)';
         if (discAmt) discAmt.textContent = '-$0.00';
         if (precBanner) precBanner.classList.add('hidden');
       }
@@ -3508,9 +3450,8 @@
             <div>
               <div class="font-bold text-[#18181B]">${entry.product.title} (×${entry.item.qty})</div>
               <div class="text-[12.5px] text-[#3F3F46]">
-                Category: ${CATEGORY_LABELS[entry.product.category] || entry.product.category}
-                ${entry.winningCoupon ? ` • <strong class="text-[#234734]">Coupon Levied: ${entry.winningCoupon} (-${entry.winningPercent}%)</strong>` : ''}
-                ${entry.supersededCoupons.length > 0 ? ` • <span class="text-[#883647]">Superseded: ${entry.supersededCoupons.join(', ')}</span>` : ''}
+                ${CATEGORY_LABELS[entry.product.category] || entry.product.category}
+                ${entry.winningCoupon ? ` • <strong class="text-[#234734]">Promo Applied: ${entry.winningCoupon} (-${entry.winningPercent}%)</strong>` : ''}
               </div>
             </div>
             <div class="text-right whitespace-nowrap">
@@ -3523,19 +3464,19 @@
 
       if (precBox) {
         if (summary.globalWinner && summary.globalSuperseded.length > 0) {
-          precBox.innerHTML = `<strong>Single-Coupon Highest Precedence Enforced:</strong> Your selection included both <strong>25% OFF (LULLUXE25)</strong> and <strong>10% OFF (BRIDAL10)</strong>. Because two discount coupons cannot be applied together, the higher <strong>25% OFF (LULLUXE25)</strong> coupon was automatically levied on your checkout total.`;
+          precBox.innerHTML = `<strong>Best Savings Automatically Applied:</strong> Since offers cannot be combined, your highest unlocked discount (<strong>${summary.globalWinner} — ${summary.globalWinnerPercent}% OFF</strong>) has been automatically applied to your order.`;
         } else if (summary.globalWinner) {
-          precBox.innerHTML = `<strong>Coupon Levied at Checkout:</strong> Code <strong>${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)</strong> has been applied to your order.`;
+          precBox.innerHTML = `<strong>Promo Code Applied:</strong> Code <strong>${summary.globalWinner} (-${summary.globalWinnerPercent}% OFF)</strong> has been applied to your checkout total.`;
         } else {
-          precBox.innerHTML = `No discount coupon attached yet. Tip: Click any <strong>25% OFF</strong> or <strong>10% OFF</strong> badge on the storefront to unlock and attach a category discount!`;
+          precBox.innerHTML = `No promo code applied yet. Tip: Click any <strong>25% OFF</strong> or <strong>10% OFF</strong> offer on the storefront to unlock your discount!`;
         }
       }
 
       if (grossEl) grossEl.textContent = formatRawMoney(summary.grossSubtotalUsd);
       if (discLbl) {
         discLbl.textContent = summary.globalWinner
-          ? `Winning Coupon Levied (${summary.globalWinner} -${summary.globalWinnerPercent}%)`
-          : 'Discount Coupon Levied';
+          ? `Promo Discount (${summary.globalWinner} -${summary.globalWinnerPercent}%)`
+          : 'Promo Discount';
       }
       if (discAmt) discAmt.textContent = `-${formatRawMoney(summary.totalDiscountUsd)}`;
       if (netEl) netEl.textContent = formatRawMoney(summary.netSubtotalUsd);
